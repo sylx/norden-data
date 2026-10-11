@@ -97,6 +97,10 @@ export const cellOrigin = (sheet: SheetInfo, col: number, row: number) => ({
   y: row * (sheet.cellHeight + sheet.padding),
 })
 
+/** セルの範囲（元画像のピクセル） */
+export const cellRect = (sheet: SheetInfo, col: number, row: number): Rect =>
+  ({ ...cellOrigin(sheet, col, row), width: sheet.cellWidth, height: sheet.cellHeight })
+
 export function createCharacter(id: string): SourceCharacter {
   return {
     id,

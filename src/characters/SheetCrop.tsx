@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react'
-import { cellOrigin, type Rect, type SheetInfo, type SourceCharacter } from './types'
+import { cellRect, type Rect, type SheetInfo, type SourceCharacter } from './types'
 
-export const sheetUrl = (file: string) => `/sheets/${encodeURIComponent(file)}`
+const sheetUrl = (file: string) => `/sheets/${encodeURIComponent(file)}`
 
 /** 元画像の一部（rect、元画像のピクセル）を幅 width で表示する */
 export function SheetCrop({ sheet, rect, width, className = '', style }: {
@@ -23,9 +23,6 @@ export function SheetCrop({ sheet, rect, width, className = '', style }: {
     }} />
   )
 }
-
-export const cellRect = (sheet: SheetInfo, col: number, row: number): Rect =>
-  ({ ...cellOrigin(sheet, col, row), width: sheet.cellWidth, height: sheet.cellHeight })
 
 /** キャラクターの顔か全身。画像が無ければ空の枠 */
 export function CharacterThumb({ character, sheets, mode, width, className = '' }: {

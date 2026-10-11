@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react'
 import { NumberField } from '../fields'
-import { cellRect, SheetCrop } from './SheetCrop'
-import type { Rect, SheetInfo } from './types'
+import { SheetCrop } from './SheetCrop'
+import { cellRect, type Rect, type SheetInfo } from './types'
 
 const VIEW_W = 240
 const MIN_SIZE = 64
@@ -43,7 +43,7 @@ export function FaceRectEditor({ sheet, col, row, faceRect, onChange }: {
 
   // ホイールで画面がスクロールしないように passive でない listener にする
   const latest = useRef({ faceRect, onChange, clamp })
-  latest.current = { faceRect, onChange, clamp }
+  useEffect(() => { latest.current = { faceRect, onChange, clamp } })
   useEffect(() => {
     const el = viewRef.current
     if (!el) return

@@ -25,16 +25,14 @@ export function CityEditor() {
   const [selectedId, setSelectedId] = useState('P000')
   const [status, setStatus] = useState<{ message?: string; error?: string }>({})
 
-  const load = useCallback(async () => {
-    try {
-      const list = await api<City[]>('/api/cities')
+  const load = useCallback(() => api<City[]>('/api/cities').then(
+    (list) => {
       setCities(list)
       setSavedJson(JSON.stringify(list))
       setStatus({})
-    } catch (e) {
-      setStatus({ error: errorMessage(e) })
-    }
-  }, [])
+    },
+    (e) => setStatus({ error: errorMessage(e) }),
+  ), [])
   useEffect(() => { load() }, [load])
 
   const dirty = cities !== null && JSON.stringify(cities) !== savedJson

@@ -36,26 +36,21 @@ export function CharacterEditor() {
   const [exported, setExported] = useState<ExportResult | null>(null)
   const [busy, setBusy] = useState(false)
 
-  const loadSheets = useCallback(async () => {
-    try {
-      setSheets(await api<SheetInfo[]>('/api/sheets'))
-    } catch (e) {
-      setStatus({ error: errorMessage(e) })
-    }
-  }, [])
+  const loadSheets = useCallback(() => api<SheetInfo[]>('/api/sheets').then(
+    setSheets,
+    (e) => setStatus({ error: errorMessage(e) }),
+  ), [])
 
-  const load = useCallback(async () => {
-    try {
-      const [list, cityList] = await Promise.all([api<SourceCharacter[]>('/api/characters'), api<City[]>('/api/cities')])
+  const load = useCallback(() => Promise.all([api<SourceCharacter[]>('/api/characters'), api<City[]>('/api/cities')]).then(
+    ([list, cityList]) => {
       setCharacters(list)
       setSavedJson(JSON.stringify(list))
       setCities(cityList)
       setSelectedId((id) => id || list[0]?.id || '')
       setStatus({})
-    } catch (e) {
-      setStatus({ error: errorMessage(e) })
-    }
-  }, [])
+    },
+    (e) => setStatus({ error: errorMessage(e) }),
+  ), [])
   useEffect(() => { load(); loadSheets() }, [load, loadSheets])
 
   const dirty = characters !== null && JSON.stringify(characters) !== savedJson

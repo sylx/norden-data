@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { cellRect, SheetCrop } from './SheetCrop'
-import type { SheetInfo, SourceCharacter } from './types'
+import { SheetCrop } from './SheetCrop'
+import { cellRect, type SheetInfo, type SourceCharacter } from './types'
 
 const THUMB_W = 64
 
