@@ -1,0 +1,871 @@
+[
+  {
+    "id": "001",
+    "name": "セラフィナ・ルクス",
+    "type": "magician",
+    "gender": "female",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 0,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 253,
+      "y": 160.84000000000003,
+      "width": 518,
+      "height": 518
+    },
+    "politics": 97,
+    "intelligence": 95,
+    "leadership": 73,
+    "strength": 9,
+    "charm": 90,
+    "biography": "灰座に仕える巫女魔法師。幼少期に「浄化の光」の素質を示し、法王庁に引き取られた。魔法師への畏怖が根強いエスハラで、「聖女」の称号は彼女を守る盾であり、同時に檻でもある。灰座が何を隠しているか、誰より近くにいながら何も知らない——あるいは、知らないふりをしている。",
+    "relations": [
+      {
+        "relation": "brother",
+        "characterId": "023"
+      }
+    ],
+    "isPatriarch": true,
+    "start": {
+      "cityId": "P000",
+      "factionId": "sede",
+      "isLord": true
+    }
+  },
+  {
+    "id": "002",
+    "name": "イルーナ・ヴァルハルト",
+    "type": "magician",
+    "gender": "female",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 1,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 250.88,
+      "y": 66.56,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 71,
+    "intelligence": 85,
+    "leadership": 74,
+    "strength": 25,
+    "charm": 61,
+    "biography": "ヴァルハルト傍流の血を引く魔法師。「帝国の正統後継者」を名乗る家の出であることへの誇りと、魔法師ゆえに家中で疎まれてきた屈辱が、彼女の高慢さの両輪になっている。旧帝国の古語を完全に習得しており、解読できる文書の量は大陸屈指。その知識を「借り」と見なさない者を、彼女は心底軽蔑する。",
+    "start": {
+      "cityId": "P021",
+      "factionId": "valhardt"
+    }
+  },
+  {
+    "id": "003",
+    "name": "フィリア・アルカナ",
+    "type": "magician",
+    "gender": "female",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 2,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 343.04,
+      "y": 143.36,
+      "width": 460.8,
+      "height": 460.8
+    },
+    "politics": 64,
+    "intelligence": 84,
+    "leadership": 38,
+    "strength": 14,
+    "charm": 86,
+    "biography": "ドラーケン家が保護するアルカナム魔法師ギルドの若手研究員。古代遺跡の調査が好きすぎて危険地帯に一人で踏み込む癖があり、探索隊の護衛たちに「またか」と思われている。天然なのか計算なのかわからない笑顔で周囲を丸め込む。古代語の翻訳精度はギルド随一。",
+    "relations": [
+      {
+        "relation": "best_friend",
+        "characterId": "026"
+      }
+    ],
+    "start": {
+      "cityId": "P017",
+      "factionId": "dracken"
+    }
+  },
+  {
+    "id": "004",
+    "name": "メルカ",
+    "type": "magician",
+    "gender": "female",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 3,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 256,
+      "y": 194.56,
+      "width": 460.8,
+      "height": 460.8
+    },
+    "politics": 45,
+    "intelligence": 78,
+    "leadership": 61,
+    "strength": 33,
+    "charm": 63,
+    "biography": "東岸の港町育ち。魔法師ギルドには属さず、商会の「契約魔法師」として船の航行支援・荷物の防腐処理・港湾の火災対応を担う。魔法を生活に溶け込ませる実用主義者で、「呪文は商売道具」が信条。客商売で鍛えた愛嬌は本物で、どの港でも顔が利く。苗字は持たない——「海に苗字はいらない」。",
+    "start": {
+      "cityId": "P022",
+      "factionId": "aqua"
+    }
+  },
+  {
+    "id": "005",
+    "name": "テッサ・カルデア",
+    "type": "magician",
+    "gender": "female",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 4,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 286.72,
+      "y": 189.44,
+      "width": 460.8,
+      "height": 460.8
+    },
+    "politics": 36,
+    "intelligence": 76,
+    "leadership": 74,
+    "strength": 47,
+    "charm": 87,
+    "biography": "タウルスの漁港カルデア生まれ。「過去を問わない」土地柄で育ったため、魔法師であることを隠す習慣がない。断崖の強風の中で編み出した独自の気流操作魔法は実戦向きで、海戦での活躍で名を挙げた。口が悪く笑いが大きく、酒場でも最前線でも同じテンションでいられる。灰座の称号？「いらない、重そうだし」。",
+    "start": {
+      "cityId": "P001",
+      "factionId": "taurus"
+    }
+  },
+  {
+    "id": "006",
+    "name": "ヴァルナ",
+    "type": "knight",
+    "gender": "female",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 0,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 378.88,
+      "y": 61.44,
+      "width": 460.8,
+      "height": 460.8
+    },
+    "politics": 28,
+    "intelligence": 31,
+    "leadership": 73,
+    "strength": 81,
+    "charm": 54,
+    "biography": "タウルス生まれ、苗字なし。断崖の要塞タルガルを守る自由騎士で、「騎士」の称号も灰座の叙任も受けていないが、実力だけで周囲にそう呼ばれるようになった。テッサとは幼馴染で、海と崖それぞれの守り手として今も背中を預け合う。重い鎧を嫌い、動きやすい軽装で戦う——「断崖では重さが命取りだ」。",
+    "start": {
+      "cityId": "P030",
+      "factionId": "taurus"
+    }
+  },
+  {
+    "id": "007",
+    "name": "アデライト・ゾーン",
+    "type": "knight",
+    "gender": "female",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 1,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 239.14,
+      "y": 24.100000000000023,
+      "width": 525,
+      "height": 525
+    },
+    "politics": 56,
+    "intelligence": 65,
+    "leadership": 86,
+    "strength": 82,
+    "charm": 56,
+    "biography": "灰座が擁する少数精鋭の聖堂騎士団の一員。感情を表に出さず、命令を完遂することに一切の迷いがない。セラフィナの護衛を長年務めているが、二人の間に会話はほとんどない——それで十分だと、両者ともに思っている。灰座が「待った」をかけるとき、その場に現れるのは大抵この女だ。",
+    "start": {
+      "cityId": "P000",
+      "factionId": "sede"
+    }
+  },
+  {
+    "id": "008",
+    "name": "ブリュンヒルト・ヴァルハルト",
+    "type": "knight",
+    "gender": "female",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 2,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 208.18,
+      "y": 28.980000000000018,
+      "width": 495,
+      "height": 495
+    },
+    "politics": 37,
+    "intelligence": 37,
+    "leadership": 84,
+    "strength": 82,
+    "charm": 65,
+    "biography": "ヴァルハルト本家の直系。旧帝国の近衛制度を模した誓約騎士の流儀を最も純粋に体現する女傑で、家中の男たちより強く、家中の誰より旧帝国への帰属意識が強い。南への遠征を「帝国領の奪還」と呼ぶ。イルーナとは従姉妹にあたるが、互いに「魔法師風情」「脳筋」と陰口を叩き合っている。",
+    "start": {
+      "cityId": "P021",
+      "factionId": "valhardt"
+    }
+  },
+  {
+    "id": "009",
+    "name": "カトリナ・ガルド",
+    "type": "knight",
+    "gender": "male",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 3,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 265.02,
+      "y": 9.02000000000001,
+      "width": 453,
+      "height": 453
+    },
+    "politics": 62,
+    "intelligence": 67,
+    "leadership": 74,
+    "strength": 71,
+    "charm": 72,
+    "biography": "帝都メディアの誓約騎士団に属するが、当主レオニス十三世の変貌に静かな疑念を抱く一人。騎士団長の「帝国への忠誠への疑問」を誰より近くで見てきた。強さは本物で忠義も本物だが、「何に忠義を尽くすべきか」という問いが頭を離れない。答えが出たとき、彼女は動く。",
+    "start": {
+      "cityId": "P023",
+      "factionId": "leonis"
+    }
+  },
+  {
+    "id": "010",
+    "name": "エスペラ・ヴィジル",
+    "type": "knight",
+    "gender": "female",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 4,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 285.15999999999997,
+      "y": 41.95999999999998,
+      "width": 510,
+      "height": 510
+    },
+    "politics": 31,
+    "intelligence": 41,
+    "leadership": 77,
+    "strength": 72,
+    "charm": 52,
+    "biography": "ロザリア侯国の「遺物護衛隊」を率いる騎士。ティルナの遺跡周辺の警備を生涯の仕事とし、「ゴーレムが眠る地下」を誰より多く歩いた人間だ。謀略を好む侯国の中で珍しく直情径行な性格で、「眠る巨人の隣にいると、小細工が馬鹿らしくなる」が口癖。",
+    "start": {
+      "cityId": "P007",
+      "factionId": "rosalia"
+    }
+  },
+  {
+    "id": "011",
+    "name": "シルヴァ・ノルデン",
+    "type": "hunter",
+    "gender": "female",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 0,
+      "row": 2
+    },
+    "faceRect": {
+      "x": 408.44000000000005,
+      "y": 105,
+      "width": 458,
+      "height": 458
+    },
+    "politics": 24,
+    "intelligence": 63,
+    "leadership": 76,
+    "strength": 70,
+    "charm": 45,
+    "biography": "ドラーケン家が毎年送り出す探索隊の先導を務める斥候。北東の森と海岸線を知り尽くしており、「地図にない道」を見つけることを生きがいにしている。フィリアとは探索現場で何度も顔を合わせており、「また来たのか」「また助けてもらった」の関係。口数が少なく、報告書だけが異様に詳細。",
+    "start": {
+      "cityId": "P019",
+      "factionId": "dracken"
+    }
+  },
+  {
+    "id": "012",
+    "name": "レナ・カルデア",
+    "type": "hunter",
+    "gender": "female",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 1,
+      "row": 2
+    },
+    "faceRect": {
+      "x": 471.18000000000006,
+      "y": 204,
+      "width": 353,
+      "height": 353
+    },
+    "politics": 14,
+    "intelligence": 44,
+    "leadership": 77,
+    "strength": 74,
+    "charm": 58,
+    "biography": "カルデアの漁港育ちだが海より陸が得意という変わり種。南西の断崖地帯と荒野を縄張りにする流浪の狩人で、タウルスに籍を置きながら各地の傭兵仕事も受ける。ヴァルナとテッサとは旧知の仲で、三人が揃うと酒場が騒がしくなる。情に厚く、依頼人を見捨てたことが一度もない。",
+    "start": {
+      "cityId": "P001",
+      "factionId": "taurus"
+    }
+  },
+  {
+    "id": "013",
+    "name": "ミレイ・ダウン",
+    "type": "hunter",
+    "gender": "female",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 2,
+      "row": 2
+    },
+    "faceRect": {
+      "x": 264.56000000000006,
+      "y": 189,
+      "width": 500,
+      "height": 500
+    },
+    "politics": 19,
+    "intelligence": 41,
+    "leadership": 78,
+    "strength": 79,
+    "charm": 61,
+    "biography": "帝国領の辺境を担当する帝国公認の狩人。本来は補給線の監視と索敵が仕事だが、当主の変貌以来、帝国内部の「おかしな動き」も目に入るようになってしまった。カトリナ（008）とは現場で連携することが多く、互いに言葉少なに信頼し合っている。「見なかったことにする」技術と「見たことを忘れない」記憶を両方持つ。",
+    "start": {
+      "cityId": "P004",
+      "factionId": "leonis"
+    }
+  },
+  {
+    "id": "014",
+    "name": "オーレア・マルカヴァ",
+    "type": "politician",
+    "gender": "female",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 3,
+      "row": 2
+    },
+    "faceRect": {
+      "x": 310.64,
+      "y": 62.31999999999999,
+      "width": 500,
+      "height": 500
+    },
+    "politics": 96,
+    "intelligence": 94,
+    "leadership": 32,
+    "strength": 10,
+    "charm": 41,
+    "biography": "東岸の大商人ギルド、マルカヴァ支部の実質的な取りまとめ役。理事会の多数決という非効率な統治形態を、根回しと人心掌握で意のままに動かす。メルカ（004）を「うちの便利な魔法師」と呼んで重宝しているが、メルカ本人は「便利で結構」と気にしていない。切れ長の目が相手の言葉より先に意図を読み取り、交渉の場で先手を譲ったことがない。怒ったところを見た者がいない——それが最も恐ろしい。",
+    "isPatriarch": true,
+    "start": {
+      "cityId": "P022",
+      "factionId": "aqua",
+      "isLord": true
+    }
+  },
+  {
+    "id": "015",
+    "name": "クラリス・マーレ",
+    "type": "scholar",
+    "gender": "female",
+    "sprite": {
+      "sheet": "001.webp",
+      "col": 4,
+      "row": 2
+    },
+    "faceRect": {
+      "x": 251.68000000000006,
+      "y": 39.19999999999999,
+      "width": 536,
+      "height": 536
+    },
+    "politics": 91,
+    "intelligence": 89,
+    "leadership": 72,
+    "strength": 24,
+    "charm": 64,
+    "biography": "カルタ書院の創始者カルタ・マーレの血を引く正統後継者。旧帝国の行政・法律文書の解読を専門とし、書院内でも閲覧できる者が限られる最高機密文書の管理者でもある。灰座との情報戦の前線に立つが、本人は「戦っている」とは思っていない——「整理しているだけ」が口癖。何を知っていて何を隠しているか、書院の中でさえ誰も把握していない。",
+    "relations": [
+      {
+        "relation": "father",
+        "characterId": "029"
+      }
+    ],
+    "start": {
+      "cityId": "P012",
+      "factionId": "carta"
+    }
+  },
+  {
+    "id": "016",
+    "name": "エルヴィン・セレス",
+    "type": "knight",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 0,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 281,
+      "y": 28.78,
+      "width": 432,
+      "height": 432
+    },
+    "politics": 65,
+    "intelligence": 67,
+    "leadership": 78,
+    "strength": 73,
+    "charm": 78,
+    "biography": "中性的な面立ちと物静かな物腰から、初見で騎士と気づかれないことが多い。カルタ書院の護衛を務めるが、本人も相当な知識欲の持ち主で、護衛の合間に文書室へ入り浸っている。クラリス（015）から「あなたは騎士より学者の顔をしている」と言われたことがあり、否定できなかった。剣技より情報収集で活躍する場面が多い。",
+    "start": {
+      "cityId": "P012",
+      "factionId": "carta"
+    }
+  },
+  {
+    "id": "017",
+    "name": "ゲルハルト・アイゼン",
+    "type": "knight",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 1,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 333.48,
+      "y": 95.40000000000003,
+      "width": 526,
+      "height": 526
+    },
+    "politics": 31,
+    "intelligence": 65,
+    "leadership": 91,
+    "strength": 74,
+    "charm": 70,
+    "biography": "白髪と無数の傷跡が三十年の戦歴を物語る老騎士。カトリナ（008）の直属の上官であり、帝国への忠誠に疑問を抱き始めた張本人でもある。レオニス十三世が変貌する前の「聡明な若君」を知っているだけに、今の現実が重くのしかかる。引退を勧める声に「まだやることがある」と答え続けている。その「やること」が何かは、本人しか知らない。",
+    "relations": [
+      {
+        "relation": "best_friend",
+        "characterId": "024"
+      }
+    ],
+    "start": {
+      "cityId": "P023",
+      "factionId": "leonis"
+    }
+  },
+  {
+    "id": "018",
+    "name": "ジークハルト・ヴァルハルト",
+    "type": "knight",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 2,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 349.4,
+      "y": 0,
+      "width": 402,
+      "height": 402
+    },
+    "politics": 87,
+    "intelligence": 71,
+    "leadership": 94,
+    "strength": 82,
+    "charm": 74,
+    "biography": "北方山岳地帯を統べる現当主。執務室では旧帝国の暦で日付を確認してから一日を始める。外交の場では灰座の権威を恭しく認めながら、家中では「帝国暦五百二十七年」を生きている。その矛盾を誰にも指摘させない威圧感と、指摘が無意味だと家臣に理解させてきた三十年がある。ブリュンヒルト（008）を最も信頼する一方、イルーナ（002）の才能を誰より買っている。",
+    "isPatriarch": true,
+    "start": {
+      "cityId": "P021",
+      "factionId": "valhardt",
+      "isLord": true
+    }
+  },
+  {
+    "id": "019",
+    "name": "ランドルフ・オスタ",
+    "type": "knight",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 3,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 426.32000000000005,
+      "y": 24.400000000000006,
+      "width": 412,
+      "height": 412
+    },
+    "politics": 57,
+    "intelligence": 62,
+    "leadership": 86,
+    "strength": 84,
+    "charm": 59,
+    "biography": "オスタリア港の防衛を担う騎士隊長。海戦と陸戦の両方をこなせる数少ない人材で、ドラーケン家当主の探索隊護衛も兼任する。実直で裏表がなく、魔法師ギルドとの折衝も「苦手だが逃げない」姿勢で臨む。フィリア（003）が単独で遺跡に踏み込むたびに追いかけている。「あの娘の護衛は寿命が縮む」が最近の口癖。",
+    "start": {
+      "cityId": "P017",
+      "factionId": "dracken"
+    }
+  },
+  {
+    "id": "020",
+    "name": "バルド・フォッサ",
+    "type": "knight",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 4,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 349.52,
+      "y": 29.52000000000001,
+      "width": 412,
+      "height": 412
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "biography": "謀略と魔法師が幅を利かせるロザリア侯国において、純粋な武力だけで生き残ってきた無骨な騎士。遺物評議会の小難しい議論を「俺には関係ない、守るだけだ」と切り捨てる姿勢は、エスペラ（009）に「同志がいた」と思わせた。実際、二人は侯国内で数少ない「策を弄さない人間」として互いを信頼している。ゴーレムの眠る地下に何度も降りており、「あれは起きない方がいい」と確信している。その理由は語らない。",
+    "start": {
+      "cityId": "P007",
+      "factionId": "rosalia"
+    }
+  },
+  {
+    "id": "021",
+    "name": "ドルグ・ハマー",
+    "type": "knight",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 0,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 278.82,
+      "y": 168.74,
+      "width": 451,
+      "height": 451
+    },
+    "politics": 28,
+    "intelligence": 56,
+    "leadership": 88,
+    "strength": 83,
+    "charm": 52,
+    "biography": "ヴァルハルト北方軍の副将。岩のような体躯と地鳴りのような声で知られ、山岳地帯の兵たちから「動く要塞」と呼ばれている。頭の回転は外見から想像されるより遥かに速く、補給線と地形把握に関しては家中随一。ジークハルト（018）に「お前がいれば城壁はいらない」と言われたことを今も誇りにしている。ブリュンヒルト（008）とは犬猿の仲だが戦場では阿吽の呼吸。",
+    "start": {
+      "cityId": "P029",
+      "factionId": "valhardt"
+    }
+  },
+  {
+    "id": "022",
+    "name": "セルジオ・マルカヴァ",
+    "type": "knight",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 1,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 361.38,
+      "y": 49,
+      "width": 442,
+      "height": 442
+    },
+    "politics": 31,
+    "intelligence": 46,
+    "leadership": 81,
+    "strength": 75,
+    "charm": 63,
+    "biography": "アクア商会の港湾警備と海上護衛を束ねる隊長。元は流浪の傭兵だったが、オーレア（014）に「うちで働かないか」と声をかけられてそのまま十年が経った。商会の非効率な合議制に慣れ、「決定が遅い分、準備が整う」と前向きに解釈している。メルカ（004）とは仕事上の付き合いが長く、互いに気の置けない相棒だと思っている——本人たちは認めないが。",
+    "start": {
+      "cityId": "P022",
+      "factionId": "aqua"
+    }
+  },
+  {
+    "id": "023",
+    "name": "ライアス・ルクス",
+    "type": "knight",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 2,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 315.88,
+      "y": 41.95999999999998,
+      "width": 510,
+      "height": 510
+    },
+    "politics": 53,
+    "intelligence": 76,
+    "leadership": 76,
+    "strength": 70,
+    "charm": 67,
+    "biography": "セラフィナ（001）と同じ「ルクス」の姓を持つ聖堂騎士。血縁かどうかは灰座の公式記録に記載がなく、本人も語らない。アデライト（007）と並ぶ聖堂騎士団の精鋭だが、中性的な外見と柔らかな物腰はアデライトとは対照的。何を考えているか読めない笑顔で場を和ませながら、誰より鋭く周囲を観察している。灰座が「何かを知っている」とすれば、この男もその一人かもしれない。",
+    "relations": [
+      {
+        "relation": "sister",
+        "characterId": "001"
+      }
+    ],
+    "start": {
+      "cityId": "P000",
+      "factionId": "sede"
+    }
+  },
+  {
+    "id": "024",
+    "name": "ヴォルフ・カーネル",
+    "type": "magician",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 3,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 334.98,
+      "y": 183.94,
+      "width": 523,
+      "height": 523
+    },
+    "politics": 84,
+    "intelligence": 95,
+    "leadership": 29,
+    "strength": 3,
+    "charm": 41,
+    "biography": "ゲルハルト（017）と同世代の老魔法師。帝国の宮廷に長く仕え、レオニス十三世が「灰の炉」に触れる前の姿も、触れた後の姿も見てきた。止めようとして失敗した過去を抱えており、今は「せめて被害を小さくする」ことだけを考えている。魔法の腕は衰えたが、古代語の読解力は大陸で五指に入る。クラリス（015）とは文書の写本を通じた文通相手であり、一度も会ったことがない。",
+    "relations": [
+      {
+        "relation": "best_friend",
+        "characterId": "017"
+      }
+    ],
+    "start": {
+      "cityId": "P023",
+      "factionId": "leonis"
+    }
+  },
+  {
+    "id": "025",
+    "name": "ドレイク・ヴェルン",
+    "type": "magician",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 4,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 138.3,
+      "y": 171.57999999999998,
+      "width": 517,
+      "height": 517
+    },
+    "politics": 86,
+    "intelligence": 92,
+    "leadership": 73,
+    "strength": 14,
+    "charm": 29,
+    "biography": "据わった目つきが第一印象を決定する。ロザリアの遺物評議会に席を持つ魔法師で、ゴーレムの起動実験を「失敗した話を外に出さない」運用の実務担当者でもある。何をしたのかは語らないが、その古傷がいつできたかを知る者もいない。エスペラ（010）とバルド（020）からは警戒されており、本人も「信用されなくて結構」と思っている。",
+    "start": {
+      "cityId": "P007",
+      "factionId": "rosalia"
+    }
+  },
+  {
+    "id": "026",
+    "name": "フィン・アルカナ",
+    "type": "magician",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 0,
+      "row": 2
+    },
+    "faceRect": {
+      "x": 240.29999999999995,
+      "y": 176.3,
+      "width": 569,
+      "height": 569
+    },
+    "politics": 17,
+    "intelligence": 81,
+    "leadership": 28,
+    "strength": 18,
+    "charm": 83,
+    "biography": "アルカナムの魔法師ギルドに属する若手研究員。フィリア（003）と同僚で、二人して遺跡に踏み込んでは帰りが遅くなる。中性的な外見と穏やかな口調だが、古代魔法の再現実験への執着は人一倍強く、ランドルフ（019）の護衛コストを二人分にした張本人。「危険かどうかより、試せるかどうかが大事」が口癖で、フィリアとの相性が良すぎることをギルド長は頭を抱えている。",
+    "relations": [
+      {
+        "relation": "best_friend",
+        "characterId": "003"
+      }
+    ],
+    "start": {
+      "cityId": "P027",
+      "factionId": "dracken"
+    }
+  },
+  {
+    "id": "027",
+    "name": "ルカ・シルヴァ",
+    "type": "hunter",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 1,
+      "row": 2
+    },
+    "faceRect": {
+      "x": 351.92,
+      "y": 155,
+      "width": 451,
+      "height": 451
+    },
+    "politics": 31,
+    "intelligence": 59,
+    "leadership": 89,
+    "strength": 74,
+    "charm": 71,
+    "biography": "カルタ書院が情報収集に使う狩人ネットワークの中核を担う赤毛の狩人。シルヴァ（011）とは遠縁にあたるが、あちらが探索寄りならこちらは諜報寄りだ。書院のために各地を渡り歩き、誰が何を隠しているかを嗅ぎつける。エルヴィン（016）とは現場と書院をつなぐ相棒関係で、二人の報告書が揃うと書院の意思決定が動く。赤毛を隠さないのは「目立つ方が堂々と歩ける」という謎の持論による。",
+    "start": {
+      "cityId": "P012",
+      "factionId": "carta"
+    }
+  },
+  {
+    "id": "028",
+    "name": "グレイ",
+    "type": "hunter",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 2,
+      "row": 2
+    },
+    "faceRect": {
+      "x": 347.70000000000005,
+      "y": 0,
+      "width": 559,
+      "height": 559
+    },
+    "politics": 8,
+    "intelligence": 24,
+    "leadership": 85,
+    "strength": 66,
+    "charm": 38,
+    "biography": "白髪に革鎧、どの勢力の旗も持たない一匹狼の狩人。ロストテクノロジーの残骸や危険な遺跡周辺に出没し、依頼があれば受け、なければ消える。年齢不詳で出自不明——本人が語らないからだ。各勢力の狩人たちとは「同業者」として顔見知りだが、仲間だと思っている者はいない。ただし、一度依頼を受けた相手は最後まで守る。それだけが知られている。",
+    "mercenaryInfo": {
+      "name": "鉄弦団",
+      "fee": 1000
+    },
+    "start": {
+      "cityId": "P001"
+    }
+  },
+  {
+    "id": "029",
+    "name": "マルクス・カルタ",
+    "type": "politician",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 3,
+      "row": 2
+    },
+    "faceRect": {
+      "x": 288.03999999999996,
+      "y": 46,
+      "width": 500,
+      "height": 500
+    },
+    "politics": 96,
+    "intelligence": 90,
+    "leadership": 59,
+    "strength": 38,
+    "charm": 89,
+    "biography": "クラリス（015）の父にあたるカルタ書院の現頭首。旧帝国の元老院制度を研究し続けた結果、その様式を体現したような人物になった——広い額、整えた白髪、常に長衣を纏い、議場では立たず座ったまま場を制する。「知識は剣より強い」という家訓を三百年で最も体現している人間だと自他ともに認めるが、その知識で何をしたいかを明言したことがない。灰座のカウンターパートとして情報戦を続けており、終わりが見えないことを楽しんでいる節がある。",
+    "relations": [
+      {
+        "relation": "daughter",
+        "characterId": "015"
+      }
+    ],
+    "isPatriarch": true,
+    "start": {
+      "cityId": "P012",
+      "factionId": "carta",
+      "isLord": true
+    }
+  },
+  {
+    "id": "030",
+    "name": "アルベルト・ドラーケン",
+    "type": "hunter",
+    "gender": "male",
+    "sprite": {
+      "sheet": "002.webp",
+      "col": 4,
+      "row": 2
+    },
+    "faceRect": {
+      "x": 298,
+      "y": 18.95999999999998,
+      "width": 556,
+      "height": 556
+    },
+    "politics": 34,
+    "intelligence": 62,
+    "leadership": 74,
+    "strength": 69,
+    "charm": 73,
+    "biography": "ドラーケン家傍流の若者。金髪碧眼の端正な顔立ちと軽やかな身のこなしは狩人というより吟遊詩人に見えるが、コンポジットボウの腕前は家中随一。探索隊への同行を志願し続けているが、「顔が惜しい」という理由で毎回後方支援に回される。本人は不満だが、後方から放った矢が前線の危機を何度も救っているため誰も前に出させない。当主の「北の岬に何かある」という執念を唯一無条件に信じている若者でもある。",
+    "start": {
+      "cityId": "P017",
+      "factionId": "dracken"
+    }
+  }
+]

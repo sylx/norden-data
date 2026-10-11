@@ -1,0 +1,7 @@
+node_modules
+dist
+*.local
+*.tsbuildinfo
+# 騎士の元画像（大きいのでコミットしない。各自で置く）
+characters/sheets/*
+!characters/sheets/.gitkeep
