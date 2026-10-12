@@ -37,9 +37,9 @@ function normalize(data: VoiceLineData): VoiceLineData {
 /** 1 行に 1 つ。前後の空白と空行は除く */
 const parseLines = (text: string) => text.split('\n').map((t) => t.trim()).filter(Boolean)
 
-/** セルに当たる騎士（口調・性格が合う。共通は問わない） */
+/** セルに当たる騎士（口調が合う（共通の列は口調が未設定）、性格が合う（性格が共通の行は問わない）） */
 const matches = (c: SourceCharacter, tone: ToneKey, p: PersonalityKey) =>
-  (tone === ANY || c.voiceTone === tone) && (p === ANY || !!c.personality?.includes(p))
+  (tone === ANY ? !c.voiceTone : c.voiceTone === tone) && (p === ANY || !!c.personality?.includes(p))
 
 /**
  * セリフ（ルートの src/data/voiceLines.json）を直接読み書きする。
@@ -97,7 +97,7 @@ export function VoiceLineEditor({ active }: { active: boolean }) {
   const cells = data.lines[situationId] ?? {}
   const key = cellKey(tone, personality)
   const count = (t: ToneKey, p: PersonalityKey) => cells[cellKey(t, p)]?.length ?? 0
-  /** 口調の列にセリフが 1 つも無い（その口調の騎士は共通の列から引く） */
+  /** 口調の列にセリフが 1 つも無い（その口調の騎士はこの場面で何も言わない） */
   const columnEmpty = (t: ToneKey) => ([ANY, ...PERSONALITY_AXES.flatMap((a) => a.tags)] as PersonalityKey[]).every((p) => !count(t, p))
 
   const setCell = (list: string[]) => setData((d) => d && {
@@ -165,7 +165,7 @@ export function VoiceLineEditor({ active }: { active: boolean }) {
       <th className="voice-matrix__personality" title={p === ANY ? undefined : PERSONALITY_LABELS[p]}>{personalityName(p)}</th>
       {TONE_COLUMNS.map((t) => {
         const n = count(t, p)
-        const knights = t === ANY ? [] : characters.filter((c) => matches(c, t, p))
+        const knights = characters.filter((c) => matches(c, t, p))
         return (
           <td key={t}>
             <button type="button"
@@ -237,7 +237,7 @@ export function VoiceLineEditor({ active }: { active: boolean }) {
                   <tr>
                     {TONE_COLUMNS.map((t) => (
                       <th key={t} className={`voice-matrix__tone ${t === tone ? 'is-active' : ''} ${t !== ANY && columnEmpty(t) ? 'is-fallback' : ''}`}
-                        title={t === ANY ? '口調を問わない（口調の列にセリフが無い騎士はここから引く）' : VOICE_TONE_LABELS[t]}>
+                        title={t === ANY ? '口調が未設定の騎士（と騎士のいない部隊）が言う' : VOICE_TONE_LABELS[t]}>
                         <span>{toneName(t)}</span>
                       </th>
                     ))}
@@ -253,8 +253,8 @@ export function VoiceLineEditor({ active }: { active: boolean }) {
               </table>
             </div>
             <p className="voice-editor__hint">
-              数字はセルのセリフの数、点はそのセルに当たる騎士がいること。騎士は自分の口調の列（性格を問わない行と自分の性格の行）から引き、その列が空なら共通の列から引く。
-              口調の見出しが暗い列は、この場面にセリフが無い口調。
+              数字はセルのセリフの数、点はそのセルに当たる騎士がいること。騎士は自分の口調の列（性格を問わない行と自分の性格の行）から引く。
+              共通の列は口調が未設定の騎士が引く。口調の見出しが暗い列は、この場面にセリフが無い口調（その口調の騎士は何も言わない）。
             </p>
           </>
         ) : <p className="loading">場面を選んでください。</p>}
