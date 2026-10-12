@@ -1,6 +1,6 @@
 # norden-data
 
-nordencult のゲームデータのエディタ。拠点データと騎士データを編集し、ゲーム本体（nordencult）の `src/` に書き出す。React + TypeScript + Vite。
+nordencult のゲームデータのエディタ。拠点データ・騎士データ・セリフを編集し、ゲーム本体（nordencult）の `src/` に書き出す。React + TypeScript + Vite。
 読み書きは開発サーバーの Vite プラグイン（[server/dataPlugin.ts](server/dataPlugin.ts)）が行うので、`npm run dev` で使う（ビルドはしない）。
 
 nordencult のサブモジュール（`nordencult/norden-data`）として置き、親ディレクトリをゲーム本体として読み書きする。
@@ -42,3 +42,17 @@ npm run typecheck
 今の騎士の `001.webp`・`002.webp` は nordencult-old の `tools/editor/uploads/` にある。
 
 キャラクターを選び、元画像のセルをクリックして画像にする。顔の範囲は、枠をドラッグで動かし、外をクリックでそこを中心にし、ホイールで大きさを変える。
+
+## セリフ（`#voiceLines`）
+
+騎士が場面ごとに言うセリフ。ゲームの `src/data/voiceLines.json` を直接読み書きする（「保存」で書く）。
+セリフを引く決まりはゲームの [src/data/voiceLines.ts](../src/data/voiceLines.ts)。
+
+- 左で場面（`battle.attack` など）を選ぶ。場面の ID はゲームのコードが引く名前なので、使っているものは変えない。場面は足せる（汎用。戦闘以外の会話にも使う）
+- 真ん中は口調（列）× 性格（行）のマトリックス。数字はセルのセリフの数、点はそのセルに当たる騎士がいること
+- 右でセルのセリフを 1 行に 1 つ書く。下のプレビューで騎士を選ぶと、その騎士がこの場面で引くセルとセリフが出る
+
+騎士は自分の口調の列から、「性格を問わない」行と自分の性格（最大 4 つ）の行を合わせて引く。その列にこの場面のセリフが 1 つも無ければ「共通」の列から同じように引く。
+口調ごとの話し方は「性格を問わない」行に書き、性格の行にはその性格らしい言い回しを足していく。
+
+戦闘（norden-battle）の場面は `battle.` で始まる。一斉攻撃の掛け合いは、攻撃する部隊の `battle.exchange_lead` に、加わる味方（2 部隊まで）がそれぞれ `battle.exchange_reply` で応じる。

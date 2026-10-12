@@ -15,6 +15,8 @@ export const SHEETS_DIR = path.join(DATA_DIR, 'characters', 'sheets')
 export const OUTPUT = {
   /** 拠点データ（エディタで直接読み書きする） */
   cities: path.join(GAME_ROOT, 'src', 'data', 'cityData.json'),
+  /** セリフ（エディタで直接読み書きする） */
+  voiceLines: path.join(GAME_ROOT, 'src', 'data', 'voiceLines.json'),
   characterData: path.join(GAME_ROOT, 'src', 'data', 'characterData.json'),
   characterStart: path.join(GAME_ROOT, 'src', 'data', 'characterStart.json'),
   /** character.webp の大きさとセルの大きさ */

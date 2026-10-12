@@ -2,6 +2,7 @@
  * エディタの読み書きを受け持つ Vite プラグイン（開発サーバーだけ）。
  *
  * - GET/PUT  /api/cities             ルートの src/data/cityData.json
+ * - GET/PUT  /api/voice-lines        ルートの src/data/voiceLines.json
  * - GET/PUT  /api/characters         characters/characters.json（騎士データの元データ）
  * - POST     /api/characters/export  ルートの characterData.json などに書き出す
  * - GET      /api/sheets             characters/sheets/ の元画像とセルの並び
@@ -54,6 +55,20 @@ function assertList(body: unknown): asserts body is { id: string }[] {
   if (dup) throw new HttpError(400, `id が重複しています: ${dup}`)
 }
 
+/** セリフのデータ（場面の配列と、場面ごとのセル → セリフの配列）であること */
+function assertVoiceLines(body: unknown): asserts body is { situations: { id: string }[]; lines: Record<string, Record<string, string[]>> } {
+  const data = body as { situations?: unknown; lines?: unknown }
+  if (!data || typeof data !== 'object' || !data.lines || typeof data.lines !== 'object') {
+    throw new HttpError(400, 'situations と lines のあるオブジェクトではありません')
+  }
+  assertList(data.situations)
+  for (const [situation, cells] of Object.entries(data.lines)) {
+    const ok = cells && typeof cells === 'object'
+      && Object.values(cells).every((list) => Array.isArray(list) && list.every((t) => typeof t === 'string'))
+    if (!ok) throw new HttpError(400, `${situation} のセルがセリフの配列ではありません`)
+  }
+}
+
 async function readJson(file: string): Promise<unknown> {
   try {
     return JSON.parse(await readFile(file, 'utf8'))
@@ -82,6 +97,16 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<boolea
       assertList(body)
       await writeJson(OUTPUT.cities, body)
       sendJson(res, 200, { ok: true, file: OUTPUT.cities })
+      return true
+    }
+    case 'GET /api/voice-lines':
+      sendJson(res, 200, await readJson(OUTPUT.voiceLines))
+      return true
+    case 'PUT /api/voice-lines': {
+      const body = await readBody(req)
+      assertVoiceLines(body)
+      await writeJson(OUTPUT.voiceLines, body)
+      sendJson(res, 200, { ok: true, file: OUTPUT.voiceLines })
       return true
     }
     case 'GET /api/characters':
