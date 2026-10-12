@@ -1,16 +1,22 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import type { City } from '@game/data/city.ts'
+import {
+  PERSONALITY_AXES, PERSONALITY_LABELS, VOICE_TONE_GROUPS, VOICE_TONE_LABELS, type PersonalityTag,
+} from '@game/data/characterVoice.ts'
 import { api, errorMessage } from '../api'
-import { FACTIONS, factionColor, factionName } from '../factions'
+import { FACTIONS, MERCENARY, characterFaction, factionColor, factionName } from '../factions'
 import { Field, NumberField, SaveStatus } from '../fields'
+import { MiniMap } from '../cities/MiniMap'
 import { useLeaveGuard } from '../useDirty'
 import { FaceRectEditor } from './FaceRectEditor'
 import { CharacterThumb } from './SheetCrop'
 import { SpritePicker } from './SpritePicker'
 import {
   CHARACTER_TYPES, CHARACTER_TYPE_LABELS, RELATION_LABELS, RELATION_TYPES, STAT_KEYS,
-  createCharacter, nextCharacterId, type SheetInfo, type SourceCharacter,
+  createCharacter, nextCharacterId, setGender, setRelations, type Relation, type SheetInfo, type SourceCharacter,
 } from './types'
+
+const axisIndex = (tag: PersonalityTag) => PERSONALITY_AXES.findIndex((axis) => axis.tags.includes(tag))
 
 /** server/exportCharacters.ts の ExportResult */
 interface ExportResult {
@@ -35,6 +41,7 @@ export function CharacterEditor() {
   const [status, setStatus] = useState<{ message?: string; error?: string }>({})
   const [exported, setExported] = useState<ExportResult | null>(null)
   const [busy, setBusy] = useState(false)
+  const [cityMapOpen, setCityMapOpen] = useState(false)
 
   const loadSheets = useCallback(() => api<SheetInfo[]>('/api/sheets').then(
     setSheets,
@@ -60,7 +67,7 @@ export function CharacterEditor() {
   const cityOwner = useMemo(() => new Map(cities.map((c) => [c.id, c.belongTo])), [cities])
   const cityName = (id: string) => cities.find((c) => c.id === id)?.name ?? id
   /** 配置先の勢力（省略なら都市の勢力） */
-  const factionOf = (c: SourceCharacter) => (c.start ? c.start.factionId ?? cityOwner.get(c.start.cityId) : undefined)
+  const factionOf = (c: SourceCharacter) => characterFaction(c, (id) => cityOwner.get(id))
 
   const save = async (list = characters) => {
     if (!list) return false
@@ -94,6 +101,8 @@ export function CharacterEditor() {
   const character = characters?.find((c) => c.id === selectedId)
   const update = (patch: Partial<SourceCharacter>) =>
     setCharacters((list) => list && list.map((c) => (c.id === selectedId ? { ...c, ...patch } : c)))
+  /** 関係を変える。相手の側の関係も自動でそろえる */
+  const updateRelations = (next: Relation[]) => setCharacters((list) => list && setRelations(list, selectedId, next))
 
   const add = () => {
     if (!characters) return
@@ -116,6 +125,7 @@ export function CharacterEditor() {
     .some((text) => text.toLowerCase().includes(q)))
   const sheet = character?.sprite ? sheetMap.get(character.sprite.sheet) : undefined
   const relations = character?.relations ?? []
+  const personality = character?.personality ?? []
 
   return (
     <div className="character-editor">
@@ -193,10 +203,21 @@ export function CharacterEditor() {
                 </Field>
                 <Field label="性別">
                   <select value={character.gender ?? ''}
-                    onChange={(e) => update({ gender: (e.target.value || undefined) as SourceCharacter['gender'] })}>
+                    onChange={(e) => setCharacters((list) => list && setGender(list, selectedId, (e.target.value || undefined) as SourceCharacter['gender']))}>
                     <option value="">未設定</option>
                     <option value="male">男性</option>
                     <option value="female">女性</option>
+                  </select>
+                </Field>
+                <Field label="口調">
+                  <select value={character.voiceTone ?? ''}
+                    onChange={(e) => update({ voiceTone: (e.target.value || undefined) as SourceCharacter['voiceTone'] })}>
+                    <option value="">未設定</option>
+                    {VOICE_TONE_GROUPS.map((g) => (
+                      <optgroup key={g.label} label={g.label}>
+                        {g.ids.map((id) => <option key={id} value={id}>{VOICE_TONE_LABELS[id]}</option>)}
+                      </optgroup>
+                    ))}
                   </select>
                 </Field>
                 <label className="checkbox">
@@ -204,6 +225,25 @@ export function CharacterEditor() {
                     onChange={(e) => update({ isPatriarch: e.target.checked || undefined })} />
                   勢力の当主
                 </label>
+              </div>
+
+              <h3 className="form__heading">性格</h3>
+              <div className="form__grid">
+                {PERSONALITY_AXES.map((axis) => (
+                  <Field key={axis.label} label={axis.label}>
+                    <select value={personality.find((t) => axis.tags.includes(t)) ?? ''}
+                      onChange={(e) => {
+                        // この軸のタグを入れ替え、軸の順に並べる
+                        const rest = personality.filter((t) => !axis.tags.includes(t))
+                        const next = [...rest, ...(e.target.value ? [e.target.value as PersonalityTag] : [])]
+                          .sort((a, b) => axisIndex(a) - axisIndex(b))
+                        update({ personality: next.length ? next : undefined })
+                      }}>
+                      <option value="">未設定</option>
+                      {axis.tags.map((tag) => <option key={tag} value={tag}>{PERSONALITY_LABELS[tag]}</option>)}
+                    </select>
+                  </Field>
+                ))}
               </div>
 
               <h3 className="form__heading">能力</h3>
@@ -214,16 +254,23 @@ export function CharacterEditor() {
               <h3 className="form__heading">初期配置</h3>
               <div className="form__grid">
                 <Field label="都市">
-                  <select value={character.start?.cityId ?? ''}
-                    onChange={(e) => update({ start: e.target.value ? { ...character.start, cityId: e.target.value } : null })}>
-                    <option value="">配置しない</option>
-                    {cities.map((c) => <option key={c.id} value={c.id}>{c.id} {c.name}</option>)}
-                  </select>
+                  <div className="city-select">
+                    <select value={character.start?.cityId ?? ''}
+                      onChange={(e) => update({ start: e.target.value ? { ...character.start, cityId: e.target.value } : null })}>
+                      <option value="">配置しない</option>
+                      {cities.map((c) => <option key={c.id} value={c.id}>{c.id} {c.name}</option>)}
+                    </select>
+                    <button type="button" className="button" onClick={() => setCityMapOpen((open) => !open)}>
+                      {cityMapOpen ? '地図を閉じる' : '地図から選ぶ'}
+                    </button>
+                  </div>
                 </Field>
                 <Field label="勢力">
                   <select value={character.start?.factionId ?? ''} disabled={!character.start}
                     onChange={(e) => character.start && update({ start: { ...character.start, factionId: e.target.value || undefined } })}>
-                    <option value="">都市の勢力（{factionName(character.start ? cityOwner.get(character.start.cityId) : undefined)}）</option>
+                    <option value="">
+                      {character.mercenaryInfo ? `所属なし（${MERCENARY.name}）` : `都市の勢力（${factionName(character.start ? cityOwner.get(character.start.cityId) : undefined)}）`}
+                    </option>
                     {FACTIONS.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}
                   </select>
                 </Field>
@@ -233,6 +280,12 @@ export function CharacterEditor() {
                   都市の領主
                 </label>
               </div>
+              {cityMapOpen && (
+                <div className="city-picker">
+                  <MiniMap cities={cities} selectedId={character.start?.cityId ?? ''} showTotals={false}
+                    onSelect={(cityId) => update({ start: { ...character.start, cityId } })} />
+                </div>
+              )}
 
               <h3 className="form__heading">傭兵</h3>
               <label className="checkbox">
@@ -256,25 +309,22 @@ export function CharacterEditor() {
               <h3 className="form__heading">関係</h3>
               {relations.map((rel, i) => (
                 <div key={i} className="relation">
-                  <select value={rel.relation} onChange={(e) => update({
-                    relations: relations.map((r, j) => (j === i ? { ...r, relation: e.target.value as typeof r.relation } : r)),
-                  })}>
+                  <select value={rel.relation} onChange={(e) => updateRelations(
+                    relations.map((r, j) => (j === i ? { ...r, relation: e.target.value as typeof r.relation } : r)),
+                  )}>
                     {RELATION_TYPES.map((r) => <option key={r} value={r}>{RELATION_LABELS[r]}</option>)}
                   </select>
-                  <select className="relation__target" value={rel.characterId} onChange={(e) => update({
-                    relations: relations.map((r, j) => (j === i ? { ...r, characterId: e.target.value } : r)),
-                  })}>
+                  <select className="relation__target" value={rel.characterId} onChange={(e) => updateRelations(
+                    relations.map((r, j) => (j === i ? { ...r, characterId: e.target.value } : r)),
+                  )}>
                     <option value="">-- 相手 --</option>
                     {characters.filter((c) => c.id !== character.id).map((c) => <option key={c.id} value={c.id}>{c.id} {c.name}</option>)}
                   </select>
                   <button type="button" className="button" aria-label="関係を外す"
-                    onClick={() => {
-                      const rest = relations.filter((_, j) => j !== i)
-                      update({ relations: rest.length ? rest : undefined })
-                    }}>×</button>
+                    onClick={() => updateRelations(relations.filter((_, j) => j !== i))}>×</button>
                 </div>
               ))}
-              <button type="button" className="button" onClick={() => update({ relations: [...relations, { relation: 'father', characterId: '' }] })}>
+              <button type="button" className="button" onClick={() => updateRelations([...relations, { relation: 'father', characterId: '' }])}>
                 ＋ 関係を追加
               </button>
 

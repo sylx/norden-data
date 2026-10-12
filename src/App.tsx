@@ -31,7 +31,7 @@ export function App() {
         </nav>
       </header>
       <main className="app__main">
-        <div className="app__page" hidden={tab !== 'cities'}><CityEditor /></div>
+        <div className="app__page" hidden={tab !== 'cities'}><CityEditor active={tab === 'cities'} /></div>
         <div className="app__page" hidden={tab !== 'characters'}><CharacterEditor /></div>
       </main>
     </div>

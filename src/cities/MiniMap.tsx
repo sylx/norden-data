@@ -1,7 +1,8 @@
 import { useMemo } from 'react'
 import { PLACES, ROAD_LINKS } from 'norden-strategy/data'
 import type { City } from '@game/data/city.ts'
-import { FACTIONS, factionColor } from '../factions'
+import type { SourceCharacter } from '../characters/types'
+import { FACTIONS, MERCENARY, characterFaction, factionColor } from '../factions'
 
 /** 拠点の位置（norden-strategy の PLACES）と街道（ROAD_LINKS）の簡易地図。拠点をクリックで選ぶ */
 
@@ -19,25 +20,43 @@ const BOUNDS = (() => {
 /** 人口で拠点の点の大きさを変える（世界の単位） */
 const radiusOf = (population: number) => 4 + Math.sqrt(Math.max(population, 0) / 1000) * 2
 
-export function MiniMap({ cities, selectedId, onSelect }: {
+export function MiniMap({ cities, characters = [], selectedId, onSelect, showTotals = true }: {
   cities: readonly City[]
+  /** 集計表の騎士数に使う */
+  characters?: readonly SourceCharacter[]
   selectedId: string
   onSelect: (id: string) => void
+  /** 勢力ごとの集計表を出す */
+  showTotals?: boolean
 }) {
   const byId = useMemo(() => new Map(cities.map((c) => [c.id, c])), [cities])
   const neighbours = useMemo(
     () => new Set(ROAD_LINKS.filter(([a, b]) => a === selectedId || b === selectedId).flat()),
     [selectedId],
   )
-  // 勢力ごとの拠点数・人口・生産
+  // 勢力ごとの拠点数・人口・生産・騎士数（傭兵は別に数える）
   const totals = useMemo(() => {
-    const rows = [...FACTIONS.map((f) => ({ id: f.id as string | undefined, name: f.name })), { id: undefined, name: '中立' }]
+    const placed = characters.filter((c) => c.start && byId.has(c.start.cityId))
+      .map((c) => ({ factionId: characterFaction(c, (id) => byId.get(id)?.belongTo), mercenary: !!c.mercenaryInfo }))
+    const rows = [
+      ...FACTIONS.map((f) => ({ id: f.id as string | undefined, name: f.name })),
+      { id: undefined, name: '中立' },
+      { id: MERCENARY.id, name: MERCENARY.name },
+    ]
       .map((f) => {
         const own = cities.filter((c) => c.belongTo === f.id)
-        return { ...f, count: own.length, population: sum(own.map((c) => c.population)), production: sum(own.map((c) => c.production)) }
+        const members = placed.filter((c) => c.factionId === f.id)
+        return {
+          ...f,
+          count: own.length,
+          population: sum(own.map((c) => c.population)),
+          production: sum(own.map((c) => c.production)),
+          knights: members.filter((c) => !c.mercenary).length,
+          mercenaries: members.filter((c) => c.mercenary).length,
+        }
       })
-    return rows.filter((r) => r.count > 0)
-  }, [cities])
+    return rows.filter((r) => r.count > 0 || r.knights > 0 || r.mercenaries > 0)
+  }, [cities, characters, byId])
   const fontSize = BOUNDS.width / 60
 
   return (
@@ -70,8 +89,8 @@ export function MiniMap({ cities, selectedId, onSelect }: {
           )
         })}
       </svg>
-      <table className="minimap__totals">
-        <thead><tr><th>勢力</th><th>拠点</th><th>人口</th><th>生産</th></tr></thead>
+      {showTotals && <table className="minimap__totals">
+        <thead><tr><th>勢力</th><th>拠点</th><th>人口</th><th>生産</th><th>騎士</th><th>傭兵</th></tr></thead>
         <tbody>
           {totals.map((r) => (
             <tr key={r.name}>
@@ -79,10 +98,12 @@ export function MiniMap({ cities, selectedId, onSelect }: {
               <td>{r.count}</td>
               <td>{r.population.toLocaleString()}</td>
               <td>{r.production.toLocaleString()}</td>
+              <td>{r.knights}</td>
+              <td>{r.mercenaries}</td>
             </tr>
           ))}
         </tbody>
-      </table>
+      </table>}
     </div>
   )
 }

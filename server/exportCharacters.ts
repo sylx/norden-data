@@ -106,6 +106,8 @@ export async function exportCharacters(characters: readonly SourceCharacter[]): 
       strength: c.strength,
       charm: c.charm,
       ...(c.gender ? { gender: c.gender } : {}),
+      ...(c.voiceTone ? { voiceTone: c.voiceTone } : {}),
+      ...(c.personality?.length ? { personality: c.personality } : {}),
       ...(c.biography ? { biography: c.biography } : {}),
       ...(c.mercenaryInfo ? { mercenaryInfo: c.mercenaryInfo } : {}),
       ...(c.relations?.length ? { relations: c.relations } : {}),

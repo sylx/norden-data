@@ -99,6 +99,10 @@ input[type='range'] { accent-color: var(--accent); width: 100%; }
 .chips { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; }
 .chip { background: var(--panel-2); border: 1px solid var(--line); border-radius: 12px; padding: 2px 10px; cursor: pointer; }
 .chip:hover { border-color: var(--muted); }
+.chips + .chips { margin-top: 6px; }
+.chip--static { cursor: default; }
+.chip--static:hover { border-color: var(--line); }
+.chip__note { margin-left: 6px; font-size: 11px; color: var(--muted); }
 
 /* 拠点データ */
 .city-editor { display: grid; grid-template-columns: minmax(360px, 440px) 1fr; gap: 12px; height: 100%; padding: 12px; }
@@ -156,6 +160,10 @@ input[type='range'] { accent-color: var(--accent); width: 100%; }
 .face-editor__previews { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .face-editor__caption { font-size: 12px; color: var(--muted); }
 .face-editor__face { border-radius: 50%; border: 2px solid var(--line); }
+
+.city-select { display: flex; gap: 6px; }
+.city-select select { flex: 1; min-width: 0; }
+.city-picker { height: 420px; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
 
 .relation { display: flex; gap: 6px; }
 .relation__target { flex: 1; }

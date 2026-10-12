@@ -1,5 +1,7 @@
 /** 騎士データの元データ（characters/characters.json）。サーバー（書き出し）とエディタの両方で使う */
 
+import type { PersonalityTag, VoiceToneId } from '@game/data/characterVoice.ts'
+
 export const CHARACTER_TYPES = ['knight', 'scholar', 'politician', 'magician', 'hunter'] as const
 export type CharacterType = (typeof CHARACTER_TYPES)[number]
 
@@ -60,6 +62,10 @@ export interface SourceCharacter {
   name: string
   type: CharacterType
   gender?: 'male' | 'female'
+  /** 口調 */
+  voiceTone?: VoiceToneId
+  /** 性格。PERSONALITY_AXES の軸ごとに 1 つまで */
+  personality?: PersonalityTag[]
   /** 元画像（characters/sheets/）のどのセルか。null: 未設定（書き出しでは除く） */
   sprite: { sheet: string; col: number; row: number } | null
   /** 顔の範囲。セルの左上からの、元画像のピクセル */
@@ -115,6 +121,50 @@ export function createCharacter(id: string): SourceCharacter {
     charm: 50,
     start: null,
   }
+}
+
+/**
+ * 相手から見た関係。A の relation（相手 B が A の何か）を B から見ると、A が B の何かになる。
+ * 父母・子・兄弟姉妹は A の性別で決める（未設定は男性として扱う）
+ */
+export function reverseRelation(relation: RelationType, gender: SourceCharacter['gender']): RelationType {
+  const female = gender === 'female'
+  switch (relation) {
+    case 'father': case 'mother': return female ? 'daughter' : 'son'
+    case 'son': case 'daughter': return female ? 'mother' : 'father'
+    case 'brother': case 'sister': return female ? 'sister' : 'brother'
+    default: return relation
+  }
+}
+
+/** others の一人ひとりの、id への関係を、id から見た関係の逆にそろえる。id から関係がなければ外す */
+function syncReverse(list: SourceCharacter[], id: string, others: ReadonlySet<string>): SourceCharacter[] {
+  const self = list.find((c) => c.id === id)
+  if (!self) return list
+  return list.map((c) => {
+    if (c.id === id || !others.has(c.id)) return c
+    const rel = self.relations?.find((r) => r.characterId === c.id)
+    const rest = (c.relations ?? []).filter((r) => r.characterId !== id)
+    const next = rel ? [...rest, { relation: reverseRelation(rel.relation, self.gender), characterId: id }] : rest
+    return { ...c, relations: next.length ? next : undefined }
+  })
+}
+
+/** id の関係を relations にし、関係を付けた・変えた・外した相手の側もそろえる */
+export function setRelations(list: SourceCharacter[], id: string, relations: Relation[]): SourceCharacter[] {
+  const before = list.find((c) => c.id === id)?.relations ?? []
+  const toward = (rels: Relation[], other: string) => rels.find((r) => r.characterId === other)?.relation
+  const changed = new Set([...before, ...relations].map((r) => r.characterId)
+    .filter((other) => other && toward(before, other) !== toward(relations, other)))
+  const next = list.map((c) => (c.id === id ? { ...c, relations: relations.length ? relations : undefined } : c))
+  return syncReverse(next, id, changed)
+}
+
+/** id の性別を変え、相手の側の関係（父/母など）もそろえる */
+export function setGender(list: SourceCharacter[], id: string, gender: SourceCharacter['gender']): SourceCharacter[] {
+  const next = list.map((c) => (c.id === id ? { ...c, gender } : c))
+  const self = next.find((c) => c.id === id)
+  return syncReverse(next, id, new Set(self?.relations?.map((r) => r.characterId)))
 }
 
 export function nextCharacterId(characters: readonly SourceCharacter[]): string {
