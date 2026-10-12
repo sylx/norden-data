@@ -32,7 +32,13 @@
       "cityId": "P000",
       "factionId": "sede",
       "isLord": true
-    }
+    },
+    "personality": [
+      "cautious",
+      "devout",
+      "generous"
+    ],
+    "voiceTone": "cool_female"
   },
   {
     "id": "002",
@@ -59,7 +65,19 @@
     "start": {
       "cityId": "P021",
       "factionId": "valhardt"
-    }
+    },
+    "voiceTone": "noble_lady",
+    "personality": [
+      "aggressive",
+      "stubborn",
+      "arrogant"
+    ],
+    "relations": [
+      {
+        "relation": "father",
+        "characterId": ""
+      }
+    ]
   },
   {
     "id": "003",
@@ -72,10 +90,10 @@
       "row": 0
     },
     "faceRect": {
-      "x": 343.04,
-      "y": 143.36,
-      "width": 460.8,
-      "height": 460.8
+      "x": 367.0400000000001,
+      "y": 167.35999999999999,
+      "width": 412.8,
+      "height": 412.8
     },
     "politics": 64,
     "intelligence": 84,
@@ -92,7 +110,11 @@
     "start": {
       "cityId": "P017",
       "factionId": "dracken"
-    }
+    },
+    "personality": [
+      "pragmatic",
+      "sociable"
+    ]
   },
   {
     "id": "004",
@@ -867,5 +889,604 @@
       "cityId": "P017",
       "factionId": "dracken"
     }
+  },
+  {
+    "id": "031",
+    "name": "キャラクター031",
+    "type": "magician",
+    "sprite": {
+      "sheet": "030.webp",
+      "col": 0,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 295.4666666666667,
+      "y": 90.66666666666669,
+      "width": 416,
+      "height": 416
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": null,
+    "gender": "female"
+  },
+  {
+    "id": "032",
+    "name": "キャラクター032",
+    "type": "magician",
+    "sprite": {
+      "sheet": "030.webp",
+      "col": 1,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 365.33333333333326,
+      "y": 164.79999999999995,
+      "width": 464,
+      "height": 464
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": null,
+    "gender": "female"
+  },
+  {
+    "id": "033",
+    "name": "キャラクター033",
+    "type": "magician",
+    "sprite": {
+      "sheet": "030.webp",
+      "col": 2,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 294.4,
+      "y": 85.33333333333331,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": null,
+    "gender": "female"
+  },
+  {
+    "id": "034",
+    "name": "キャラクター034",
+    "type": "magician",
+    "sprite": {
+      "sheet": "030.webp",
+      "col": 3,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 159.4666666666667,
+      "y": 56,
+      "width": 432,
+      "height": 432
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": null,
+    "gender": "female"
+  },
+  {
+    "id": "035",
+    "name": "キャラクター035",
+    "type": "magician",
+    "sprite": {
+      "sheet": "030.webp",
+      "col": 4,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 195.7333333333334,
+      "y": 25.06666666666672,
+      "width": 496,
+      "height": 496
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": null,
+    "gender": "female",
+    "voiceTone": "tomboy_warrior"
+  },
+  {
+    "id": "036",
+    "name": "キャラクター036",
+    "type": "knight",
+    "sprite": {
+      "sheet": "030.webp",
+      "col": 0,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 235.7333333333333,
+      "y": 9.600000000000023,
+      "width": 544,
+      "height": 544
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": null,
+    "gender": "female",
+    "voiceTone": "earnest_youth",
+    "personality": [
+      "valiant",
+      "loyal",
+      "strict"
+    ]
+  },
+  {
+    "id": "037",
+    "name": "キャラクター037",
+    "type": "knight",
+    "sprite": {
+      "sheet": "030.webp",
+      "col": 1,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 272,
+      "y": 58.666666666666686,
+      "width": 480,
+      "height": 480
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": null,
+    "gender": "male",
+    "voiceTone": "wild_berserker",
+    "personality": [
+      "aggressive",
+      "nihilist",
+      "stubborn",
+      "lone_wolf"
+    ]
+  },
+  {
+    "id": "038",
+    "name": "キャラクター038",
+    "type": "knight",
+    "sprite": {
+      "sheet": "030.webp",
+      "col": 2,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 274.66666666666663,
+      "y": 121.06666666666666,
+      "width": 432,
+      "height": 432
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": null,
+    "gender": "female",
+    "voiceTone": "tomboy_warrior",
+    "personality": [
+      "cautious",
+      "strict",
+      "pessimist"
+    ]
+  },
+  {
+    "id": "039",
+    "name": "アルベルト・レオニスⅡ世",
+    "type": "politician",
+    "sprite": {
+      "sheet": "030.webp",
+      "col": 3,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 243.19999999999993,
+      "y": 59.73333333333335,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P023",
+      "isLord": true
+    },
+    "gender": "male",
+    "voiceTone": "fanatic_zealot",
+    "personality": [
+      "pragmatic"
+    ],
+    "isPatriarch": true,
+    "relations": [
+      {
+        "relation": "son",
+        "characterId": "041"
+      }
+    ]
+  },
+  {
+    "id": "040",
+    "name": "キャラクター040",
+    "type": "knight",
+    "sprite": {
+      "sheet": "030.webp",
+      "col": 4,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 268.79999999999995,
+      "y": 0,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P004"
+    },
+    "gender": "female",
+    "voiceTone": "sisterly_veteran",
+    "personality": [
+      "nihilist",
+      "strict",
+      "mentor_spirit"
+    ],
+    "mercenaryInfo": {
+      "name": "",
+      "fee": 1000
+    }
+  },
+  {
+    "id": "041",
+    "name": "ジョン・レオニスⅢ世",
+    "type": "politician",
+    "sprite": {
+      "sheet": "040.webp",
+      "col": 0,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 256,
+      "y": 12.800000000000011,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P023"
+    },
+    "gender": "male",
+    "voiceTone": "noble_male",
+    "personality": [
+      "cautious",
+      "nihilist",
+      "stubborn",
+      "pessimist"
+    ],
+    "relations": [
+      {
+        "relation": "father",
+        "characterId": "039"
+      }
+    ]
+  },
+  {
+    "id": "042",
+    "name": "キャラクター042",
+    "type": "knight",
+    "sprite": {
+      "sheet": "040.webp",
+      "col": 1,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 234.66666666666663,
+      "y": 46.93333333333334,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 16,
+    "intelligence": 30,
+    "leadership": 76,
+    "strength": 79,
+    "charm": 31,
+    "start": {
+      "cityId": "P012"
+    },
+    "gender": "male",
+    "voiceTone": "veteran_soldier",
+    "personality": [
+      "cautious",
+      "mentor_spirit"
+    ],
+    "mercenaryInfo": {
+      "name": "未設定（ドワーフっぽい名前）",
+      "fee": 1000
+    }
+  },
+  {
+    "id": "043",
+    "name": "キャラクター043",
+    "type": "knight",
+    "sprite": {
+      "sheet": "040.webp",
+      "col": 2,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 314.1333333333333,
+      "y": 49.60000000000002,
+      "width": 464,
+      "height": 464
+    },
+    "politics": 22,
+    "intelligence": 38,
+    "leadership": 79,
+    "strength": 77,
+    "charm": 67,
+    "start": {
+      "cityId": "P024",
+      "isLord": true
+    },
+    "gender": "male",
+    "voiceTone": "veteran_soldier",
+    "personality": [
+      "cautious",
+      "loyal",
+      "generous",
+      "mentor_spirit"
+    ]
+  },
+  {
+    "id": "044",
+    "name": "キャラクター044",
+    "type": "knight",
+    "sprite": {
+      "sheet": "040.webp",
+      "col": 3,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 330.66666666666663,
+      "y": 44.80000000000001,
+      "width": 448,
+      "height": 448
+    },
+    "politics": 37,
+    "intelligence": 68,
+    "leadership": 84,
+    "strength": 87,
+    "charm": 78,
+    "start": {
+      "cityId": "P025",
+      "isLord": true
+    },
+    "gender": "male",
+    "voiceTone": "wild_berserker",
+    "personality": [
+      "aggressive",
+      "ambitious",
+      "sociable",
+      "mentor_spirit"
+    ]
+  },
+  {
+    "id": "045",
+    "name": "キャラクター045",
+    "type": "knight",
+    "sprite": {
+      "sheet": "040.webp",
+      "col": 4,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 168,
+      "y": 0,
+      "width": 560,
+      "height": 560
+    },
+    "politics": 64,
+    "intelligence": 73,
+    "leadership": 78,
+    "strength": 71,
+    "charm": 81,
+    "start": {
+      "cityId": "P003",
+      "isLord": true
+    },
+    "gender": "male",
+    "voiceTone": "noble_male",
+    "personality": [
+      "valiant",
+      "devout",
+      "strict"
+    ]
+  },
+  {
+    "id": "046",
+    "name": "キャラクター046",
+    "type": "knight",
+    "sprite": {
+      "sheet": "040.webp",
+      "col": 0,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 234.66666666666674,
+      "y": 0,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 75,
+    "intelligence": 85,
+    "leadership": 73,
+    "strength": 58,
+    "charm": 54,
+    "start": {
+      "cityId": "P004",
+      "isLord": true
+    },
+    "gender": "male",
+    "voiceTone": "noble_male",
+    "personality": [
+      "cautious",
+      "nihilist"
+    ]
+  },
+  {
+    "id": "047",
+    "name": "キャラクター047",
+    "type": "hunter",
+    "sprite": {
+      "sheet": "040.webp",
+      "col": 1,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 248.00000000000006,
+      "y": 149.86666666666667,
+      "width": 400,
+      "height": 400
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P002"
+    },
+    "gender": "female",
+    "voiceTone": "tomboy_warrior",
+    "personality": [
+      "pessimist"
+    ]
+  },
+  {
+    "id": "048",
+    "name": "キャラクター048",
+    "type": "hunter",
+    "sprite": {
+      "sheet": "040.webp",
+      "col": 2,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 296.5333333333333,
+      "y": 57.599999999999966,
+      "width": 448,
+      "height": 448
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P029"
+    },
+    "gender": "female",
+    "voiceTone": "cool_female",
+    "personality": [
+      "strict",
+      "lone_wolf"
+    ]
+  },
+  {
+    "id": "049",
+    "name": "キャラクター049",
+    "type": "hunter",
+    "sprite": {
+      "sheet": "040.webp",
+      "col": 3,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 280,
+      "y": 49.60000000000002,
+      "width": 464,
+      "height": 464
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P027"
+    },
+    "gender": "male",
+    "voiceTone": "wild_berserker",
+    "personality": [
+      "cautious",
+      "generous",
+      "mentor_spirit"
+    ]
+  },
+  {
+    "id": "050",
+    "name": "キャラクター050",
+    "type": "hunter",
+    "sprite": {
+      "sheet": "040.webp",
+      "col": 4,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 232,
+      "y": 0,
+      "width": 560,
+      "height": 560
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P008"
+    },
+    "gender": "female",
+    "voiceTone": "valkyrie_female",
+    "personality": [
+      "cautious",
+      "loyal",
+      "strict",
+      "lone_wolf"
+    ]
   }
 ]
