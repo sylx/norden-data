@@ -124,6 +124,9 @@ input[type='range'] { accent-color: var(--accent); width: 100%; }
 .minimap__totals th, .minimap__totals td { padding: 2px 8px; text-align: right; }
 .minimap__totals th:first-child, .minimap__totals td:first-child { text-align: left; }
 .minimap__totals th { color: var(--muted); font-weight: normal; border-bottom: 1px solid var(--line); }
+.minimap__totals .minimap__group th { border-bottom: none; padding-bottom: 0; text-align: center; }
+.minimap__totals .minimap__sep { border-left: 1px solid var(--line); }
+.minimap__totals .minimap__total td { border-top: 1px solid var(--line); }
 
 /* 騎士データ */
 .character-editor { display: grid; grid-template-columns: 280px 1fr; gap: 12px; height: 100%; padding: 12px; }
