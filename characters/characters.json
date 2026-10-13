@@ -1182,6 +1182,10 @@
       {
         "relation": "son",
         "characterId": "041"
+      },
+      {
+        "relation": "daughter",
+        "characterId": "053"
       }
     ],
     "biography": "レオニス帝国の皇帝。若き日は聡明で寛大な君主と讃えられ、帝国に黄金期を取り戻すと期待された。だが「灰の炉」に触れて以来、人が変わった。語る言葉は預言めいて冷たく、それでいて施策は恐ろしく合理的で、帝国の国力はむしろ以前より増している——それが周囲をいっそう困惑させる。自らを「炉の声を聞く者」と称し、灰座の権威すら意に介さない。息子ヨハン（041）を見る目に、かつての温かさは残っていない。"
@@ -1560,5 +1564,323 @@
       "lone_wolf"
     ],
     "biography": "ティルナの遺物護衛隊に属する射手。エスペラ（010）の部下だが、隊の中でも単独の夜間哨戒ばかりを志願する変わり者。遺跡に忍び込む盗掘者や他家の密偵を、闇の中から何人も射抜いてきた。命令には絶対に従い、規律違反は仲間であっても上に報告するため、隊に親しい者はいない。本人はそれで構わないと思っている。ベアトリス（033）の護衛を命じられたときだけは、なぜか断らなかった。"
+  },
+  {
+    "id": "051",
+    "name": "キャラクター051",
+    "type": "politician",
+    "sprite": {
+      "sheet": "050.webp",
+      "col": 0,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 282.66666666666674,
+      "y": 0,
+      "width": 544,
+      "height": 544
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P022",
+      "isLord": true
+    },
+    "voiceTone": "cool_tactician",
+    "gender": "male",
+    "personality": [
+      "cautious",
+      "loyal",
+      "generous",
+      "pessimist"
+    ]
+  },
+  {
+    "id": "052",
+    "name": "キャラクター052",
+    "type": "scholar",
+    "sprite": {
+      "sheet": "050.webp",
+      "col": 1,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 264.5333333333333,
+      "y": 0,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P022"
+    },
+    "gender": "male",
+    "voiceTone": "cool_tactician",
+    "personality": [
+      "cautious",
+      "devout"
+    ]
+  },
+  {
+    "id": "053",
+    "name": "キャラクター053",
+    "type": "knight",
+    "sprite": {
+      "sheet": "050.webp",
+      "col": 2,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 294.4,
+      "y": 0,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P015"
+    },
+    "gender": "female",
+    "voiceTone": "valkyrie_female",
+    "personality": [
+      "valiant",
+      "loyal",
+      "strict"
+    ],
+    "relations": [
+      {
+        "relation": "father",
+        "characterId": "039"
+      }
+    ]
+  },
+  {
+    "id": "054",
+    "name": "キャラクター054",
+    "type": "knight",
+    "sprite": {
+      "sheet": "050.webp",
+      "col": 3,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 277.33333333333337,
+      "y": 0,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P022"
+    },
+    "gender": "female",
+    "voiceTone": "valkyrie_female",
+    "personality": [
+      "aggressive",
+      "loyal",
+      "stubborn"
+    ]
+  },
+  {
+    "id": "055",
+    "name": "キャラクター055",
+    "type": "knight",
+    "sprite": {
+      "sheet": "050.webp",
+      "col": 4,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 260.26666666666665,
+      "y": 0,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P017"
+    },
+    "gender": "female",
+    "voiceTone": "valkyrie_female",
+    "personality": [
+      "cautious",
+      "loyal",
+      "generous",
+      "mentor_spirit"
+    ]
+  },
+  {
+    "id": "056",
+    "name": "キャラクター056",
+    "type": "knight",
+    "sprite": {
+      "sheet": "050.webp",
+      "col": 0,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 344,
+      "y": 18.666666666666657,
+      "width": 464,
+      "height": 464
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P013",
+      "isLord": true
+    },
+    "gender": "male",
+    "voiceTone": "wild_berserker",
+    "personality": [
+      "nihilist",
+      "sociable"
+    ]
+  },
+  {
+    "id": "057",
+    "name": "キャラクター057",
+    "type": "knight",
+    "sprite": {
+      "sheet": "050.webp",
+      "col": 1,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 236.8,
+      "y": 0,
+      "width": 448,
+      "height": 448
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P014",
+      "isLord": true
+    },
+    "gender": "male",
+    "voiceTone": "cool_tactician",
+    "personality": [
+      "cautious",
+      "ambitious",
+      "arrogant"
+    ]
+  },
+  {
+    "id": "058",
+    "name": "キャラクター058",
+    "type": "knight",
+    "sprite": {
+      "sheet": "050.webp",
+      "col": 2,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 194.13333333333333,
+      "y": 0,
+      "width": 576,
+      "height": 576
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P005"
+    },
+    "gender": "male",
+    "voiceTone": "noble_male",
+    "personality": [
+      "ambitious",
+      "lone_wolf"
+    ]
+  },
+  {
+    "id": "059",
+    "name": "キャラクター059",
+    "type": "knight",
+    "sprite": {
+      "sheet": "050.webp",
+      "col": 3,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 225.06666666666672,
+      "y": 0,
+      "width": 480,
+      "height": 480
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P017"
+    },
+    "gender": "male",
+    "voiceTone": "noble_male",
+    "personality": [
+      "valiant",
+      "loyal",
+      "strict"
+    ]
+  },
+  {
+    "id": "060",
+    "name": "キャラクター060",
+    "type": "knight",
+    "sprite": {
+      "sheet": "050.webp",
+      "col": 4,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 296.53333333333325,
+      "y": 0,
+      "width": 448,
+      "height": 448
+    },
+    "politics": 50,
+    "intelligence": 50,
+    "leadership": 50,
+    "strength": 50,
+    "charm": 50,
+    "start": {
+      "cityId": "P015",
+      "isLord": true
+    },
+    "gender": "male",
+    "voiceTone": "cool_tactician",
+    "personality": [
+      "pragmatic",
+      "sociable"
+    ]
   }
 ]
