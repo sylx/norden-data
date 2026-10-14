@@ -39,7 +39,7 @@ npm run typecheck
 
 元画像（1 枚に 5 人 × 2 行または 3 行、1 人 1024×1536、間に 50px の余白）は大きいのでコミットしない。
 [characters/sheets/](characters/sheets/) に置いて「画像を読み直す」を押す。行数は画像の大きさから決める（5×3 の 15 人、5×2 の 10 人のどちらも読める）。
-今の騎士の `001.webp`・`002.webp` は nordencult-old の `tools/editor/uploads/` にある。
+今の騎士の `001.webp`・`002.webp` は [nordencult-old の tools/editor/uploads/](https://github.com/sylx/nordencult-old/tree/main/tools/editor/uploads) にもある。
 
 キャラクターを選び、元画像のセルをクリックして画像にする。顔の範囲は、枠をドラッグで動かし、外をクリックでそこを中心にし、ホイールで大きさを変える。
 
