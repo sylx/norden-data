@@ -109,8 +109,8 @@ input[type='range'] { accent-color: var(--accent); width: 100%; }
 .city-editor__form { overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
 .city-editor__map { position: relative; min-height: 0; padding: 0; overflow: hidden; }
 
-.minimap { position: relative; width: 100%; height: 100%; background: #12222c; }
-.minimap__svg { width: 100%; height: 100%; display: block; }
+.minimap { display: flex; flex-direction: column; width: 100%; height: 100%; background: #12222c; }
+.minimap__svg { flex: 1; min-height: 0; width: 100%; display: block; }
 .minimap__road { stroke: #6d7b86; stroke-width: 2px; vector-effect: non-scaling-stroke; }
 .minimap__road.is-active { stroke: var(--accent); stroke-width: 3px; }
 .minimap__city { cursor: pointer; }
@@ -120,7 +120,8 @@ input[type='range'] { accent-color: var(--accent); width: 100%; }
 .minimap__halo { fill: none; stroke: var(--accent); stroke-width: 2.5px; vector-effect: non-scaling-stroke; }
 .minimap__label { fill: var(--text); text-anchor: middle; paint-order: stroke; stroke: #12222c; stroke-linejoin: round; pointer-events: none; }
 .minimap__city.is-selected .minimap__label { fill: var(--accent); font-weight: bold; }
-.minimap__totals { position: absolute; right: 8px; bottom: 8px; background: rgb(22 24 29 / 0.85); border: 1px solid var(--line); border-radius: 4px; font-size: 12px; border-collapse: collapse; }
+.minimap__totals-wrap { flex: none; overflow-x: auto; padding: 8px; border-top: 1px solid var(--line); background: var(--panel); }
+.minimap__totals { margin-left: auto; font-size: 12px; border-collapse: collapse; }
 .minimap__totals th, .minimap__totals td { padding: 2px 8px; text-align: right; }
 .minimap__totals th:first-child, .minimap__totals td:first-child { text-align: left; }
 .minimap__totals th { color: var(--muted); font-weight: normal; border-bottom: 1px solid var(--line); }

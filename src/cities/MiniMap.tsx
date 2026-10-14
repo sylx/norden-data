@@ -101,7 +101,7 @@ export function MiniMap({ cities, characters = [], selectedId, onSelect, showTot
           )
         })}
       </svg>
-      {showTotals && <table className="minimap__totals">
+      {showTotals && <div className="minimap__totals-wrap"><table className="minimap__totals">
         <thead>
           <tr className="minimap__group">
             <th colSpan={6} /><th colSpan={CHARACTER_TYPES.length} className="minimap__sep">クラス</th>
@@ -124,7 +124,7 @@ export function MiniMap({ cities, characters = [], selectedId, onSelect, showTot
             </tr>
           ))}
         </tbody>
-      </table>}
+      </table></div>}
     </div>
   )
 }
