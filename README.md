@@ -1,6 +1,6 @@
 # norden-data
 
-nordencult のゲームデータのエディタ。拠点データ・騎士データ・セリフを編集し、ゲーム本体（nordencult）の `src/` に書き出す。React + TypeScript + Vite。
+nordencult のゲームデータのエディタ。拠点データ・騎士データ・施設データ・セリフを編集し、ゲーム本体（nordencult）の `src/` に書き出す。React + TypeScript + Vite。
 読み書きは開発サーバーの Vite プラグイン（[server/dataPlugin.ts](server/dataPlugin.ts)）が行うので、`npm run dev` で使う（ビルドはしない）。
 
 nordencult のサブモジュール（`nordencult/norden-data`）として置き、親ディレクトリをゲーム本体として読み書きする。
@@ -14,11 +14,14 @@ npm run typecheck
 
 ## 拠点データ（`#cities`）
 
-左で拠点を選んで人口・農業・商業・生産・初期の所属などを入力し、「保存」でゲームの `src/data/cityData.json` に直接書く。
+左で拠点を選んで人口・商業・生産・初期の所属などを入力し、「保存」でゲームの `src/data/cityData.json` に直接書く。
 右の地図（`norden-strategy` の拠点の位置 `PLACES` と街道 `ROAD_LINKS` から描く簡易地図）の拠点をクリックしても選べる。
-点の色は所属、大きさは人口。地図の右下は勢力ごとの拠点数・人口・生産の合計。
+点の色は所属、大きさは人口。地図の右下は勢力ごとの拠点数・人口・商業・生産・兵数の合計。
 
-- 「生産」は以前の「軍事」（`military` → `production`）。ゲームでは 1 ターンに出せる兵が 生産 × 5
+- 「生産」は以前の「軍事」（`military` → `production`）。ゲームでは 1 ターンに募兵できる上限が 生産 × 5
+- 人口の下に Tier と施設のスロット数を出す（ゲームの `src/game/economy/balance.ts` の閾値）
+- 「初期の状態」の備蓄・兵数・練度は省略できる。省略中は既定値（備蓄 = 生産 × 2、兵数 = 生産 × 5、練度 = 70）を薄く出し、動かすとその値を持つ。「既定に戻す」で省略に戻す
+- 初期の施設は施設データ（`#buildings`）から選ぶ。Tier や必要なタグが合わない施設、スロットより多い施設も選べるが、注記を出す
 - 地図の描画（町・大都市の描き分けなど）は `norden-strategy` の `CITY_LIST` を使っていて、ここで変えた人口などは反映されない
 
 ## 騎士データ（`#characters`）
@@ -42,6 +45,20 @@ npm run typecheck
 今の騎士の `001.webp`・`002.webp` は [nordencult-old の tools/editor/uploads/](https://github.com/sylx/nordencult-old/tree/main/tools/editor/uploads) にもある。
 
 キャラクターを選び、元画像のセルをクリックして画像にする。顔の範囲は、枠をドラッグで動かし、外をクリックでそこを中心にし、ホイールで大きさを変える。
+
+## 施設データ（`#buildings`）
+
+左で施設を選び、名前・説明・必要な物資と金・建てられる都市（最低の Tier・必要なタグ）・効果を入力し、「保存」でゲームの `src/data/buildingData.json` に直接書く。
+一覧の上で ID（英小文字・数字・`_`）を入れて「追加」。ID は拠点の初期の施設などから参照されるので、後から変えない。
+効果の種類と表示はゲームの `src/data/buildings.ts`（`BUILDING_EFFECT_LABELS`・`describeEffect`）。
+
+### 画像
+
+元画像は [buildings/sources/](buildings/sources/) に置き（大きいのでコミットしない）、「元画像を読み直す」を押す。
+施設ごとに元画像を選び、正方形の範囲を決める（範囲をドラッグで動かし、外をクリックでそこを中心にし、ホイールで大きさを変える）。
+使う元画像と範囲は [buildings/images.json](buildings/images.json) に保存する（コミットする）。
+
+「画像を書き出す」で、保存してから範囲を切り抜いて 256×256 に縮め、ゲームの `src/assets/buildings/<id>.webp` に書き、施設データの `image` を `<id>.webp` にする。
 
 ## セリフ（`#voiceLines`）
 

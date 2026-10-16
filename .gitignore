@@ -5,3 +5,6 @@ dist
 # 騎士の元画像（大きいのでコミットしない。各自で置く）
 characters/sheets/*
 !characters/sheets/.gitkeep
+# 施設の元画像（大きいのでコミットしない。各自で置く）
+buildings/sources/*
+!buildings/sources/.gitkeep

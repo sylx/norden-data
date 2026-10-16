@@ -3,6 +3,7 @@ import { PLACES, ROAD_LINKS } from 'norden-strategy/data'
 import type { City } from '@game/data/city.ts'
 import { CHARACTER_TYPES, CHARACTER_TYPE_LABELS, type CharacterType, type SourceCharacter } from '../characters/types'
 import { FACTIONS, MERCENARY, characterFaction, factionColor } from '../factions'
+import { troopsOf } from './rules'
 
 /** 拠点の位置（norden-strategy の PLACES）と街道（ROAD_LINKS）の簡易地図。拠点をクリックで選ぶ */
 
@@ -34,7 +35,7 @@ export function MiniMap({ cities, characters = [], selectedId, onSelect, showTot
     () => new Set(ROAD_LINKS.filter(([a, b]) => a === selectedId || b === selectedId).flat()),
     [selectedId],
   )
-  // 勢力ごとの拠点数・人口・生産・騎士数（傭兵は別に数える）・クラスごとの人数（傭兵も含む）と、その合計
+  // 勢力ごとの拠点数・人口・商業・生産・兵数・騎士数（傭兵は別に数える）・クラスごとの人数（傭兵も含む）と、その合計
   const totals = useMemo(() => {
     const placed = characters.filter((c) => c.start && byId.has(c.start.cityId))
       .map((c) => ({ factionId: characterFaction(c, (id) => byId.get(id)?.belongTo), mercenary: !!c.mercenaryInfo, type: c.type }))
@@ -50,7 +51,9 @@ export function MiniMap({ cities, characters = [], selectedId, onSelect, showTot
           ...f,
           count: own.length,
           population: sum(own.map((c) => c.population)),
+          market: sum(own.map((c) => c.market)),
           production: sum(own.map((c) => c.production)),
+          troops: sum(own.map(troopsOf)),
           knights: members.filter((c) => !c.mercenary).length,
           mercenaries: members.filter((c) => c.mercenary).length,
           types: countTypes(members),
@@ -62,7 +65,9 @@ export function MiniMap({ cities, characters = [], selectedId, onSelect, showTot
       name: '計',
       count: sum(rows.map((r) => r.count)),
       population: sum(rows.map((r) => r.population)),
+      market: sum(rows.map((r) => r.market)),
       production: sum(rows.map((r) => r.production)),
+      troops: sum(rows.map((r) => r.troops)),
       knights: sum(rows.map((r) => r.knights)),
       mercenaries: sum(rows.map((r) => r.mercenaries)),
       types: Object.fromEntries(CHARACTER_TYPES.map((t) => [t, sum(rows.map((r) => r.types[t]))])) as Record<CharacterType, number>,
@@ -104,10 +109,10 @@ export function MiniMap({ cities, characters = [], selectedId, onSelect, showTot
       {showTotals && <div className="minimap__totals-wrap"><table className="minimap__totals">
         <thead>
           <tr className="minimap__group">
-            <th colSpan={6} /><th colSpan={CHARACTER_TYPES.length} className="minimap__sep">クラス</th>
+            <th colSpan={8} /><th colSpan={CHARACTER_TYPES.length} className="minimap__sep">クラス</th>
           </tr>
           <tr>
-            <th>勢力</th><th>拠点</th><th>人口</th><th>生産</th><th>騎士</th><th>傭兵</th>
+            <th>勢力</th><th>拠点</th><th>人口</th><th>商業</th><th>生産</th><th>兵数</th><th>騎士</th><th>傭兵</th>
             {CHARACTER_TYPES.map((t, i) => <th key={t} className={i === 0 ? 'minimap__sep' : ''}>{CHARACTER_TYPE_LABELS[t]}</th>)}
           </tr>
         </thead>
@@ -117,7 +122,9 @@ export function MiniMap({ cities, characters = [], selectedId, onSelect, showTot
               <td>{r !== totals.total && <span className="swatch" style={{ background: factionColor(r.id) }} />}{r.name}</td>
               <td>{r.count}</td>
               <td>{r.population.toLocaleString()}</td>
+              <td>{r.market.toLocaleString()}</td>
               <td>{r.production.toLocaleString()}</td>
+              <td>{r.troops.toLocaleString()}</td>
               <td>{r.knights}</td>
               <td>{r.mercenaries}</td>
               {CHARACTER_TYPES.map((t, i) => <td key={t} className={i === 0 ? 'minimap__sep' : ''}>{r.types[t] || ''}</td>)}

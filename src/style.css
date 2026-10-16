@@ -222,3 +222,20 @@ input[type='range'] { accent-color: var(--accent); width: 100%; }
   .voice-editor { grid-template-columns: 200px minmax(0, 1fr) 320px; }
 }
 .voice-editor__remove { align-self: flex-end; font-size: 12px; }
+
+/* 省略できる数値（拠点の初期値） */
+.optional-number { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 8px; }
+.optional-number.is-default .number-field__input { color: var(--muted); font-style: italic; }
+.optional-number__reset { font-size: 11px; }
+.form__note { margin: 0 0 0 64px; font-size: 12px; color: var(--muted); }
+.chip--check { display: inline-flex; align-items: center; gap: 4px; }
+.chip--check input { margin: 0; }
+.chip--check.is-on { border-color: var(--accent); }
+.chip--missing { color: var(--danger); }
+
+/* 施設データ */
+.form__hint { margin: 0; font-size: 12px; color: var(--muted); }
+.building-list__image { width: 40px; height: 40px; flex: none; border-radius: 4px; object-fit: cover; display: flex; align-items: center; justify-content: center; }
+.building-previews { display: flex; gap: 12px; align-items: flex-start; }
+.building-preview { border: 1px solid var(--line); border-radius: 4px; }
+.building-effect__value { width: 72px; }

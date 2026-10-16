@@ -11,10 +11,18 @@ export const GAME_ROOT = path.resolve(process.env.NORDEN_ROOT ?? path.join(DATA_
 export const CHARACTERS_FILE = path.join(DATA_DIR, 'characters', 'characters.json')
 export const SHEETS_DIR = path.join(DATA_DIR, 'characters', 'sheets')
 
+/** 施設の元画像と、施設ごとに使う元画像・切り抜く範囲 */
+export const BUILDING_SOURCES_DIR = path.join(DATA_DIR, 'buildings', 'sources')
+export const BUILDING_IMAGES_FILE = path.join(DATA_DIR, 'buildings', 'images.json')
+
 /** ゲームが読む出力先 */
 export const OUTPUT = {
   /** 拠点データ（エディタで直接読み書きする） */
   cities: path.join(GAME_ROOT, 'src', 'data', 'cityData.json'),
+  /** 施設データ（エディタで直接読み書きする） */
+  buildings: path.join(GAME_ROOT, 'src', 'data', 'buildingData.json'),
+  /** 施設の画像（<id>.webp） */
+  buildingImages: path.join(GAME_ROOT, 'src', 'assets', 'buildings'),
   /** セリフ（エディタで直接読み書きする） */
   voiceLines: path.join(GAME_ROOT, 'src', 'data', 'voiceLines.json'),
   characterData: path.join(GAME_ROOT, 'src', 'data', 'characterData.json'),

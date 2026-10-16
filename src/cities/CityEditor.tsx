@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { ROAD_LINKS } from 'norden-strategy/data'
+import type { Building } from '@game/data/buildings.ts'
 import type { City } from '@game/data/city.ts'
 import { api, errorMessage } from '../api'
 import type { SourceCharacter } from '../characters/types'
 import { FACTIONS, characterFaction, factionColor, factionName } from '../factions'
-import { Field, NumberField, SaveStatus, TagsField } from '../fields'
+import { Field, NumberField, OptionalNumberField, SaveStatus, TagsField } from '../fields'
 import { useLeaveGuard } from '../useDirty'
 import { MiniMap } from './MiniMap'
+import { INITIAL_MORALE, INITIAL_SUPPLIES_PER_PRODUCTION, INITIAL_TROOPS_PER_PRODUCTION, slotsOf, tierOf } from './rules'
 
 /** 都市の種別（ゲームの src/scenes/strategy/views.ts の CITY_TYPE_LABELS と同じ） */
 const CITY_TYPES: readonly [string, string][] = [
@@ -27,6 +29,8 @@ export function CityEditor({ active }: { active: boolean }) {
   const [status, setStatus] = useState<{ message?: string; error?: string }>({})
   /** 保存済みの騎士データ（所属騎士の表示だけに使う）。タブを開くたびに読み直す */
   const [characters, setCharacters] = useState<SourceCharacter[]>([])
+  /** 保存済みの施設データ（初期の施設の選択肢）。タブを開くたびに読み直す */
+  const [buildings, setBuildings] = useState<Building[]>([])
 
   const load = useCallback(() => api<City[]>('/api/cities').then(
     (list) => {
@@ -40,6 +44,7 @@ export function CityEditor({ active }: { active: boolean }) {
   useEffect(() => {
     if (!active) return
     api<SourceCharacter[]>('/api/characters').then(setCharacters, (e) => setStatus({ error: errorMessage(e) }))
+    api<Building[]>('/api/buildings').then(setBuildings, (e) => setStatus({ error: errorMessage(e) }))
   }, [active])
 
   const dirty = cities !== null && JSON.stringify(cities) !== savedJson
@@ -64,6 +69,14 @@ export function CityEditor({ active }: { active: boolean }) {
     () => ROAD_LINKS.flatMap(([a, b]) => (a === selectedId ? [b] : b === selectedId ? [a] : [])),
     [selectedId],
   )
+
+  const tier = city ? tierOf(city.population) : 1
+  const slots = slotsOf(tier)
+  const built = city?.buildings ?? []
+  const toggleBuilding = (id: string, on: boolean) => {
+    const next = on ? [...built, id] : built.filter((b) => b !== id)
+    update({ buildings: next.length ? next : undefined })
+  }
 
   const members = characters.filter((c) => c.start?.cityId === selectedId)
   const knights = members.filter((c) => !c.mercenaryInfo)
@@ -125,9 +138,47 @@ export function CityEditor({ active }: { active: boolean }) {
 
             <h3 className="form__heading">数値</h3>
             <NumberField label="人口" value={city.population} max={30000} step={100} onChange={(population) => update({ population })} />
-            <NumberField label="農業" value={city.agriculture} max={1000} step={10} onChange={(agriculture) => update({ agriculture })} />
+            <p className="form__note">Tier {tier}（施設のスロット {slots}）</p>
             <NumberField label="商業" value={city.market} max={1000} step={10} onChange={(market) => update({ market })} />
             <NumberField label="生産" value={city.production} max={1000} step={10} onChange={(production) => update({ production })} />
+
+            <h3 className="form__heading">初期の状態</h3>
+            <OptionalNumberField label="備蓄" value={city.storedSupplies} max={5000} step={10}
+              fallback={city.production * INITIAL_SUPPLIES_PER_PRODUCTION} fallbackNote={`生産 × ${INITIAL_SUPPLIES_PER_PRODUCTION}`}
+              onChange={(storedSupplies) => update({ storedSupplies })} />
+            <OptionalNumberField label="兵数" value={city.troops} max={10000} step={10}
+              fallback={city.production * INITIAL_TROOPS_PER_PRODUCTION} fallbackNote={`生産 × ${INITIAL_TROOPS_PER_PRODUCTION}`}
+              onChange={(troops) => update({ troops })} />
+            <OptionalNumberField label="練度" value={city.troopMorale} max={100}
+              fallback={INITIAL_MORALE} fallbackNote={String(INITIAL_MORALE)}
+              onChange={(troopMorale) => update({ troopMorale })} />
+            <Field label={`施設（${built.length} / ${slots}）`} wide>
+              <ul className="chips">
+                {buildings.map((b) => {
+                  const on = built.includes(b.id)
+                  const why = b.minTier > tier ? `Tier ${b.minTier} 以上`
+                    : b.requiredTags && !b.requiredTags.some((t) => city.tags.includes(t)) ? `${b.requiredTags.join('・')}のみ` : null
+                  return (
+                    <li key={b.id}>
+                      <label className={`chip chip--check ${on ? 'is-on' : ''}`} title={why ?? undefined}>
+                        <input type="checkbox" checked={on} onChange={(e) => toggleBuilding(b.id, e.target.checked)} />
+                        {b.name}
+                        {why && <span className="chip__note">{why}</span>}
+                      </label>
+                    </li>
+                  )
+                })}
+                {built.filter((id) => !buildings.some((b) => b.id === id)).map((id) => (
+                  <li key={id}>
+                    <label className="chip chip--check is-on chip--missing">
+                      <input type="checkbox" checked onChange={() => toggleBuilding(id, false)} />{id}
+                      <span className="chip__note">施設データに無い</span>
+                    </label>
+                  </li>
+                ))}
+              </ul>
+              {built.length > slots && <span className="save-status save-status--error">スロットより多い施設があります</span>}
+            </Field>
 
             <h3 className="form__heading">その他</h3>
             <Field label="特殊" wide>

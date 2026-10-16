@@ -31,6 +31,31 @@ export function NumberField({ label, value, min = 0, max, step = 1, onChange }: 
   )
 }
 
+/**
+ * 省略できる数値。省略中は既定値（fallback）を薄く出し、動かすとその値を持つ。
+ * 「既定」で省略に戻す
+ */
+export function OptionalNumberField({ label, value, fallback, fallbackNote, max, step = 1, onChange }: {
+  label: string
+  value: number | undefined
+  fallback: number
+  /** 既定値の決まり（例: 生産 × 2） */
+  fallbackNote: string
+  max: number
+  step?: number
+  onChange: (value: number | undefined) => void
+}) {
+  return (
+    <div className={`optional-number ${value === undefined ? 'is-default' : ''}`}>
+      <NumberField label={label} value={value ?? fallback} max={max} step={step} onChange={onChange} />
+      <button type="button" className="button optional-number__reset" disabled={value === undefined}
+        title={`既定値（${fallbackNote}）に戻す`} onClick={() => onChange(undefined)}>
+        {value === undefined ? `既定（${fallbackNote}）` : '既定に戻す'}
+      </button>
+    </div>
+  )
+}
+
 /** タグ。Enter か「、」「,」で追加、× で外す */
 export function TagsField({ value, onChange }: { value: readonly string[]; onChange: (tags: string[]) => void }) {
   const [draft, setDraft] = useState('')
