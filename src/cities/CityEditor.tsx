@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { ROAD_LINKS } from 'norden-strategy/data'
-import type { Building } from '@game/data/buildings.ts'
 import type { City } from '@game/data/city.ts'
 import { api, errorMessage } from '../api'
+import type { SourceBuilding } from '../buildings/types'
 import type { SourceCharacter } from '../characters/types'
 import { FACTIONS, characterFaction, factionColor, factionName } from '../factions'
 import { Field, NumberField, OptionalNumberField, SaveStatus, TagsField } from '../fields'
@@ -30,7 +30,7 @@ export function CityEditor({ active }: { active: boolean }) {
   /** 保存済みの騎士データ（所属騎士の表示だけに使う）。タブを開くたびに読み直す */
   const [characters, setCharacters] = useState<SourceCharacter[]>([])
   /** 保存済みの施設データ（初期の施設の選択肢）。タブを開くたびに読み直す */
-  const [buildings, setBuildings] = useState<Building[]>([])
+  const [buildings, setBuildings] = useState<SourceBuilding[]>([])
 
   const load = useCallback(() => api<City[]>('/api/cities').then(
     (list) => {
@@ -44,7 +44,7 @@ export function CityEditor({ active }: { active: boolean }) {
   useEffect(() => {
     if (!active) return
     api<SourceCharacter[]>('/api/characters').then(setCharacters, (e) => setStatus({ error: errorMessage(e) }))
-    api<Building[]>('/api/buildings').then(setBuildings, (e) => setStatus({ error: errorMessage(e) }))
+    api<SourceBuilding[]>('/api/buildings').then(setBuildings, (e) => setStatus({ error: errorMessage(e) }))
   }, [active])
 
   const dirty = cities !== null && JSON.stringify(cities) !== savedJson
@@ -156,8 +156,9 @@ export function CityEditor({ active }: { active: boolean }) {
               <ul className="chips">
                 {buildings.map((b) => {
                   const on = built.includes(b.id)
-                  const why = b.minTier > tier ? `Tier ${b.minTier} 以上`
-                    : b.requiredTags && !b.requiredTags.some((t) => city.tags.includes(t)) ? `${b.requiredTags.join('・')}のみ` : null
+                  const why = b.upgradeFrom && on && built.includes(b.upgradeFrom) ? `${buildings.find((x) => x.id === b.upgradeFrom)?.name ?? b.upgradeFrom}と重複`
+                    : b.requiredTags && !b.requiredTags.some((t) => city.tags.includes(t)) ? `${b.requiredTags.join('・')}のみ`
+                    : b.requiredRelic ? `遺物「${b.requiredRelic}」` : null
                   return (
                     <li key={b.id}>
                       <label className={`chip chip--check ${on ? 'is-on' : ''}`} title={why ?? undefined}>

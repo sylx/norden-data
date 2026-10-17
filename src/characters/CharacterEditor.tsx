@@ -177,7 +177,7 @@ export function CharacterEditor() {
           <div className="character-form">
             <div className="character-form__images panel">
               <h3 className="form__heading">画像</h3>
-              <SpritePicker sheets={sheets} character={character} characters={characters}
+              <SpritePicker sheets={sheets} item={character} items={characters} dir="characters/sheets/"
                 onPick={(sprite) => update({ sprite })} />
               {sheet && character.sprite && (
                 <>

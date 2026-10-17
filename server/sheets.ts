@@ -1,10 +1,12 @@
 import { readdir } from 'node:fs/promises'
 import path from 'node:path'
 import sharp from 'sharp'
-import type { SheetInfo } from '../src/characters/types.ts'
-import { SHEETS_DIR } from './paths.ts'
+import { cellOrigin, type SheetInfo } from '../src/characters/types.ts'
 
-/** 元画像は横 5 人、セルの間に 50px の余白。行数（以前は 3、最近は 2）は画像の大きさから決める */
+/**
+ * 元画像（騎士は characters/sheets/、施設は buildings/sources/）は横 5 セル、セルの間に 50px の余白。
+ * 行数（騎士は 3 か 2、施設は 4）は画像の大きさから決める
+ */
 const SHEET_COLS = 5
 const SHEET_PADDING = 50
 const MAX_ROWS = 6
@@ -29,18 +31,50 @@ export function detectLayout(file: string, width: number, height: number): Sheet
   return best!
 }
 
-export async function readSheet(file: string): Promise<SheetInfo> {
-  const { width, height } = await sharp(path.join(SHEETS_DIR, file)).metadata()
+export async function readSheet(dir: string, file: string): Promise<SheetInfo> {
+  const { width, height } = await sharp(path.join(dir, file)).metadata()
   if (!width || !height) throw new Error(`画像の大きさが読めません: ${file}`)
   return detectLayout(file, width, height)
 }
 
-export async function listSheets(): Promise<SheetInfo[]> {
+export async function listSheets(dir: string): Promise<SheetInfo[]> {
   let files: string[]
   try {
-    files = (await readdir(SHEETS_DIR)).filter(isSheetFileName).sort()
+    files = (await readdir(dir)).filter(isSheetFileName).sort()
   } catch {
     return []
   }
-  return Promise.all(files.map(readSheet))
+  return Promise.all(files.map((file) => readSheet(dir, file)))
+}
+
+/**
+ * 使うセルを切り出して縮め、横 cols 個ずつ詰めて並べ直した 1 枚にする。
+ * 元画像は 1 枚ずつ読む。返す位置は cells と同じ順の、書き出す画像の上のピクセル
+ */
+export async function packCells(dir: string, sheets: ReadonlyMap<string, SheetInfo>, cells: readonly { sheet: string; col: number; row: number }[],
+  out: { cellWidth: number; cellHeight: number; cols: number; quality: number }): Promise<{ image: Buffer; width: number; height: number; positions: { x: number; y: number }[] }> {
+  const positions = cells.map((_, i) => ({ x: (i % out.cols) * out.cellWidth, y: Math.floor(i / out.cols) * out.cellHeight }))
+  const layers: { input: Buffer; left: number; top: number }[] = []
+  for (const file of new Set(cells.map((c) => c.sheet))) {
+    const sheet = sheets.get(file)!
+    const raw = await sharp(path.join(dir, file)).ensureAlpha().raw().toBuffer({ resolveWithObject: true })
+    for (const [i, cell] of cells.entries()) {
+      if (cell.sheet !== file) continue
+      const origin = cellOrigin(sheet, cell.col, cell.row)
+      const input = await sharp(raw.data, { raw: { width: raw.info.width, height: raw.info.height, channels: 4 } })
+        .extract({ left: Math.round(origin.x), top: Math.round(origin.y), width: Math.round(sheet.cellWidth), height: Math.round(sheet.cellHeight) })
+        .resize(out.cellWidth, out.cellHeight, { fit: 'fill' })
+        .png()
+        .toBuffer()
+      layers.push({ input, left: positions[i].x, top: positions[i].y })
+    }
+  }
+  const width = out.cellWidth * out.cols
+  // セルが無くても 1 行分の空の画像にする（ゲームが常に読めるように）
+  const height = out.cellHeight * Math.max(1, Math.ceil(cells.length / out.cols))
+  const image = await sharp({ create: { width, height, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
+    .composite(layers)
+    .webp({ quality: out.quality, effort: 6 })
+    .toBuffer()
+  return { image, width, height, positions }
 }

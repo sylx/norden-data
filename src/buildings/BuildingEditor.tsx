@@ -1,75 +1,99 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
-  BUILDING_EFFECT_LABELS, describeEffect, type Building, type BuildingEffect, type BuildingEffectKind, type CityTier,
+  BUILDING_EFFECT_LABELS, describeEffect, type BuildingEffect, type BuildingEffectKind,
 } from '@game/data/buildings.ts'
 import { api, errorMessage } from '../api'
 import { Field, NumberField, SaveStatus, TagsField } from '../fields'
 import { useLeaveGuard } from '../useDirty'
-import { CropPreview, SquareCropEditor } from './SquareCropEditor'
-import { defaultCrop, type BuildingImageSettings, type BuildingSource } from './types'
+import { SheetCrop } from '../characters/SheetCrop'
+import { SpritePicker } from '../characters/SpritePicker'
+import { cellRect, type SheetInfo } from '../characters/types'
+import { createBuilding, isBuildingId, upgradeCycle, type SourceBuilding } from './types'
 
 const EFFECT_KINDS = Object.keys(BUILDING_EFFECT_LABELS) as BuildingEffectKind[]
-const TIERS: readonly CityTier[] = [1, 2, 3]
-const TIER_LABELS: Readonly<Record<CityTier, string>> = { 1: 'Tier 1（どこでも）', 2: 'Tier 2 以上', 3: 'Tier 3 以上' }
 
-const effectOf = (kind: BuildingEffectKind, value = 10): BuildingEffect =>
-  kind === 'mercenary' ? { kind } : { kind, value }
+/** 効果の値の入力の範囲と刻み（ないものは割合などで、範囲を決めない） */
+const EFFECT_INPUTS: Partial<Record<BuildingEffectKind, { min: number; max: number; step: number }>> = {
+  tradeRoutes: { min: 1, max: 6, step: 1 },
+}
+const clampEffect = (kind: BuildingEffectKind, value: number) => {
+  const input = EFFECT_INPUTS[kind]
+  return input ? Math.min(input.max, Math.max(input.min, Math.round(value))) : value
+}
 
-const newBuilding = (id: string): Building => ({
-  id, name: id, description: '', supplies: 300, gold: 100, minTier: 1, effects: [],
-})
+/** 種類を kind に変えた効果。前の値は引き継げるときだけ引き継ぐ（その他はテキスト、ほかは数） */
+function withKind(effect: BuildingEffect, kind: BuildingEffectKind): BuildingEffect {
+  if (kind === 'etc') return { kind, value: effect.kind === 'etc' ? effect.value : '' }
+  return { kind, value: clampEffect(kind, effect.kind === 'etc' ? 10 : effect.value) }
+}
 
-/** GET /api/building-images */
-interface ImageData {
-  sources: BuildingSource[]
-  settings: BuildingImageSettings
+/** server/exportBuildings.ts の ExportResult */
+interface ExportResult {
+  buildingCount: number
+  noImage: { id: string; name: string }[]
+  imageSize: string
+  imageBytes: number
+  files: string[]
+}
+
+/** 施設の画像。square は幅に合わせて上下を切った正方形（一覧の小さい画像） */
+function BuildingThumb({ building, sheets, width, square, className = '' }: {
+  building: SourceBuilding
+  sheets: ReadonlyMap<string, SheetInfo>
+  width: number
+  square?: boolean
+  className?: string
+}) {
+  const sheet = building.sprite && sheets.get(building.sprite.sheet)
+  if (!sheet || !building.sprite) {
+    return <div className={`sheet-crop sheet-crop--empty ${className}`} style={{ width, height: square ? width : width * 1.5 }}>?</div>
+  }
+  const cell = cellRect(sheet, building.sprite.col, building.sprite.row)
+  const rect = square ? { ...cell, y: cell.y + (cell.height - cell.width) / 2, height: cell.width } : cell
+  return <SheetCrop sheet={sheet} rect={rect} width={width} base="/building-sheets" className={className} />
 }
 
 /**
- * 施設データ（ルートの src/data/buildingData.json）を直接読み書きする。左に一覧、右に画像と入力。
- * 画像は buildings/sources/ の元画像から正方形を切り抜き、ゲームの src/assets/buildings/<id>.webp に書き出す
+ * 施設データの元データ（buildings/buildings.json）を編集し、ゲームのデータに書き出す。左に一覧、右に画像と入力。
+ * 画像は buildings/sources/ の元画像（横 5 × 縦 4）のセルを選び、書き出しで buildings.webp に並べ直す
  */
 export function BuildingEditor() {
-  const [buildings, setBuildings] = useState<Building[] | null>(null)
-  const [settings, setSettings] = useState<BuildingImageSettings>({})
-  const [sources, setSources] = useState<BuildingSource[]>([])
+  const [buildings, setBuildings] = useState<SourceBuilding[] | null>(null)
+  const [sheets, setSheets] = useState<SheetInfo[]>([])
   const [savedJson, setSavedJson] = useState('')
   const [selectedId, setSelectedId] = useState('')
   const [newId, setNewId] = useState('')
   const [status, setStatus] = useState<{ message?: string; error?: string }>({})
+  const [exported, setExported] = useState<ExportResult | null>(null)
   const [busy, setBusy] = useState(false)
-  /** 書き出した画像を読み直させる */
-  const [imageVersion, setImageVersion] = useState(() => Date.now())
 
-  const snapshot = (list: Building[] | null, images: BuildingImageSettings) => JSON.stringify([list, images])
-
-  const loadSources = useCallback(() => api<ImageData>('/api/building-images').then(
-    (data) => setSources(data.sources),
+  const loadSheets = useCallback(() => api<SheetInfo[]>('/api/building-sheets').then(
+    setSheets,
     (e) => setStatus({ error: errorMessage(e) }),
   ), [])
 
-  const load = useCallback(() => Promise.all([api<Building[]>('/api/buildings'), api<ImageData>('/api/building-images')]).then(
-    ([list, images]) => {
+  const load = useCallback(() => api<SourceBuilding[]>('/api/buildings').then(
+    (list) => {
       setBuildings(list)
-      setSettings(images.settings)
-      setSources(images.sources)
-      setSavedJson(snapshot(list, images.settings))
+      setSavedJson(JSON.stringify(list))
       setSelectedId((id) => (list.some((b) => b.id === id) ? id : list[0]?.id ?? ''))
       setStatus({})
     },
     (e) => setStatus({ error: errorMessage(e) }),
   ), [])
-  useEffect(() => { load() }, [load])
+  useEffect(() => { load(); loadSheets() }, [load, loadSheets])
 
-  const dirty = buildings !== null && snapshot(buildings, settings) !== savedJson
+  const dirty = buildings !== null && JSON.stringify(buildings) !== savedJson
   useLeaveGuard(dirty)
 
-  const save = async (list = buildings, images = settings) => {
+  const sheetMap = useMemo(() => new Map(sheets.map((s) => [s.file, s])), [sheets])
+  const nameOf = (id: string) => buildings?.find((b) => b.id === id)?.name ?? id
+
+  const save = async (list = buildings) => {
     if (!list) return false
     try {
       await api('/api/buildings', { method: 'PUT', body: list })
-      await api('/api/building-images', { method: 'PUT', body: images })
-      setSavedJson(snapshot(list, images))
+      setSavedJson(JSON.stringify(list))
       setStatus({ message: `保存しました（${new Date().toLocaleTimeString()}）` })
       return true
     } catch (e) {
@@ -78,53 +102,15 @@ export function BuildingEditor() {
     }
   }
 
-  const building = buildings?.find((b) => b.id === selectedId)
-  const update = (patch: Partial<Building>) =>
-    setBuildings((list) => list && list.map((b) => (b.id === selectedId ? { ...b, ...patch } : b)))
-  const setEffects = (effects: BuildingEffect[]) => update({ effects })
-
-  const setting = building ? settings[building.id] : undefined
-  const source = useMemo(() => sources.find((s) => s.file === setting?.file), [sources, setting])
-  const setSetting = (next: BuildingImageSettings[string] | undefined) => {
-    if (!building) return
-    setSettings((all) => {
-      const { [building.id]: _, ...rest } = all
-      return next ? { ...rest, [building.id]: next } : rest
-    })
-  }
-
-  const idProblem = (() => {
-    if (!newId) return null
-    if (!/^[a-z][a-z0-9_]*$/.test(newId)) return 'ID は英小文字で始め、英小文字・数字・_ にしてください'
-    if (buildings?.some((b) => b.id === newId)) return 'その ID はもうあります'
-    return null
-  })()
-
-  const add = () => {
-    if (!newId || idProblem) return
-    setBuildings((list) => list && [...list, newBuilding(newId)])
-    setSelectedId(newId)
-    setNewId('')
-  }
-
-  const remove = () => {
-    if (!building || !confirm(`${building.name}（${building.id}）を削除しますか？ 拠点の初期の施設に入っていれば、そこにも残ります`)) return
-    setBuildings((list) => list && list.filter((b) => b.id !== building.id))
-    setSetting(undefined)
-    setSelectedId(buildings?.find((b) => b.id !== building.id)?.id ?? '')
-  }
-
-  /** 保存してから画像を書き出し、施設の image を <id>.webp にする */
-  const exportImage = async () => {
-    if (!building || !buildings) return
+  const exportToGame = async () => {
     setBusy(true)
-    const list = buildings.map((b) => (b.id === building.id ? { ...b, image: `${b.id}.webp` } : b))
-    setBuildings(list)
+    setExported(null)
     try {
-      if (!await save(list)) return
-      const result = await api<{ file: string; bytes: number }>('/api/building-images/export', { method: 'POST', body: { id: building.id } })
-      setImageVersion(Date.now())
-      setStatus({ message: `書き出しました: ${result.file}（${(result.bytes / 1024).toFixed(0)} KB）` })
+      if (dirty && !(await save())) return
+      setStatus({ message: '書き出し中…' })
+      const result = await api<ExportResult>('/api/buildings/export', { method: 'POST' })
+      setExported(result)
+      setStatus({ message: `書き出しました（${new Date().toLocaleTimeString()}）` })
     } catch (e) {
       setStatus({ error: errorMessage(e) })
     } finally {
@@ -132,7 +118,45 @@ export function BuildingEditor() {
     }
   }
 
+  const building = buildings?.find((b) => b.id === selectedId)
+  const update = (patch: Partial<SourceBuilding>) =>
+    setBuildings((list) => list && list.map((b) => (b.id === selectedId ? { ...b, ...patch } : b)))
+  const setEffects = (effects: BuildingEffect[]) => update({ effects })
+
+  const idProblem = (() => {
+    if (!newId) return null
+    if (!isBuildingId(newId)) return 'ID は英小文字で始め、英小文字・数字・_ にしてください'
+    if (buildings?.some((b) => b.id === newId)) return 'その ID はもうあります'
+    return null
+  })()
+
+  const add = () => {
+    if (!newId || idProblem) return
+    setBuildings((list) => list && [...list, createBuilding(newId)])
+    setSelectedId(newId)
+    setNewId('')
+  }
+
+  /** 削除した施設をアップグレード元にしていた施設は、アップグレードでなくなる */
+  const remove = () => {
+    if (!buildings || !building) return
+    const upgrades = buildings.filter((b) => b.upgradeFrom === building.id)
+    const note = upgrades.length ? `\n${upgrades.map((b) => b.name).join('・')}のアップグレード元からも外します。` : ''
+    if (!confirm(`${building.name}（${building.id}）を削除しますか？${note}\n拠点の初期の施設に入っていれば、そこには残ります`)) return
+    const rest = buildings.filter((b) => b.id !== building.id)
+      .map((b) => (b.upgradeFrom === building.id ? { ...b, upgradeFrom: undefined } : b))
+    setBuildings(rest)
+    setSelectedId(rest[0]?.id ?? '')
+  }
+
   if (!buildings) return <div className="loading">{status.error ?? '読み込み中…'}</div>
+
+  /** アップグレード元に選べる施設（自分と、選ぶと循環するものを除く） */
+  const upgradeSources = building
+    ? buildings.filter((b) => b.id !== building.id
+      && !upgradeCycle(buildings.map((x) => (x.id === building.id ? { ...x, upgradeFrom: b.id } : x)), building.id))
+    : []
+  const upgradesTo = building ? buildings.filter((b) => b.upgradeFrom === building.id) : []
 
   return (
     <div className="character-editor">
@@ -148,12 +172,18 @@ export function BuildingEditor() {
             <li key={b.id}>
               <button type="button" className={`character-list__item ${b.id === selectedId ? 'is-selected' : ''}`}
                 onClick={() => setSelectedId(b.id)}>
-                {b.image
-                  ? <img className="building-list__image" src={`/building-images/${b.image}?v=${imageVersion}`} alt="" />
-                  : <span className="building-list__image sheet-crop--empty">?</span>}
+                <BuildingThumb building={b} sheets={sheetMap} width={40} square className="building-list__image" />
                 <span className="character-list__text">
                   <span className="character-list__name">{b.name}</span>
-                  <span className="character-list__sub">{b.id} / Tier {b.minTier} / {b.effects.map(describeEffect).join('・') || '効果なし'}</span>
+                  <span className="character-list__sub">
+                    {[
+                      b.id,
+                      b.requiredTags?.length && b.requiredTags.join('・'),
+                      b.upgradeFrom && `${nameOf(b.upgradeFrom)}から`,
+                      b.requiredRelic && `遺物「${b.requiredRelic}」`,
+                      b.effects.map(describeEffect).join('・') || '効果なし',
+                    ].filter(Boolean).join(' / ')}
+                  </span>
                 </span>
               </button>
             </li>
@@ -166,47 +196,27 @@ export function BuildingEditor() {
           <button type="button" className="button button--primary" disabled={!dirty || busy} onClick={() => save()}>保存</button>
           <button type="button" className="button" disabled={!dirty || busy}
             onClick={() => { if (confirm('保存していない変更を捨てて読み込み直しますか？')) load() }}>元に戻す</button>
-          <button type="button" className="button" onClick={loadSources}>元画像を読み直す</button>
+          <button type="button" className="button button--accent" disabled={busy} onClick={exportToGame}
+            title="保存してから、ゲームの buildingData.json・buildingSprite.json・buildings.webp に書き出す">ゲームに書き出す</button>
+          <button type="button" className="button" onClick={loadSheets}>画像を読み直す</button>
           <SaveStatus dirty={dirty} {...status} />
         </div>
+
+        {exported && (
+          <div className="notice notice--ok">
+            {exported.buildingCount}件を書き出しました（{exported.imageSize}、{(exported.imageBytes / 1024).toFixed(0)} KB）
+            {exported.noImage.length > 0 && <div>画像が未設定: {exported.noImage.map((b) => `${b.id} ${b.name}`).join('、')}</div>}
+            <ul className="notice__files">{exported.files.map((f) => <li key={f}>{f}</li>)}</ul>
+          </div>
+        )}
 
         {building && (
           <div className="character-form">
             <div className="character-form__images panel">
               <h3 className="form__heading">画像</h3>
-              <Field label="元画像（norden-data/buildings/sources/）">
-                <select value={setting?.file ?? ''} onChange={(e) => {
-                  const next = sources.find((s) => s.file === e.target.value)
-                  setSetting(next && { file: next.file, crop: defaultCrop(next) })
-                }}>
-                  <option value="">なし</option>
-                  {setting && !source && <option value={setting.file}>{setting.file}（見つかりません）</option>}
-                  {sources.map((s) => <option key={s.file} value={s.file}>{s.file}（{s.width}×{s.height}）</option>)}
-                </select>
-              </Field>
-              {sources.length === 0 && <p className="form__hint">元画像を buildings/sources/ に置いて「元画像を読み直す」を押してください</p>}
-              {source && setting && (
-                <>
-                  <SquareCropEditor source={source} crop={setting.crop} onChange={(crop) => setSetting({ ...setting, crop })} />
-                  <div className="building-previews">
-                    <CropPreview source={source} crop={setting.crop} width={128} className="building-preview" />
-                    <CropPreview source={source} crop={setting.crop} width={64} className="building-preview" />
-                  </div>
-                  <button type="button" className="button button--accent" disabled={busy} onClick={exportImage}
-                    title={`保存してから、ゲームの src/assets/buildings/${building.id}.webp に書き出す`}>画像を書き出す</button>
-                </>
-              )}
-              <h3 className="form__heading">ゲームの画像</h3>
-              {building.image ? (
-                <div className="building-previews">
-                  <img className="building-preview" src={`/building-images/${building.image}?v=${imageVersion}`} width={128} height={128} alt="" />
-                  <div className="form">
-                    <span className="form__hint">src/assets/buildings/{building.image}</span>
-                    <button type="button" className="button" onClick={() => update({ image: undefined })}
-                      title="施設データから画像を外す（ファイルは残る）">画像を外す</button>
-                  </div>
-                </div>
-              ) : <p className="form__hint">未設定</p>}
+              <SpritePicker sheets={sheets} item={building} items={buildings} base="/building-sheets" dir="buildings/sources/"
+                onPick={(sprite) => update({ sprite })} />
+              {building.sprite && <BuildingThumb building={building} sheets={sheetMap} width={128} className="building-preview" />}
             </div>
 
             <div className="character-form__data panel form">
@@ -217,19 +227,36 @@ export function BuildingEditor() {
 
               <div className="form__grid">
                 <Field label="名前"><input value={building.name} onChange={(e) => update({ name: e.target.value })} /></Field>
-                <Field label="建てられる都市">
-                  <select value={building.minTier} onChange={(e) => update({ minTier: Number(e.target.value) as CityTier })}>
-                    {TIERS.map((t) => <option key={t} value={t}>{TIER_LABELS[t]}</option>)}
+                <Field label="アップグレード元">
+                  <select value={building.upgradeFrom ?? ''} onChange={(e) => update({ upgradeFrom: e.target.value || undefined })}>
+                    <option value="">なし（空きスロットに建てる）</option>
+                    {building.upgradeFrom && !buildings.some((b) => b.id === building.upgradeFrom) && (
+                      <option value={building.upgradeFrom}>{building.upgradeFrom}（見つかりません）</option>
+                    )}
+                    {upgradeSources.map((b) => <option key={b.id} value={b.id}>{b.name}（{b.id}）</option>)}
                   </select>
+                </Field>
+                <Field label="必要な遺物">
+                  <input value={building.requiredRelic ?? ''} placeholder="なし"
+                    onChange={(e) => update({ requiredRelic: e.target.value || undefined })} />
                 </Field>
                 <Field label="必要なタグ（どれか）" wide>
                   <TagsField value={building.requiredTags ?? []}
                     onChange={(tags) => update({ requiredTags: tags.length ? tags : undefined })} />
                 </Field>
-                <Field label="説明" wide>
+                <Field label="説明（フレーバーテキスト）" wide>
                   <textarea rows={3} value={building.description} onChange={(e) => update({ description: e.target.value })} />
                 </Field>
               </div>
+              {building.upgradeFrom && (
+                <p className="form__hint">{nameOf(building.upgradeFrom)}が建っている都市で、その上に建てる（スロットは増えない）</p>
+              )}
+              {building.requiredRelic && (
+                <p className="form__hint">遺物の所持はまだゲームに無いので、今は建てられない</p>
+              )}
+              {upgradesTo.length > 0 && (
+                <p className="form__hint">アップグレード先: {upgradesTo.map((b) => b.name).join('・')}</p>
+              )}
 
               <h3 className="form__heading">費用</h3>
               <NumberField label="物資" value={building.supplies} max={3000} step={10} onChange={(supplies) => update({ supplies })} />
@@ -239,20 +266,26 @@ export function BuildingEditor() {
               {building.effects.map((effect, i) => (
                 <div key={i} className="relation">
                   <select value={effect.kind} onChange={(e) => setEffects(building.effects.map((ef, j) => (
-                    j === i ? effectOf(e.target.value as BuildingEffectKind, 'value' in ef ? ef.value : undefined) : ef)))}>
+                    j === i ? withKind(ef, e.target.value as BuildingEffectKind) : ef)))}>
                     {EFFECT_KINDS.map((k) => <option key={k} value={k}>{BUILDING_EFFECT_LABELS[k]}</option>)}
                   </select>
-                  {'value' in effect && (
-                    <input type="number" className="number-field__input building-effect__value" value={effect.value} step={5}
-                      onChange={(e) => setEffects(building.effects.map((ef, j) => (
-                        j === i ? { ...effect, value: e.target.value === '' ? 0 : Number(e.target.value) } : ef)))} />
+                  {effect.kind === 'etc' ? (
+                    <input className="relation__target" value={effect.value} placeholder="ゲームではまだ表せない効果"
+                      onChange={(e) => setEffects(building.effects.map((ef, j) => (j === i ? { ...effect, value: e.target.value } : ef)))} />
+                  ) : (
+                    <>
+                      <input type="number" className="number-field__input building-effect__value" value={effect.value}
+                        min={EFFECT_INPUTS[effect.kind]?.min} max={EFFECT_INPUTS[effect.kind]?.max} step={EFFECT_INPUTS[effect.kind]?.step ?? 5}
+                        onChange={(e) => setEffects(building.effects.map((ef, j) => (
+                          j === i ? { ...effect, value: clampEffect(effect.kind, e.target.value === '' ? 0 : Number(e.target.value)) } : ef)))} />
+                      <span className="relation__target form__hint">{describeEffect(effect)}</span>
+                    </>
                   )}
-                  <span className="relation__target form__hint">{describeEffect(effect)}</span>
                   <button type="button" className="button" aria-label="効果を外す"
                     onClick={() => setEffects(building.effects.filter((_, j) => j !== i))}>×</button>
                 </div>
               ))}
-              <button type="button" className="button" onClick={() => setEffects([...building.effects, effectOf('marketPct')])}>
+              <button type="button" className="button" onClick={() => setEffects([...building.effects, { kind: 'marketPct', value: 10 }])}>
                 ＋ 効果を追加
               </button>
             </div>

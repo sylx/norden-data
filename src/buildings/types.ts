@@ -1,30 +1,34 @@
-/** 施設の画像の元データ（buildings/images.json）と元画像（buildings/sources/） */
+/** 施設データの元データ（buildings/buildings.json）。サーバー（書き出し）とエディタの両方で使う */
 
-/** buildings/sources/ の元画像 */
-export interface BuildingSource {
-  file: string
-  width: number
-  height: number
+import type { Building } from '@game/data/buildings.ts'
+
+/** 元画像（buildings/sources/）のどのセルか */
+export interface SheetCell {
+  sheet: string
+  col: number
+  row: number
 }
 
-/** 正方形の範囲（元画像のピクセル） */
-export interface SquareCrop {
-  x: number
-  y: number
-  size: number
+/** ゲームの施設データの sprite（buildings.webp の位置）の代わりに、元画像のセルを持つ */
+export type SourceBuilding = Omit<Building, 'sprite'> & {
+  /** null: 画像なし */
+  sprite: SheetCell | null
 }
 
-/** 施設の画像に使う元画像と、切り抜く範囲 */
-export interface BuildingImageSetting {
-  file: string
-  crop: SquareCrop
-}
+export const isBuildingId = (id: string) => /^[a-z][a-z0-9_]*$/.test(id)
 
-/** 施設の ID → 画像の設定 */
-export type BuildingImageSettings = Record<string, BuildingImageSetting>
+export const createBuilding = (id: string): SourceBuilding => ({
+  id, name: id, description: '', supplies: 300, gold: 100, effects: [], sprite: null,
+})
 
-/** 元画像全体に収まる一番大きい正方形を中央に */
-export function defaultCrop(source: BuildingSource): SquareCrop {
-  const size = Math.min(source.width, source.height)
-  return { x: Math.round((source.width - size) / 2), y: Math.round((source.height - size) / 2), size }
+/** アップグレードをたどると id に戻る（循環する）なら、その並び */
+export function upgradeCycle(buildings: readonly SourceBuilding[], id: string): string[] | null {
+  const map = new Map(buildings.map((b) => [b.id, b]))
+  const path = [id]
+  for (let next = map.get(id)?.upgradeFrom; next; next = map.get(next)?.upgradeFrom) {
+    if (next === id) return [...path, id]
+    if (path.includes(next)) return null
+    path.push(next)
+  }
+  return null
 }

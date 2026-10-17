@@ -1,0 +1,568 @@
+[
+  {
+    "id": "drill",
+    "name": "練兵場",
+    "description": "踏み固めた土の広場に、朝から号令と木剣の打ち合う音が響く。",
+    "supplies": 600,
+    "gold": 150,
+    "effects": [
+      {
+        "kind": "trainingPct",
+        "value": 10
+      },
+      {
+        "kind": "recruitMorale",
+        "value": 5
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 0,
+      "row": 0
+    }
+  },
+  {
+    "id": "market",
+    "name": "市場",
+    "description": "週に一度、近在の農家が荷車を連ねてやって来る。値切る声が町の目覚ましだ。",
+    "supplies": 400,
+    "gold": 100,
+    "effects": [
+      {
+        "kind": "marketPct",
+        "value": 5
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 1,
+      "row": 0
+    }
+  },
+  {
+    "id": "grand_market",
+    "name": "大市場",
+    "description": "屋根付きの通りに常設の店が並び、遠い土地の言葉も聞こえはじめる。",
+    "supplies": 1000,
+    "gold": 250,
+    "effects": [
+      {
+        "kind": "marketPct",
+        "value": 10
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 2,
+      "row": 0
+    },
+    "upgradeFrom": "market"
+  },
+  {
+    "id": "comprehensive_market",
+    "name": "総合市場",
+    "description": "穀物から宝飾まで、ここで手に入らぬものは無いと商人たちは言う。値は帳場で決まり、噂は路地で決まる。",
+    "supplies": 2000,
+    "gold": 500,
+    "effects": [
+      {
+        "kind": "marketPct",
+        "value": 20
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 3,
+      "row": 0
+    },
+    "upgradeFrom": "grand_market"
+  },
+  {
+    "id": "workshop",
+    "name": "工房",
+    "description": "親方と徒弟が一つ屋根の下で鎚を振るう。町の道具はたいていここで生まれる。",
+    "supplies": 400,
+    "gold": 120,
+    "effects": [
+      {
+        "kind": "productionPct",
+        "value": 5
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 4,
+      "row": 0
+    }
+  },
+  {
+    "id": "artisans_quarter",
+    "name": "職人街",
+    "description": "鍛冶、皮革、織物。煙と槌音の絶えない一角に、組合の旗が軒を連ねる。",
+    "supplies": 1000,
+    "gold": 280,
+    "effects": [
+      {
+        "kind": "productionPct",
+        "value": 10
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 0,
+      "row": 1
+    },
+    "upgradeFrom": "workshop"
+  },
+  {
+    "id": "factory",
+    "name": "工場",
+    "description": "水車と歯車が人の手を何十倍にもする。旧帝国の図面を読み解いた者がいたらしい。",
+    "supplies": 2000,
+    "gold": 550,
+    "effects": [
+      {
+        "kind": "productionPct",
+        "value": 20
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 1,
+      "row": 1
+    },
+    "upgradeFrom": "artisans_quarter"
+  },
+  {
+    "id": "port",
+    "name": "港",
+    "description": "潮の香りと積み荷の掛け声。船乗りたちは見知らぬ港の話を酒代がわりに置いていく。",
+    "supplies": 700,
+    "gold": 200,
+    "effects": [
+      {
+        "kind": "marketPct",
+        "value": 5
+      },
+      {
+        "kind": "tradeRoutes",
+        "value": 2
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 2,
+      "row": 1
+    },
+    "requiredTags": [
+      "港湾"
+    ]
+  },
+  {
+    "id": "trading_post",
+    "name": "交易所",
+    "description": "隊商が荷を解き、帳簿と秤で取引を結ぶ。街道の先の町々と、ここで細い糸がつながる。",
+    "supplies": 600,
+    "gold": 180,
+    "effects": [
+      {
+        "kind": "marketPct",
+        "value": 5
+      },
+      {
+        "kind": "tradeRoutes",
+        "value": 1
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 3,
+      "row": 1
+    }
+  },
+  {
+    "id": "grand_trade_hub",
+    "name": "交易ハブ",
+    "description": "各地の商会が支店を構え、為替一枚で遠い町の倉が動く。大陸の物の流れが、この建物を通っていく。",
+    "supplies": 1500,
+    "gold": 400,
+    "effects": [
+      {
+        "kind": "marketPct",
+        "value": 6
+      },
+      {
+        "kind": "tradeRoutes",
+        "value": 3
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 4,
+      "row": 1
+    },
+    "upgradeFrom": "trading_post"
+  },
+  {
+    "id": "witchs_cottage",
+    "name": "魔女の家",
+    "description": "町外れの小屋に薬草が吊るされている。人々は陰口を叩きながらも、熱が出ればこの戸を叩く。",
+    "supplies": 400,
+    "gold": 150,
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "魔術関連研究施設"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 0,
+      "row": 2
+    }
+  },
+  {
+    "id": "mage_academy",
+    "name": "魔術学院",
+    "description": "術を秘伝から学問へ。疎まれてきた者たちが、ここでは机を並べて師を持つ。",
+    "supplies": 1100,
+    "gold": 350,
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "魔術関連研究施設"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 1,
+      "row": 2
+    },
+    "upgradeFrom": "witchs_cottage"
+  },
+  {
+    "id": "wizards_tower",
+    "name": "魔術師の塔",
+    "description": "夜ごと塔の窓に青白い光が灯る。何を研究しているのか、町の者は誰も尋ねない。",
+    "supplies": 2200,
+    "gold": 600,
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "魔術関連研究施設"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 2,
+      "row": 2
+    },
+    "upgradeFrom": "mage_academy"
+  },
+  {
+    "id": "library",
+    "name": "図書館",
+    "description": "写本の匂いと、頁をめくる音だけが満ちている。読める者は少なくとも、記録は残る。",
+    "supplies": 500,
+    "gold": 150,
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "科学関係研究施設"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 3,
+      "row": 2
+    }
+  },
+  {
+    "id": "great_archive",
+    "name": "大図書館",
+    "description": "旧帝国の文書が棚の奥まで眠る。司書たちは失われた知識の地図を少しずつ描き直している。",
+    "supplies": 1200,
+    "gold": 350,
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "科学関係研究施設"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 4,
+      "row": 2
+    },
+    "upgradeFrom": "library"
+  },
+  {
+    "id": "academy",
+    "name": "大学",
+    "description": "各地から集った学徒が昼夜を問わず議論を交わす。遺物の仕組みを解こうとする講座もある。",
+    "supplies": 2200,
+    "gold": 600,
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "科学関係研究施設"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 0,
+      "row": 3
+    },
+    "upgradeFrom": "great_archive"
+  },
+  {
+    "id": "tavern",
+    "name": "酒場",
+    "description": "旅人も傭兵も、杯を傾ければ口が軽くなる。仕事の話はたいていここで始まる。",
+    "supplies": 300,
+    "gold": 80,
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "遠くの傭兵を雇えるようになる"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 1,
+      "row": 3
+    }
+  },
+  {
+    "id": "warehouse",
+    "name": "倉庫",
+    "description": "厚い石壁の内に、麦袋と樽が天井まで積まれている。飢えた冬を覚えている町ほど、倉は大きい。",
+    "supplies": 500,
+    "gold": 80,
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "物資の保存上限が上がる"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 2,
+      "row": 3
+    }
+  },
+  {
+    "id": "chapel_of_emissaries",
+    "name": "聖堂使節館",
+    "description": "灰都から遣わされた使者が逗留する館。祈りと同じだけ、外交の言葉が交わされる。",
+    "supplies": 800,
+    "gold": 250,
+    "effects": [
+      {
+        "kind": "growthPct",
+        "value": 5
+      },
+      {
+        "kind": "etc",
+        "value": "法王府の使者を迎える施設"
+      },
+      {
+        "kind": "etc",
+        "value": "信仰度（法王府の関係に影響）が上がる"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 3,
+      "row": 3
+    }
+  },
+  {
+    "id": "cathedral",
+    "name": "法王首座大聖堂",
+    "description": "灰座の威光をこの地に迎える大聖堂。鐘が鳴るたび、人々は灰の七日間を思い出す。",
+    "supplies": 2400,
+    "gold": 700,
+    "effects": [
+      {
+        "kind": "growthPct",
+        "value": 10
+      },
+      {
+        "kind": "etc",
+        "value": "法王を迎える施設"
+      },
+      {
+        "kind": "etc",
+        "value": "信仰度（法王府の関係に影響）が上がる"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings01.webp",
+      "col": 4,
+      "row": 3
+    },
+    "upgradeFrom": "chapel_of_emissaries"
+  },
+  {
+    "id": "guild",
+    "name": "傭兵ギルド",
+    "description": "契約と報酬、それだけが掟。どの旗の下で戦うかは、紙一枚で決まる。",
+    "supplies": 900,
+    "gold": 250,
+    "effects": [
+      {
+        "kind": "recruitMorale",
+        "value": 5
+      },
+      {
+        "kind": "etc",
+        "value": "傭兵雇用の距離撤廃"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings02.webp",
+      "col": 0,
+      "row": 0
+    },
+    "upgradeFrom": "tavern"
+  },
+  {
+    "id": "cannon",
+    "name": "据付大砲",
+    "description": "城壁に据えた鋼の筒。遺された設計図から鋳造されたそれは、雷鳴のような音で敵を迎える。",
+    "supplies": 1200,
+    "gold": 400,
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "設置した都市の防衛拠点から射程5の砲撃を毎ターン実行可能"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings02.webp",
+      "col": 1,
+      "row": 0
+    },
+    "requiredRelic": "大砲の設計図"
+  },
+  {
+    "id": "arcane_focus_platform",
+    "name": "魔導台",
+    "description": "刻まれた紋様が術者の力を束ね、遠くまで届かせる。古代の術式を写した石の台座。",
+    "supplies": 1000,
+    "gold": 450,
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "城内にいる魔術師の射程+1、攻撃力+20%"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings02.webp",
+      "col": 2,
+      "row": 0
+    },
+    "requiredRelic": "魔導台の設計図"
+  },
+  {
+    "id": "ballista",
+    "name": "バリスタ",
+    "description": "城壁の上に据えた巨大な弩。放たれた太矢は盾ごと兵を貫く。",
+    "supplies": 900,
+    "gold": 300,
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "城内にいる弓兵の射程+1、攻撃力+20%"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings02.webp",
+      "col": 3,
+      "row": 0
+    },
+    "requiredRelic": "バリスタの設計図"
+  },
+  {
+    "id": "gunship",
+    "name": "ガンシップ",
+    "description": "旧帝国の設計図から甦った武装船。その砲火は戦場のどこへでも届く。",
+    "supplies": 2600,
+    "gold": 800,
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "配備都市とその隣接都市の戦闘時、全HEXを対象にした攻撃を行うことができる"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings02.webp",
+      "col": 4,
+      "row": 0
+    },
+    "requiredRelic": "ガンシップの設計図"
+  },
+  {
+    "id": "prison",
+    "name": "牢獄",
+    "description": "湿った石の牢。囚われた者も、時がたてば新しい主の話に耳を傾けるようになる。",
+    "supplies": 600,
+    "gold": 120,
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "捕虜の登用がしやすくなる（確率+20%)"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings02.webp",
+      "col": 0,
+      "row": 1
+    }
+  },
+  {
+    "id": "mine",
+    "name": "炭鉱",
+    "description": "坑夫たちが煤にまみれて坑道を降りていく。掘り出された黒い石が、町の炉と鍛冶場を支えている。",
+    "supplies": 500,
+    "gold": 120,
+    "effects": [
+      {
+        "kind": "productionPct",
+        "value": 10
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings02.webp",
+      "col": 1,
+      "row": 1
+    },
+    "requiredTags": [
+      "鉱山"
+    ]
+  },
+  {
+    "id": "deep_mine",
+    "name": "大深度鉱山",
+    "description": "旧帝国の坑道を継いで、さらに地の底へ。時おり、誰も見たことのない金属が岩の間から顔を出す。",
+    "supplies": 1300,
+    "gold": 350,
+    "effects": [
+      {
+        "kind": "productionPct",
+        "value": 20
+      },
+      {
+        "kind": "etc",
+        "value": "遺物の発掘(確率1%)"
+      }
+    ],
+    "sprite": {
+      "sheet": "buildings02.webp",
+      "col": 2,
+      "row": 1
+    },
+    "upgradeFrom": "mine"
+  }
+]

@@ -1,10 +1,9 @@
 import { existsSync } from 'node:fs'
-import { mkdir, rename, writeFile } from 'node:fs/promises'
 import path from 'node:path'
-import sharp from 'sharp'
-import { cellOrigin, type SheetInfo, type SourceCharacter } from '../src/characters/types.ts'
+import type { SheetInfo, SourceCharacter } from '../src/characters/types.ts'
+import { ExportError, writeAtomic } from './files.ts'
 import { OUTPUT, SHEETS_DIR } from './paths.ts'
-import { readSheet } from './sheets.ts'
+import { packCells, readSheet } from './sheets.ts'
 
 /** character.webp の 1 人分（元画像のセルの半分）と、横に並べる人数 */
 const OUT_CELL_W = 512
@@ -18,15 +17,6 @@ export interface ExportResult {
   imageSize: string
   imageBytes: number
   files: string[]
-}
-
-export class ExportError extends Error {}
-
-async function writeAtomic(file: string, data: string | Buffer) {
-  await mkdir(path.dirname(file), { recursive: true })
-  const tmp = `${file}.tmp`
-  await writeFile(tmp, data)
-  await rename(tmp, file)
 }
 
 /** {"id": "001", "cityId": "P000"} の形で 1 人 1 行（これまでの characterStart.json と同じ） */
@@ -51,7 +41,7 @@ export async function exportCharacters(characters: readonly SourceCharacter[]): 
   if (withSprite.length === 0) throw new ExportError('画像が設定されたキャラクターがいません')
 
   const sheets = new Map<string, SheetInfo>()
-  for (const f of sheetFiles) sheets.set(f, await readSheet(f))
+  for (const f of sheetFiles) sheets.set(f, await readSheet(SHEETS_DIR, f))
   for (const c of withSprite) {
     const sheet = sheets.get(c.sprite!.sheet)!
     if (c.sprite!.col >= sheet.cols || c.sprite!.row >= sheet.rows) {
@@ -59,34 +49,10 @@ export async function exportCharacters(characters: readonly SourceCharacter[]): 
     }
   }
 
-  // 元画像を 1 枚ずつ読み、使うセルを切り出して縮める
-  const order = new Map(withSprite.map((c, i) => [c.id, i]))
-  const cells: { input: Buffer; left: number; top: number }[] = []
-  const placed = new Map<string, { x: number; y: number }>()
-  for (const f of sheetFiles) {
-    const sheet = sheets.get(f)!
-    const raw = await sharp(path.join(SHEETS_DIR, f)).ensureAlpha().raw().toBuffer({ resolveWithObject: true })
-    for (const c of withSprite) {
-      if (c.sprite!.sheet !== f) continue
-      const i = order.get(c.id)!
-      const origin = cellOrigin(sheet, c.sprite!.col, c.sprite!.row)
-      const input = await sharp(raw.data, { raw: { width: raw.info.width, height: raw.info.height, channels: 4 } })
-        .extract({ left: Math.round(origin.x), top: Math.round(origin.y), width: Math.round(sheet.cellWidth), height: Math.round(sheet.cellHeight) })
-        .resize(OUT_CELL_W, OUT_CELL_H, { fit: 'fill' })
-        .png()
-        .toBuffer()
-      const pos = { x: (i % OUT_COLS) * OUT_CELL_W, y: Math.floor(i / OUT_COLS) * OUT_CELL_H }
-      cells.push({ input, left: pos.x, top: pos.y })
-      placed.set(c.id, pos)
-    }
-  }
-
-  const width = OUT_CELL_W * OUT_COLS
-  const height = OUT_CELL_H * Math.ceil(withSprite.length / OUT_COLS)
-  const image = await sharp({ create: { width, height, channels: 4, background: { r: 0, g: 0, b: 0, alpha: 0 } } })
-    .composite(cells)
-    .webp({ quality: 90, effort: 6 })
-    .toBuffer()
+  // 使うセルを ID 順に並べ直す
+  const { image, width, height, positions } = await packCells(SHEETS_DIR, sheets, withSprite.map((c) => c.sprite!),
+    { cellWidth: OUT_CELL_W, cellHeight: OUT_CELL_H, cols: OUT_COLS, quality: 90 })
+  const placed = new Map(withSprite.map((c, i) => [c.id, positions[i]]))
 
   const characterData = withSprite.map((c) => {
     const sheet = sheets.get(c.sprite!.sheet)!

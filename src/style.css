@@ -235,7 +235,6 @@ input[type='range'] { accent-color: var(--accent); width: 100%; }
 
 /* 施設データ */
 .form__hint { margin: 0; font-size: 12px; color: var(--muted); }
-.building-list__image { width: 40px; height: 40px; flex: none; border-radius: 4px; object-fit: cover; display: flex; align-items: center; justify-content: center; }
-.building-previews { display: flex; gap: 12px; align-items: flex-start; }
+.building-list__image { width: 40px; height: 40px; flex: none; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
 .building-preview { border: 1px solid var(--line); border-radius: 4px; }
 .building-effect__value { width: 72px; }
