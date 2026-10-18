@@ -1,18 +1,18 @@
 import { useMemo } from 'react'
-import { PLACES, ROAD_LINKS } from 'norden-strategy/data'
+import { PLACE_POINTS, ROAD_LINKS } from 'norden-strategy/data'
 import type { City } from '@game/data/city.ts'
 import { CHARACTER_TYPES, CHARACTER_TYPE_LABELS, type CharacterType, type SourceCharacter } from '../characters/types'
 import { FACTIONS, MERCENARY, characterFaction, factionColor } from '../factions'
 import { troopsOf } from './rules'
 
-/** 拠点の位置（norden-strategy の PLACES）と街道（ROAD_LINKS）の簡易地図。拠点をクリックで選ぶ */
+/** 拠点の位置（norden-strategy の PLACE_POINTS）と街道（ROAD_LINKS）の簡易地図。拠点をクリックで選ぶ */
 
 /** 世界の単位（地図の幅が約 700） */
 const MARGIN = 40
-const POSITIONS = new Map(PLACES.map((p) => [p.id, { x: p.x, y: p.z }]))
+const POSITIONS = new Map(Object.entries(PLACE_POINTS).map(([id, p]) => [id, { x: p.x, y: p.z }]))
 const BOUNDS = (() => {
-  const xs = PLACES.map((p) => p.x)
-  const ys = PLACES.map((p) => p.z)
+  const xs = [...POSITIONS.values()].map((p) => p.x)
+  const ys = [...POSITIONS.values()].map((p) => p.y)
   const minX = Math.min(...xs) - MARGIN
   const minY = Math.min(...ys) - MARGIN
   return { minX, minY, width: Math.max(...xs) - minX + MARGIN, height: Math.max(...ys) - minY + MARGIN }

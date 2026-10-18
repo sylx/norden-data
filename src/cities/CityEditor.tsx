@@ -8,9 +8,12 @@ import { FACTIONS, characterFaction, factionColor, factionName } from '../factio
 import { Field, NumberField, OptionalNumberField, SaveStatus, TagsField } from '../fields'
 import { useLeaveGuard } from '../useDirty'
 import { MiniMap } from './MiniMap'
-import { INITIAL_MORALE, INITIAL_SUPPLIES_PER_PRODUCTION, INITIAL_TROOPS_PER_PRODUCTION, slotsOf, tierOf } from './rules'
+import { citySlots, INITIAL_MORALE, INITIAL_SUPPLIES_PER_PRODUCTION, INITIAL_TROOPS_PER_PRODUCTION, tierOf } from './rules'
 
 /** 都市の種別（ゲームの src/scenes/strategy/views.ts の CITY_TYPE_LABELS と同じ） */
+/** 地図の絵を固定する都市（聖地・要塞）。規模と施設のスロットが Tier に従わない */
+const IMAGE_LABELS: Readonly<Record<NonNullable<City['image']>, string>> = { temple: '聖地', fortress1: '要塞1', fortress2: '要塞2' }
+
 const CITY_TYPES: readonly [string, string][] = [
   ['pope_city', '聖都'],
   ['port_city', '港湾都市'],
@@ -71,7 +74,7 @@ export function CityEditor({ active }: { active: boolean }) {
   )
 
   const tier = city ? tierOf(city.population) : 1
-  const slots = slotsOf(tier)
+  const slots = city ? citySlots(city) : 0
   const built = city?.buildings ?? []
   const toggleBuilding = (id: string, on: boolean) => {
     const next = on ? [...built, id] : built.filter((b) => b !== id)
@@ -128,6 +131,13 @@ export function CityEditor({ active }: { active: boolean }) {
                   {CITY_TYPES.map(([id, label]) => <option key={id} value={id}>{label}（{id}）</option>)}
                 </select>
               </Field>
+              <Field label="固定の絵">
+                <select value={city.image ?? ''}
+                  onChange={(e) => update({ image: (e.target.value || undefined) as City['image'] })}>
+                  <option value="">なし（Tier で変わる）</option>
+                  {Object.entries(IMAGE_LABELS).map(([id, label]) => <option key={id} value={id}>{label}（{id}）</option>)}
+                </select>
+              </Field>
               <Field label="所属（初期）">
                 <select value={city.belongTo ?? ''} onChange={(e) => update({ belongTo: e.target.value || undefined })}>
                   <option value="">中立</option>
@@ -137,8 +147,10 @@ export function CityEditor({ active }: { active: boolean }) {
             </div>
 
             <h3 className="form__heading">数値</h3>
-            <NumberField label="人口" value={city.population} max={30000} step={100} onChange={(population) => update({ population })} />
-            <p className="form__note">Tier {tier}（施設のスロット {slots}）</p>
+            <NumberField label="人口" value={city.population} max={60000} step={100} onChange={(population) => update({ population })} />
+            <p className="form__note">
+              {city.image ? `${IMAGE_LABELS[city.image]}のため規模は固定（施設のスロット ${slots}）` : `Tier ${tier}（施設のスロット ${slots}）`}
+            </p>
             <NumberField label="商業" value={city.market} max={1000} step={10} onChange={(market) => update({ market })} />
             <NumberField label="生産" value={city.production} max={1000} step={10} onChange={(production) => update({ production })} />
 
