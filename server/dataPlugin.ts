@@ -2,6 +2,7 @@
  * エディタの読み書きを受け持つ Vite プラグイン（開発サーバーだけ）。
  *
  * - GET/PUT  /api/cities             ルートの src/data/cityData.json
+ * - GET/PUT  /api/factions           ルートの src/data/factionData.json
  * - GET/PUT  /api/buildings          buildings/buildings.json（施設データの元データ）
  * - POST     /api/buildings/export   ルートの buildingData.json・buildings.webp などに書き出す
  * - GET      /api/building-sheets    buildings/sources/ の元画像とセルの並び
@@ -18,6 +19,7 @@ import path from 'node:path'
 import type { Plugin } from 'vite'
 import { isBuildingId, type SourceBuilding } from '../src/buildings/types.ts'
 import type { SourceCharacter } from '../src/characters/types.ts'
+import { isFactionId } from '../src/factions/types.ts'
 import { exportBuildings } from './exportBuildings.ts'
 import { exportCharacters } from './exportCharacters.ts'
 import { ExportError } from './files.ts'
@@ -118,6 +120,18 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<boolea
       assertList(body)
       await writeJson(OUTPUT.cities, body)
       sendJson(res, 200, { ok: true, file: OUTPUT.cities })
+      return true
+    }
+    case 'GET /api/factions':
+      sendJson(res, 200, await readJson(OUTPUT.factions))
+      return true
+    case 'PUT /api/factions': {
+      const body = await readBody(req)
+      assertList(body)
+      const bad = body.find((f) => !isFactionId(f.id))
+      if (bad) throw new HttpError(400, `勢力の ID は英小文字・数字・_ にしてください（mercenary は使えません）: ${bad.id}`)
+      await writeJson(OUTPUT.factions, body)
+      sendJson(res, 200, { ok: true, file: OUTPUT.factions })
       return true
     }
     case 'GET /api/buildings':

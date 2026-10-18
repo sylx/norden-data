@@ -19,6 +19,8 @@ export const BUILDING_SHEETS_DIR = path.join(DATA_DIR, 'buildings', 'sources')
 export const OUTPUT = {
   /** 拠点データ（エディタで直接読み書きする） */
   cities: path.join(GAME_ROOT, 'src', 'data', 'cityData.json'),
+  /** 勢力データ（エディタで直接読み書きする） */
+  factions: path.join(GAME_ROOT, 'src', 'data', 'factionData.json'),
   buildingData: path.join(GAME_ROOT, 'src', 'data', 'buildingData.json'),
   /** buildings.webp の大きさとセルの大きさ */
   buildingSprite: path.join(GAME_ROOT, 'src', 'data', 'buildingSprite.json'),

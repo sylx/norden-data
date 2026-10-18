@@ -6,7 +6,7 @@ import { GAME_ROOT } from './server/paths.ts'
 
 const local = (path: string) => fileURLToPath(new URL(path, import.meta.url))
 
-// 街道・勢力（norden-strategy）と勢力の色（ルートの src/data/factionColors.ts）はゲーム本体のソースをそのまま読む
+// 街道・紋章（norden-strategy）と勢力・拠点などのデータ（ルートの src/data/）はゲーム本体のソースをそのまま読む
 export default defineConfig({
   plugins: [react(), dataPlugin()],
   resolve: {
