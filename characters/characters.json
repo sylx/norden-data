@@ -616,7 +616,8 @@
     "biography": "ヴァルハルト北方軍の副将。岩のような体躯と地鳴りのような声で知られ、山岳地帯の兵たちから「動く要塞」と呼ばれている。頭の回転は外見から想像されるより遥かに速く、補給線と地形把握に関しては家中随一。ジークハルト（018）に「お前がいれば城壁はいらない」と言われたことを今も誇りにしている。ブリュンヒルト（008）とは犬猿の仲だが戦場では阿吽の呼吸。",
     "start": {
       "cityId": "P029",
-      "factionId": "valhardt"
+      "factionId": "valhardt",
+      "isLord": true
     }
   },
   {
@@ -1849,7 +1850,8 @@
     "strength": 88,
     "charm": 52,
     "start": {
-      "cityId": "P005"
+      "cityId": "P005",
+      "isLord": true
     },
     "gender": "male",
     "voiceTone": "noble_male",
@@ -2157,7 +2159,8 @@
     "strength": 65,
     "charm": 82,
     "start": {
-      "cityId": "P026"
+      "cityId": "P026",
+      "isLord": true
     },
     "gender": "male",
     "voiceTone": "cool_tactician",
@@ -2270,5 +2273,675 @@
     ],
     "isPatriarch": true,
     "biography": "ロザリア家の若き当主。先代の急逝により少年の身で家督を継ぎ、遺物評議会には「飾りの当主」として迎えられた。評議員にも衛兵にも同じ丁寧な言葉で話す穏やかな青年だが、時折、誰にも相談せずに評議会の決定を覆す裁可を下し、理由を問われても「そうした方がいいと思ったんです」と微笑むだけ。後から振り返ると、その判断が家を救っていたことが一度ならずある。危うい場には自ら盾を取って先頭に立ち、侍従たちを青ざめさせる。分家のベアトリス（033）は年の近い従姉で、彼女の悲観的な報告書を誰より真面目に読んでいる。ドレイク（025）が何を隠しているのか、気づいているのかどうかは誰にもわからない。"
+  },
+  {
+    "id": "071",
+    "name": "エメリヒ・ジルバーシュタイン",
+    "type": "politician",
+    "sprite": {
+      "sheet": "070.webp",
+      "col": 0,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 273.0666666666667,
+      "y": 0,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 82,
+    "intelligence": 74,
+    "leadership": 46,
+    "strength": 28,
+    "charm": 58,
+    "start": {
+      "cityId": "P010",
+      "isLord": true
+    },
+    "voiceTone": "noble_male",
+    "gender": "male",
+    "personality": [
+      "cautious",
+      "ambitious",
+      "stubborn",
+      "arrogant"
+    ],
+    "biography": "帝国の鉱山と鋳貨の利権を代々握ってきた名門の当主。生まれつきの銀髪を家の誇りとし、「銀は嘘をつかない」と言って、血筋と蓄えの確かな者以外を自分の卓に着かせない。皇帝が課税を強めた年、真っ先に銀を差し出して家の地位を盤石にした抜け目のなさを持つ一方、どの戦にも勝ち馬が見えるまでは一兵も出さない。一度決めた序列は決して改めず、取り入ろうとした成り上がりの商人は例外なく門前で追い返されてきた。差し出した銀が帝都で何に使われているのか、その帳簿だけは見ないことにしている。"
+  },
+  {
+    "id": "072",
+    "name": "ジュリオ・アマランテ",
+    "type": "scholar",
+    "sprite": {
+      "sheet": "070.webp",
+      "col": 1,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 247.4666666666667,
+      "y": 0,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 64,
+    "intelligence": 85,
+    "leadership": 40,
+    "strength": 22,
+    "charm": 66,
+    "start": {
+      "cityId": "P006",
+      "isLord": true
+    },
+    "gender": "male",
+    "voiceTone": "noble_male",
+    "personality": [
+      "devout",
+      "glory_seeker"
+    ],
+    "biography": "南の旧家に生まれ、灰座の神学校で旧帝国の暦と星の運行を学んだ若い学者。古代の知恵は神が人に授け、人が一度失ったものだと信じ、それを灰座のもとへ取り戻すことを自らの使命と心得ている。その熱意は本物だが、名を残したい気持ちも同じだけ本物で、検証の済まない発見を先に公表しては撤回する癖がある。秘密を重んじる遺物の研究者たちからは「口の軽い学者」と煙たがられている。ジネーヴラ（089）の術を書物にまとめたいと何度も頼み込み、そのたびに黙って追い返されている。"
+  },
+  {
+    "id": "073",
+    "name": "ジャコモ・ヴェント",
+    "type": "politician",
+    "sprite": {
+      "sheet": "070.webp",
+      "col": 2,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 253.33333333333326,
+      "y": 0,
+      "width": 560,
+      "height": 560
+    },
+    "politics": 80,
+    "intelligence": 74,
+    "leadership": 80,
+    "strength": 66,
+    "charm": 90,
+    "start": {
+      "cityId": "P001",
+      "isLord": true
+    },
+    "gender": "male",
+    "voiceTone": "wild_berserker",
+    "isPatriarch": true,
+    "personality": [
+      "pragmatic",
+      "ambitious",
+      "sociable",
+      "mentor_spirit"
+    ],
+    "biography": "タウルス自由都市連合の議長。港の荷揚げ人足から身を起こし、船乗りの顔役、漁師組合の取りまとめ役を経て、気づけば議長の椅子に座っていた。それより前のことを本人は語らず、タウルスの流儀で誰も尋ねない。議場でも酒場と同じ口ぶりで怒鳴り、笑い、最後には誰もが彼の案に乗っている。「自由都市が国になって何が悪い」と公言し、連合を大陸の諸勢力と渡り合える力に育てようと目論む。若い船乗りや流れ者に仕事を回して鍛えるのが好きで、テッサ（005）も駆け出しの頃に彼から最初の船の仕事を世話された一人だ。"
+  },
+  {
+    "id": "074",
+    "name": "リディア・フォルナーチ",
+    "type": "scholar",
+    "sprite": {
+      "sheet": "070.webp",
+      "col": 3,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 219.20000000000005,
+      "y": 18.666666666666686,
+      "width": 560,
+      "height": 560
+    },
+    "politics": 18,
+    "intelligence": 87,
+    "leadership": 36,
+    "strength": 38,
+    "charm": 60,
+    "start": {
+      "cityId": "P001"
+    },
+    "gender": "female",
+    "voiceTone": "tomboy_warrior",
+    "personality": [
+      "aggressive",
+      "enigmatic"
+    ],
+    "biography": "ゴーグルと革手袋を外さない調合師。旧帝国の鍛冶遺跡から出た「燃える粉」の配合を再現することに取り憑かれ、これまでに工房を三つ吹き飛ばし、三つの町を追い出された。学者を名乗るが学院には属さず、知識はすべて焦げた指と自分の帳面から得てきた。気が向けば徹夜で同じ調合を百回繰り返し、気が向かなければ大事な実験の途中でも昼寝をする。何を作ろうとしているのかと問われると「まだ名前がない」と笑うだけ。爆ぜる音を聞くと機嫌が良くなるので、周りの者はかえって不安になる。"
+  },
+  {
+    "id": "075",
+    "name": "エレオノーレ・フォルクマン",
+    "type": "scholar",
+    "sprite": {
+      "sheet": "070.webp",
+      "col": 4,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 268.79999999999995,
+      "y": 0,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 62,
+    "intelligence": 88,
+    "leadership": 28,
+    "strength": 10,
+    "charm": 64,
+    "start": {
+      "cityId": "P011"
+    },
+    "gender": "female",
+    "voiceTone": "noble_lady",
+    "personality": [
+      "arrogant"
+    ],
+    "biography": "イルムガルト（078）の妹で、旧帝国以来の家々の系図を読み解く系譜学者。新興の自家に古い血筋を見つけようと系図をさかのぼるうち、名門と呼ばれる家々の系図にも書き換えや継ぎ足しが少なからずあることを知ってしまった。以来、誰の家柄も心から敬わず、名乗りを聞くたびに薄く笑う。その知識を使えば幾つかの家を潰せることも承知しているが、今のところ姉にも明かしていない。黒い装丁の帳面には、彼女が見つけた「嘘」が一つ残らず書き留められている。",
+    "relations": [
+      {
+        "relation": "sister",
+        "characterId": "078"
+      }
+    ]
+  },
+  {
+    "id": "076",
+    "name": "ヘンリエッテ・ショルツ",
+    "type": "politician",
+    "sprite": {
+      "sheet": "070.webp",
+      "col": 0,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 215.4666666666667,
+      "y": 0,
+      "width": 576,
+      "height": 576
+    },
+    "politics": 85,
+    "intelligence": 82,
+    "leadership": 52,
+    "strength": 18,
+    "charm": 44,
+    "start": {
+      "cityId": "P021"
+    },
+    "gender": "female",
+    "voiceTone": "noble_lady",
+    "personality": [
+      "cautious",
+      "nihilist",
+      "strict"
+    ],
+    "biography": "下級官吏の家に生まれ、旧帝国の書式と暦のまま、税と兵糧の帳簿をつけてきた書記官。山の城で冬を越すための麦の一袋、矢の一本までを帳面で把握し、数字の合わない報告は差出人が誰であれ突き返す。「帝国は中断されているだけ」という言葉を信じたことは一度もないが、帳簿は一字の誤りもなく旧帝国暦でつける。信じていないことと、仕事を怠けることは別だからだ。補給の話が通じる相手としてドルグ（021）とだけは長話をするが、それ以外の雑談には眼鏡の奥から冷たい一瞥を返すのみ。"
+  },
+  {
+    "id": "077",
+    "name": "ベネデット・ヴァローリ",
+    "type": "politician",
+    "sprite": {
+      "sheet": "070.webp",
+      "col": 1,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 256.5333333333333,
+      "y": 8,
+      "width": 528,
+      "height": 528
+    },
+    "politics": 85,
+    "intelligence": 82,
+    "leadership": 42,
+    "strength": 26,
+    "charm": 62,
+    "start": {
+      "cityId": "P022"
+    },
+    "gender": "male",
+    "voiceTone": "noble_male",
+    "personality": [
+      "pragmatic",
+      "ambitious",
+      "arrogant"
+    ],
+    "biography": "遠洋の交易で一代のうちに財を成した商人。船と積荷が沈んだときの損を前もって金で引き受ける「航海請負」の仕組みを考え出し、嵐の多い年ほど儲かると言われる。船乗りたちには「海の不幸で肥える男」と陰口を叩かれるが、彼の証文のおかげで破産を免れた船主も少なくない。古い船主の家々を「祖父の船の名前しか持たない連中」と見下し、いずれ商人たちの頂点に座ると公言してはばからない。オーレア（014）の交渉術だけは認めており、だからこそ、いつか彼女を椅子から引きずり下ろすのは自分だと決めている。"
+  },
+  {
+    "id": "078",
+    "name": "イルムガルト・フォルクマン",
+    "type": "politician",
+    "sprite": {
+      "sheet": "070.webp",
+      "col": 2,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 214.93333333333334,
+      "y": 0,
+      "width": 560,
+      "height": 560
+    },
+    "politics": 88,
+    "intelligence": 79,
+    "leadership": 54,
+    "strength": 20,
+    "charm": 72,
+    "start": {
+      "cityId": "P011",
+      "isLord": true
+    },
+    "gender": "female",
+    "voiceTone": "noble_lady",
+    "personality": [
+      "cautious",
+      "ambitious",
+      "stubborn",
+      "arrogant"
+    ],
+    "biography": "交易で財を成した新興の家の当主。父の代に帝国の徴税請負で富を築いて爵位を買い取った家を、交易路と市場の通行税を握ることで、帝国に欠かせない家にまで押し上げた。土地しか持たない旧家を「埃をかぶった家系図」と嘲り、金で騎士の位を買ったゲオルク（067）と同類に見られることを何より嫌う。動くときは必ず相手の弱みを三つ押さえてからと決めていて、勝算のない取引には決して乗らない。一度口にした条件は、損をしてでも撤回しない。妹エレオノーレ（075）の学識を家の箔として重宝しているが、その帳面に何が書かれているかは知らない。",
+    "relations": [
+      {
+        "relation": "sister",
+        "characterId": "075"
+      }
+    ]
+  },
+  {
+    "id": "079",
+    "name": "アガーテ・ブルンナー",
+    "type": "magician",
+    "sprite": {
+      "sheet": "070.webp",
+      "col": 3,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 260.26666666666665,
+      "y": 12.799999999999983,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 38,
+    "intelligence": 76,
+    "leadership": 40,
+    "strength": 14,
+    "charm": 80,
+    "start": {
+      "cityId": "P005"
+    },
+    "gender": "female",
+    "voiceTone": "noble_lady",
+    "personality": [
+      "devout",
+      "enigmatic"
+    ],
+    "biography": "灰座の修道院で、井戸の底を流れる水の音を聴いて育った魔法師。地の下を走る水脈を探り当てる術を持ち、彼女が杖で示した場所を掘れば必ず水が出るという。本人はそれを魔法とは呼ばず、祈りに応えた恵みだと信じている。日照りの村を巡っては井戸を掘らせ、礼も受け取らずに去っていくため「水の聖女」と呼ばれることもあるが、灰座の聖女と並べられるのは畏れ多いと嫌がる。ときおり、水があるはずの場所で「ここは掘ってはいけません」とだけ告げ、その理由は決して語らない。"
+  },
+  {
+    "id": "080",
+    "name": "ヴェイラ",
+    "type": "magician",
+    "sprite": {
+      "sheet": "070.webp",
+      "col": 4,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 183.46666666666658,
+      "y": 0,
+      "width": 768,
+      "height": 768
+    },
+    "politics": 30,
+    "intelligence": 86,
+    "leadership": 74,
+    "strength": 28,
+    "charm": 72,
+    "start": null,
+    "gender": "female",
+    "voiceTone": "cool_female",
+    "personality": [
+      "enigmatic"
+    ],
+    "mercenaryInfo": {
+      "name": "金翼団",
+      "fee": 1000
+    },
+    "biography": "顔の上半分を黄金の仮面で覆った魔法師で、小さな傭兵団「金翼団」の頭目。陽炎を操って一隊を大軍に見せ、あるいは大軍を砂の上の幻のように消してみせる。仮面を外したところを見た者はおらず、砂漠の向こうから来たとも、仮面の下には顔がないとも噂される。契約の場では雇い主の名を聞かず、敵の名と報酬だけを確かめる。団員は皆かつて彼女に命を拾われた者たちで、彼女のために死ぬことを当然と思っている。本人はそれを喜ばず、「死なせるために拾ったのではない」と短く言うだけだ。"
+  },
+  {
+    "id": "081",
+    "name": "アンセルム・ローデ",
+    "type": "knight",
+    "sprite": {
+      "sheet": "080.webp",
+      "col": 0,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 202.13333333333333,
+      "y": 0,
+      "width": 560,
+      "height": 560
+    },
+    "politics": 52,
+    "intelligence": 84,
+    "leadership": 83,
+    "strength": 70,
+    "charm": 46,
+    "start": {
+      "cityId": "P030",
+      "isLord": true
+    },
+    "gender": "male",
+    "voiceTone": "cool_tactician",
+    "personality": [
+      "cautious",
+      "lone_wolf"
+    ],
+    "biography": "攻城技師として各地の戦場を渡り歩いた騎士。城を落とす側に長くいたからこそ、落ちない城の作り方を知っていると言う。城壁のひびや抜け道を一目で見抜き、守りの手配はすべて一人で図面に起こす。他人に計画を任せないのは、かつて信じた味方の裏切りで城を一つ失ったからだと噂されるが、本人は否定も肯定もしない。部下には必要なことしか話さず、酒宴にも顔を出さないため冷たい男と思われがちだが、守りの要には必ず自分が立つ。ヴァルナ（006）とは守り方をめぐって衝突が絶えないものの、互いの腕だけは認め合っている。"
+  },
+  {
+    "id": "082",
+    "name": "ラザール・ネーベル",
+    "type": "knight",
+    "sprite": {
+      "sheet": "080.webp",
+      "col": 1,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 198.39999999999998,
+      "y": 17.06666666666672,
+      "width": 576,
+      "height": 576
+    },
+    "politics": 34,
+    "intelligence": 66,
+    "leadership": 74,
+    "strength": 82,
+    "charm": 40,
+    "start": {
+      "cityId": "P011"
+    },
+    "voiceTone": "noble_male",
+    "gender": "male",
+    "personality": [
+      "nihilist",
+      "enigmatic"
+    ],
+    "biography": "負け戦の殿を三度務め、三度とも一人だけ生きて帰った騎士。外套に縫いつけた徽章は、そのたびに看取った戦友たちのもので、今では胸元が重くなるほどの数になった。「弔いのラザール」と呼ばれても気にする様子はなく、生き残ったのは神の思し召しでも腕でもなく、ただ順番が回ってこなかっただけだと言う。退くべき戦では真っ先に殿を志願し、戦の前夜には徽章の一つひとつに話しかける。笑うべきでないところで静かに笑うので、部下たちは彼の考えが読めない。名家の末子だというが、実家とは長く音信を絶っている。"
+  },
+  {
+    "id": "083",
+    "name": "オスヴァルト・ベルガー",
+    "type": "knight",
+    "sprite": {
+      "sheet": "080.webp",
+      "col": 2,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 208,
+      "y": 0,
+      "width": 608,
+      "height": 608
+    },
+    "politics": 38,
+    "intelligence": 54,
+    "leadership": 85,
+    "strength": 87,
+    "charm": 78,
+    "start": {
+      "cityId": "P028",
+      "isLord": true
+    },
+    "gender": "male",
+    "voiceTone": "veteran_soldier",
+    "personality": [
+      "aggressive",
+      "loyal",
+      "generous",
+      "mentor_spirit"
+    ],
+    "biography": "坑夫の家に生まれ、落盤に埋まった仲間五人を素手で掘り出した剛力を見込まれて、騎士に取り立てられた老将。北の山で四十年戦い続け、今なお戦となれば先頭で斧を振るう。取り立ててくれた主家への忠誠は叙任の日から一度も揺らいだことがなく、「拾ってもらった恩は死ぬまで返す」が口癖。若い兵には怒鳴り声と同じだけ飯を食わせ、坑夫上がりの新兵を誰より可愛がる。坑夫の娘ハンナ（032）を幼い頃から知っており、今も「嬢ちゃん」と呼んでは本気で嫌がられている。"
+  },
+  {
+    "id": "084",
+    "name": "バルタザール・グルント",
+    "type": "scholar",
+    "sprite": {
+      "sheet": "080.webp",
+      "col": 3,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 244.79999999999995,
+      "y": 0,
+      "width": 560,
+      "height": 560
+    },
+    "politics": 44,
+    "intelligence": 88,
+    "leadership": 48,
+    "strength": 42,
+    "charm": 34,
+    "start": {
+      "cityId": "P018"
+    },
+    "gender": "male",
+    "voiceTone": "veteran_soldier",
+    "personality": [
+      "ambitious",
+      "stubborn",
+      "arrogant"
+    ],
+    "biography": "帝国軍の工兵として遺跡の地下道を掘っていた男が、壁の碑文を読みたい一心で古代語を独学で覚え、学者にまでなった。机の上で古代を語る学者たちを「土を掘ったこともない連中」と見下し、自分の説に異を唱える者とは何年でも論争を続ける。いつか大発見を掘り当て、帝都に自分の名を冠した研究所を建てさせるのが望み。年季の入った外套の下には、今も工兵時代のつるはしを忍ばせている。アルカナムの若い研究員たちの論文を取り寄せては赤字で埋め尽くすが、その一番熱心な読者が自分であることは認めない。"
+  },
+  {
+    "id": "085",
+    "name": "ホルガー・ベーム",
+    "type": "knight",
+    "sprite": {
+      "sheet": "080.webp",
+      "col": 4,
+      "row": 0
+    },
+    "faceRect": {
+      "x": 208.53333333333342,
+      "y": 24,
+      "width": 624,
+      "height": 624
+    },
+    "politics": 20,
+    "intelligence": 40,
+    "leadership": 76,
+    "strength": 89,
+    "charm": 70,
+    "start": {
+      "cityId": "P014"
+    },
+    "gender": "male",
+    "voiceTone": "wild_berserker",
+    "biography": "鍛冶場の火番から身を起こした大男の騎士。身につけている鎧も盾も自分で槌を振るって打ったもので、戦のたびにへこみを叩き直しては「前より強くなった」と言い張る。北の山で傭兵をしていた頃の毛皮を今も肩に掛け、戦場では盾ごと敵に体当たりするのを好む。戦が終われば仲間と大鍋を囲み、勝っても負けても歌い出す。騎士に取り立ててくれた帝国への恩義は厚く、皇帝の変貌についても「打った剣は持ち主を選べねぇ」と言って深く考えないようにしている。ラルフ（090）とは傭兵時代からの飲み仲間。",
+    "personality": [
+      "aggressive",
+      "loyal",
+      "sociable"
+    ],
+    "relations": [
+      {
+        "relation": "best_friend",
+        "characterId": "090"
+      }
+    ]
+  },
+  {
+    "id": "086",
+    "name": "ヨアヒム・ケルナー",
+    "type": "knight",
+    "sprite": {
+      "sheet": "080.webp",
+      "col": 0,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 227.20000000000005,
+      "y": 8,
+      "width": 544,
+      "height": 544
+    },
+    "politics": 46,
+    "intelligence": 64,
+    "leadership": 77,
+    "strength": 72,
+    "charm": 62,
+    "start": {
+      "cityId": "P024"
+    },
+    "gender": "male",
+    "voiceTone": "noble_male",
+    "personality": [
+      "cautious",
+      "loyal",
+      "strict"
+    ],
+    "biography": "孤児として騎士団の厨房で育ち、従士から叩き上げて騎士になった若者。騎士団の規則書を一字一句まで諳んじ、「規則に書いていないことはしない男」と仲間にからかわれるほどの堅物。教練でディートリヒ（043）に見込まれて若くして小隊を預かったが、無理な突撃は一度も命じたことがない。兵を一人も失わないことが最上の勝利だと信じているからだ。騎士団を家と思い、団の名誉を傷つける者には相手が上官でも抗議する。皇帝の変貌については騎士団が従う限り自分も従うと決めている——その騎士団が割れたときのことは、まだ考えたくない。"
+  },
+  {
+    "id": "087",
+    "name": "ロスヴィータ・エッカート",
+    "type": "knight",
+    "sprite": {
+      "sheet": "080.webp",
+      "col": 1,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 234.66666666666663,
+      "y": 0,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 34,
+    "intelligence": 54,
+    "leadership": 84,
+    "strength": 84,
+    "charm": 60,
+    "start": {
+      "cityId": "P004"
+    },
+    "gender": "female",
+    "voiceTone": "noble_lady",
+    "personality": [
+      "aggressive",
+      "loyal",
+      "strict",
+      "arrogant"
+    ],
+    "biography": "帝国騎兵の名門に生まれた女騎士。胸に連ねた金貨は、彼女の隊が手柄を立てるたびに皇帝から下賜されたもので、戦場では陽を受けてひときわ目を引く。皇帝への忠誠に一片の疑いも持たず、変貌を口にする者を「臆病風に吹かれた者」と切り捨てる。隊の規律は誰より厳しく、遅れた馬は乗り手ごと隊から外す。金で動く傭兵を心底蔑んでおり、ドロテア（040）とは顔を合わせるたびに火花を散らす。ただし、鴉羽団の馬の扱いが自分の隊より上手いことだけは、誰にも言わない。"
+  },
+  {
+    "id": "088",
+    "name": "ヴァレスカ・ディール",
+    "type": "knight",
+    "sprite": {
+      "sheet": "080.webp",
+      "col": 2,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 257.6,
+      "y": 0,
+      "width": 560,
+      "height": 560
+    },
+    "politics": 32,
+    "intelligence": 58,
+    "leadership": 82,
+    "strength": 78,
+    "charm": 80,
+    "start": {
+      "cityId": "P029"
+    },
+    "gender": "female",
+    "voiceTone": "sisterly_veteran",
+    "personality": [
+      "valiant",
+      "loyal",
+      "stubborn",
+      "mentor_spirit"
+    ],
+    "biography": "平民の出の誓約騎士。戦で夫を亡くしたとき、葬儀の翌日に夫の部隊の前に立ち、「今日からアタシが隊長だよ」と言い放ってそのまま率いた。肩の円盾は亡き夫の形見。部下の若者たちを我が子のように叱り、食べさせ、戦場では必ず最後尾で全員が退くのを見届ける。一度引き受けた持ち場は誰に何と言われても離れず、撤退の命令を三日遅らせて砦を守り抜いた逸話を持つ。魔法師を疎む空気をよそに、イルーナ（002）にもハンナ（032）にも同じ調子で茶を勧める。"
+  },
+  {
+    "id": "089",
+    "name": "ジネーヴラ・サッビア",
+    "type": "magician",
+    "sprite": {
+      "sheet": "080.webp",
+      "col": 3,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 248.5333333333333,
+      "y": 0,
+      "width": 544,
+      "height": 544
+    },
+    "politics": 28,
+    "intelligence": 80,
+    "leadership": 36,
+    "strength": 16,
+    "charm": 56,
+    "start": {
+      "cityId": "P006"
+    },
+    "gender": "female",
+    "voiceTone": "cool_female",
+    "biography": "海の水を真水と塩に分ける術を持つ魔法師。砂漠を渡る隊商に雇われては水を作り、船に雇われては塩を作り、どこにも長く留まらずに暮らしてきた。宝飾を身につけているのは、報酬をそのまま身に着けて運ぶ隊商の慣わしに従っているだけで、本人に飾る趣味はない。必要なことしか話さず、術の仕組みを尋ねられても答えない。書物にまとめさせてほしいと日参する学者ジュリオ（072）を一言も返さずに追い返し続けているが、彼が持ってくる茶菓子だけは受け取っている。",
+    "personality": [
+      "pragmatic",
+      "lone_wolf"
+    ]
+  },
+  {
+    "id": "090",
+    "name": "ラルフ・シュヴァルツァー",
+    "type": "knight",
+    "sprite": {
+      "sheet": "080.webp",
+      "col": 4,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 136.53333333333336,
+      "y": 9.066666666666663,
+      "width": 640,
+      "height": 640
+    },
+    "politics": 40,
+    "intelligence": 62,
+    "leadership": 80,
+    "strength": 86,
+    "charm": 68,
+    "start": {
+      "cityId": "P018",
+      "isLord": true
+    },
+    "gender": "male",
+    "voiceTone": "wild_berserker",
+    "personality": [
+      "nihilist",
+      "sociable",
+      "lone_wolf"
+    ],
+    "biography": "傭兵団を率いていたが、帝国に腕を買われて騎士の位を得た男。遺跡の発掘現場の警護を長く務めてきたが、古代の遺物にも皇帝の大義にも興味はなく、「払いがいいから守ってる」と公言する。人夫とも兵とも同じ卓で酒を飲み、誰の愚痴でも笑って聞くので慕われているが、副官を置かず、背中だけは誰にも預けない。地下で何かがおかしいときには学者たちより先に気づき、黙って人を退かせる。バルタザール（084）の野心を鼻で笑いつつ、彼が地下に潜る日だけは自分も降りていく。ホルガー（085）は唯一、酔い潰れた姿を見せる相手。",
+    "relations": [
+      {
+        "relation": "best_friend",
+        "characterId": "085"
+      }
+    ]
   }
 ]
