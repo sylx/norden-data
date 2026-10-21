@@ -29,7 +29,8 @@ export const OUTPUT = {
   voiceLines: path.join(GAME_ROOT, 'src', 'data', 'voiceLines.json'),
   characterData: path.join(GAME_ROOT, 'src', 'data', 'characterData.json'),
   characterStart: path.join(GAME_ROOT, 'src', 'data', 'characterStart.json'),
-  /** character.webp の大きさとセルの大きさ */
+  /** character-<n>.webp の各大きさとセルの大きさ */
   characterSprite: path.join(GAME_ROOT, 'src', 'data', 'characterSprite.json'),
-  characterImage: path.join(GAME_ROOT, 'src', 'assets', 'character.webp'),
+  /** character-0.webp, character-1.webp, … を置く場所 */
+  characterImageDir: path.join(GAME_ROOT, 'src', 'assets'),
 } as const

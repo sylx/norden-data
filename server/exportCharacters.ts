@@ -1,14 +1,21 @@
 import { existsSync } from 'node:fs'
+import { readdir, unlink } from 'node:fs/promises'
 import path from 'node:path'
 import type { SheetInfo, SourceCharacter } from '../src/characters/types.ts'
 import { ExportError, writeAtomic } from './files.ts'
 import { OUTPUT, SHEETS_DIR } from './paths.ts'
 import { packCells, readSheet } from './sheets.ts'
 
-/** character.webp の 1 人分（元画像のセルの半分）と、横に並べる人数 */
+/** character-<n>.webp の 1 人分（元画像のセルの半分）と、横に並べる人数 */
 const OUT_CELL_W = 512
 const OUT_CELL_H = 768
 const OUT_COLS = 5
+/** 1 枚の行数（WebP は 1 辺 16383px までなので、人数が増えたら次の 1 枚に続ける） */
+const OUT_ROWS = 10
+const PER_SHEET = OUT_COLS * OUT_ROWS
+
+const sheetFile = (index: number) => path.join(OUTPUT.characterImageDir, `character-${index}.webp`)
+const SHEET_FILE_PATTERN = /^character-(\d+)\.webp$/
 
 export interface ExportResult {
   characterCount: number
@@ -25,10 +32,10 @@ const inlineJson = (obj: Record<string, unknown>) =>
 
 /**
  * 元データからゲームのデータを書き出す。
- * - character.webp: 使っているセルだけを ID 順に横 5 人で並べ直し、半分の大きさにする
- * - characterData.json: 画像の位置は character.webp 上のピクセル、顔の範囲もその大きさに合わせる
+ * - character-0.webp, character-1.webp, …: 使っているセルだけを ID 順に横 5 人 × 縦 10 人ずつ並べ直し、半分の大きさにする
+ * - characterData.json: 画像の位置は何枚目か（sheet）とその上のピクセル、顔の範囲もその大きさに合わせる
  * - characterStart.json: 配置（start）のあるキャラクター
- * - characterSprite.json: character.webp とセルの大きさ
+ * - characterSprite.json: 各 1 枚とセルの大きさ
  */
 export async function exportCharacters(characters: readonly SourceCharacter[]): Promise<ExportResult> {
   const sorted = [...characters].sort((a, b) => a.id.localeCompare(b.id))
@@ -50,9 +57,15 @@ export async function exportCharacters(characters: readonly SourceCharacter[]): 
   }
 
   // 使うセルを ID 順に並べ直す
-  const { image, width, height, positions } = await packCells(SHEETS_DIR, sheets, withSprite.map((c) => c.sprite!),
-    { cellWidth: OUT_CELL_W, cellHeight: OUT_CELL_H, cols: OUT_COLS, quality: 90 })
-  const placed = new Map(withSprite.map((c, i) => [c.id, positions[i]]))
+  const packed: { image: Buffer; width: number; height: number }[] = []
+  const placed = new Map<string, { sheet: number; x: number; y: number }>()
+  for (let start = 0; start < withSprite.length; start += PER_SHEET) {
+    const page = withSprite.slice(start, start + PER_SHEET)
+    const { image, width, height, positions } = await packCells(SHEETS_DIR, sheets, page.map((c) => c.sprite!),
+      { cellWidth: OUT_CELL_W, cellHeight: OUT_CELL_H, cols: OUT_COLS, quality: 90 })
+    page.forEach((c, i) => placed.set(c.id, { sheet: packed.length, ...positions[i] }))
+    packed.push({ image, width, height })
+  }
 
   const characterData = withSprite.map((c) => {
     const sheet = sheets.get(c.sprite!.sheet)!
@@ -88,16 +101,22 @@ export async function exportCharacters(characters: readonly SourceCharacter[]): 
     ...(c.start!.isLord ? { isLord: true } : {}),
   }))
 
-  await writeAtomic(OUTPUT.characterImage, image)
+  for (const [i, { image }] of packed.entries()) await writeAtomic(sheetFile(i), image)
+  // 人数が減って使わなくなった 1 枚は消す
+  for (const name of await readdir(OUTPUT.characterImageDir)) {
+    const index = SHEET_FILE_PATTERN.exec(name)?.[1]
+    if (index !== undefined && Number(index) >= packed.length) await unlink(path.join(OUTPUT.characterImageDir, name))
+  }
   await writeAtomic(OUTPUT.characterData, JSON.stringify(characterData, null, 2) + '\n')
   await writeAtomic(OUTPUT.characterStart, `[\n${starts.map((s) => `  ${s}`).join(',\n')}\n]\n`)
-  await writeAtomic(OUTPUT.characterSprite, JSON.stringify({ width, height, cellWidth: OUT_CELL_W, cellHeight: OUT_CELL_H }, null, 2) + '\n')
+  const sprite = { cellWidth: OUT_CELL_W, cellHeight: OUT_CELL_H, sheets: packed.map(({ width, height }) => ({ width, height })) }
+  await writeAtomic(OUTPUT.characterSprite, JSON.stringify(sprite, null, 2) + '\n')
 
   return {
     characterCount: characterData.length,
     skipped,
-    imageSize: `${width}×${height}`,
-    imageBytes: image.length,
-    files: [OUTPUT.characterImage, OUTPUT.characterData, OUTPUT.characterStart, OUTPUT.characterSprite],
+    imageSize: `${packed.length}枚: ${packed.map(({ width, height }) => `${width}×${height}`).join('・')}`,
+    imageBytes: packed.reduce((sum, { image }) => sum + image.length, 0),
+    files: [...packed.map((_, i) => sheetFile(i)), OUTPUT.characterData, OUTPUT.characterStart, OUTPUT.characterSprite],
   }
 }

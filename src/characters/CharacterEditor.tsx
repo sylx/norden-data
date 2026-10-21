@@ -160,7 +160,7 @@ export function CharacterEditor() {
           <button type="button" className="button" disabled={!dirty || busy}
             onClick={() => { if (confirm('保存していない変更を捨てて読み込み直しますか？')) load() }}>元に戻す</button>
           <button type="button" className="button button--accent" disabled={busy} onClick={exportToGame}
-            title="保存してから、ゲームの characterData.json・characterStart.json・character.webp に書き出す">ゲームに書き出す</button>
+            title="保存してから、ゲームの characterData.json・characterStart.json・character-<n>.webp に書き出す">ゲームに書き出す</button>
           <button type="button" className="button" onClick={loadSheets}>画像を読み直す</button>
           <SaveStatus dirty={dirty} {...status} />
         </div>
