@@ -2,7 +2,7 @@
 
 import type { PersonalityTag, VoiceToneId } from '@game/data/characterVoice.ts'
 
-export const CHARACTER_TYPES = ['knight', 'scholar', 'politician', 'magician', 'hunter'] as const
+export const CHARACTER_TYPES = ['knight', 'scholar', 'politician', 'magician', 'hunter', 'rifleman', 'artillery', 'landsknecht'] as const
 export type CharacterType = (typeof CHARACTER_TYPES)[number]
 
 export const CHARACTER_TYPE_LABELS: Readonly<Record<CharacterType, string>> = {
@@ -11,6 +11,9 @@ export const CHARACTER_TYPE_LABELS: Readonly<Record<CharacterType, string>> = {
   politician: '政治家',
   magician: '魔法使い',
   hunter: '狩人',
+  rifleman: 'ライフル兵',
+  artillery: '砲兵',
+  landsknecht: 'ランツクネヒト',
 }
 
 export const RELATION_TYPES = ['father', 'mother', 'son', 'daughter', 'brother', 'sister', 'married', 'best_friend'] as const
