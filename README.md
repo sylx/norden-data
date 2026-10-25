@@ -51,7 +51,7 @@ npm run typecheck
 画像が未設定のキャラクターは書き出さない。
 
 種別はゲームで率いられる兵科を決める（ゲームの `src/data/unitTypes.ts` の `UNIT_TYPES_BY_CHARACTER_TYPE`。歩兵は誰でも率いられる）。
-ライフル兵・砲兵・ランツクネヒトは独自のユニット画像（`norden-battle/assets/units/<兵科>.png`）を持つ兵科で、同じ種別のキャラクターだけが率いる。
+ライフル兵・砲兵・ランツクネヒトは独自のユニット画像（`norden-battle/assets/units/<兵科>.webp`）を持つ兵科で、同じ種別のキャラクターだけが率いる。
 
 ### 元画像
 
