@@ -10,6 +10,7 @@
  * - GET/PUT  /api/voice-lines        ルートの src/data/voiceLines.json
  * - GET/PUT  /api/characters         characters/characters.json（騎士データの元データ）
  * - POST     /api/characters/export  ルートの characterData.json などに書き出す
+ * - POST     /api/characters/export-data  画像以外（characterData.json・characterStart.json）だけを書き出す
  * - GET      /api/sheets             characters/sheets/ の元画像とセルの並び
  * - GET      /sheets/<file>          元画像
  */
@@ -21,7 +22,7 @@ import { isBuildingId, type SourceBuilding } from '../src/buildings/types.ts'
 import type { SourceCharacter } from '../src/characters/types.ts'
 import { isFactionId } from '../src/factions/types.ts'
 import { exportBuildings } from './exportBuildings.ts'
-import { exportCharacters } from './exportCharacters.ts'
+import { exportCharacterData, exportCharacters } from './exportCharacters.ts'
 import { ExportError } from './files.ts'
 import { BUILDING_SHEETS_DIR, BUILDINGS_FILE, CHARACTERS_FILE, OUTPUT, SHEETS_DIR } from './paths.ts'
 import { isSheetFileName, listSheets } from './sheets.ts'
@@ -180,11 +181,13 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<boolea
       sendJson(res, 200, { ok: true, file: CHARACTERS_FILE })
       return true
     }
-    case 'POST /api/characters/export': {
+    case 'POST /api/characters/export':
+    case 'POST /api/characters/export-data': {
       const characters = await readJson(CHARACTERS_FILE)
       assertList(characters)
+      const exporter = route.endsWith('export-data') ? exportCharacterData : exportCharacters
       try {
-        sendJson(res, 200, await exportCharacters(characters as SourceCharacter[]))
+        sendJson(res, 200, await exporter(characters as SourceCharacter[]))
       } catch (e) {
         if (e instanceof ExportError) throw new HttpError(400, e.message)
         throw e

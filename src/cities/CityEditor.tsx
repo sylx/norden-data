@@ -82,8 +82,9 @@ export function CityEditor({ active }: { active: boolean }) {
   }
 
   const members = characters.filter((c) => c.start?.cityId === selectedId)
-  const knights = members.filter((c) => !c.mercenaryInfo)
-  const mercenaries = members.filter((c) => c.mercenaryInfo)
+  const prisoners = members.filter((c) => c.start?.isPrisoner)
+  const knights = members.filter((c) => !c.mercenaryInfo && !c.start?.isPrisoner)
+  const mercenaries = members.filter((c) => c.mercenaryInfo && !c.start?.isPrisoner)
   /** 都市の勢力と違う勢力に仕える騎士は、勢力名を添える */
   const memberChip = (c: SourceCharacter) => {
     const factionId = characterFaction(c, () => city?.belongTo)
@@ -94,7 +95,9 @@ export function CityEditor({ active }: { active: boolean }) {
           {c.name}
           {c.start?.isLord && <span className="chip__note">領主</span>}
           {c.mercenaryInfo && <span className="chip__note">{c.mercenaryInfo.name || '傭兵団'}</span>}
-          {factionId !== city?.belongTo && <span className="chip__note">{factionName(factionId)}</span>}
+          {c.start?.isPrisoner
+            ? <span className="chip__note">{factionId ? factionName(factionId) : '所属なし'}</span>
+            : factionId !== city?.belongTo && <span className="chip__note">{factionName(factionId)}</span>}
         </span>
       </li>
     )
@@ -204,6 +207,10 @@ export function CityEditor({ active }: { active: boolean }) {
             <h3 className="form__heading">所属騎士（騎士 {knights.length}人・傭兵 {mercenaries.length}人）</h3>
             {knights.length > 0 && <ul className="chips">{knights.map(memberChip)}</ul>}
             {mercenaries.length > 0 && <ul className="chips">{mercenaries.map(memberChip)}</ul>}
+            {prisoners.length > 0 && <>
+              <h3 className="form__heading">捕虜（{prisoners.length}人）</h3>
+              <ul className="chips">{prisoners.map(memberChip)}</ul>
+            </>}
 
             <h3 className="form__heading">街道でつながる拠点</h3>
             <ul className="chips">

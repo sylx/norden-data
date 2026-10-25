@@ -45,7 +45,7 @@ npm run typecheck
 | --- | --- |
 | `src/assets/character-<n>.webp` | 使っているセルだけを ID 順に横 5 人 × 縦 10 人ずつ並べ、半分（512×768）にした画像。50 人ごとに次の 1 枚（`character-0.webp`、`character-1.webp`、…）。WebP は 1 辺 16383px までなので分けている |
 | `src/data/characterData.json` | 能力・略歴など。画像の位置は何枚目か（`sheet`）とその上のピクセル |
-| `src/data/characterStart.json` | 初期配置（都市・勢力・領主） |
+| `src/data/characterStart.json` | 初期配置（都市・勢力・領主・捕虜） |
 | `src/data/characterSprite.json` | 各 1 枚とセルの大きさ（ゲームの `src/data/characterSheets.ts` が使う） |
 
 画像が未設定のキャラクターは書き出さない。

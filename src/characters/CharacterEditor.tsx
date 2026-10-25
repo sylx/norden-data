@@ -22,8 +22,9 @@ const axisIndex = (tag: PersonalityTag) => PERSONALITY_AXES.findIndex((axis) => 
 interface ExportResult {
   characterCount: number
   skipped: { id: string; name: string }[]
-  imageSize: string
-  imageBytes: number
+  /** 画像以外の書き出しでは省く */
+  imageSize?: string
+  imageBytes?: number
   files: string[]
 }
 
@@ -82,13 +83,14 @@ export function CharacterEditor() {
     }
   }
 
-  const exportToGame = async () => {
+  /** 保存してから書き出す。withImages: 画像も（false: 画像以外だけ） */
+  const exportToGame = async (withImages = true) => {
     setBusy(true)
     setExported(null)
     try {
       if (dirty && !(await save())) return
       setStatus({ message: '書き出し中…' })
-      const result = await api<ExportResult>('/api/characters/export', { method: 'POST' })
+      const result = await api<ExportResult>(withImages ? '/api/characters/export' : '/api/characters/export-data', { method: 'POST' })
       setExported(result)
       setStatus({ message: `書き出しました（${new Date().toLocaleTimeString()}）` })
     } catch (e) {
@@ -146,6 +148,7 @@ export function CharacterEditor() {
                   <span className="character-list__sub">
                     {c.id}・{CHARACTER_TYPE_LABELS[c.type]}
                     {c.start && <> ・<span className="swatch" style={{ background: factionColor(factionOf(c)) }} />{cityName(c.start.cityId)}</>}
+                    {c.start?.isPrisoner && '（捕虜）'}
                   </span>
                 </span>
               </button>
@@ -159,15 +162,19 @@ export function CharacterEditor() {
           <button type="button" className="button button--primary" disabled={!dirty || busy} onClick={() => save()}>保存</button>
           <button type="button" className="button" disabled={!dirty || busy}
             onClick={() => { if (confirm('保存していない変更を捨てて読み込み直しますか？')) load() }}>元に戻す</button>
-          <button type="button" className="button button--accent" disabled={busy} onClick={exportToGame}
+          <button type="button" className="button button--accent" disabled={busy} onClick={() => exportToGame()}
             title="保存してから、ゲームの characterData.json・characterStart.json・character-<n>.webp に書き出す">ゲームに書き出す</button>
+          <button type="button" className="button" disabled={busy} onClick={() => exportToGame(false)}
+            title="保存してから、画像以外（characterData.json・characterStart.json）だけを書き出す。画像の位置と顔の範囲は前回の書き出しのまま。元画像が無くても使える">
+            画像以外を書き出す</button>
           <button type="button" className="button" onClick={loadSheets}>画像を読み直す</button>
           <SaveStatus dirty={dirty} {...status} />
         </div>
 
         {exported && (
           <div className="notice notice--ok">
-            {exported.characterCount}人を書き出しました（{exported.imageSize}、{(exported.imageBytes / 1024).toFixed(0)} KB）
+            {exported.characterCount}人を書き出しました
+            {exported.imageSize ? `（${exported.imageSize}、${((exported.imageBytes ?? 0) / 1024).toFixed(0)} KB）` : '（画像以外）'}
             {exported.skipped.length > 0 && <div>画像が未設定で除いた: {exported.skipped.map((c) => `${c.id} ${c.name}`).join('、')}</div>}
             <ul className="notice__files">{exported.files.map((f) => <li key={f}>{f}</li>)}</ul>
           </div>
@@ -269,17 +276,30 @@ export function CharacterEditor() {
                   <select value={character.start?.factionId ?? ''} disabled={!character.start}
                     onChange={(e) => character.start && update({ start: { ...character.start, factionId: e.target.value || undefined } })}>
                     <option value="">
-                      {character.mercenaryInfo ? `所属なし（${MERCENARY.name}）` : `都市の勢力（${factionName(character.start ? cityOwner.get(character.start.cityId) : undefined)}）`}
+                      {character.start?.isPrisoner ? '所属なし'
+                        : character.mercenaryInfo ? `所属なし（${MERCENARY.name}）` : `都市の勢力（${factionName(character.start ? cityOwner.get(character.start.cityId) : undefined)}）`}
                     </option>
                     {FACTIONS.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}
                   </select>
                 </Field>
                 <label className="checkbox">
-                  <input type="checkbox" checked={!!character.start?.isLord} disabled={!character.start}
+                  <input type="checkbox" checked={!!character.start?.isLord && !character.start.isPrisoner}
+                    disabled={!character.start || !!character.start.isPrisoner}
                     onChange={(e) => character.start && update({ start: { ...character.start, isLord: e.target.checked || undefined } })} />
                   都市の領主
                 </label>
+                <label className="checkbox">
+                  <input type="checkbox" checked={!!character.start?.isPrisoner} disabled={!character.start}
+                    onChange={(e) => character.start && update({
+                      start: { ...character.start, isPrisoner: e.target.checked || undefined, ...(e.target.checked && { isLord: undefined }) },
+                    })} />
+                  都市の捕虜（勢力は捕まる前に仕えていた勢力）
+                </label>
               </div>
+              {character.start?.isPrisoner && (!cityOwner.get(character.start.cityId)
+                ? <p className="form__note">中立の都市には捕虜を置けません（ゲームでは捕虜になりません）</p>
+                : factionOf(character) === cityOwner.get(character.start.cityId)
+                && <p className="form__note">都市の勢力の騎士は捕虜になりません（ゲームでは都市の騎士になります）。勢力を選んでください</p>)}
               {cityMapOpen && (
                 <div className="city-picker">
                   <MiniMap cities={cities} selectedId={character.start?.cityId ?? ''} showTotals={false}

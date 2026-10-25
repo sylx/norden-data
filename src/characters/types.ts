@@ -57,6 +57,8 @@ export interface CharacterStart {
   factionId?: string
   /** 都市の領主 */
   isLord?: boolean
+  /** 都市に捕らえられている捕虜。factionId は捕まる前に仕えていた勢力（省略: 所属なし）。都市の勢力の騎士は捕虜にならない */
+  isPrisoner?: boolean
 }
 
 export interface SourceCharacter {
