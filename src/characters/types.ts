@@ -9,7 +9,7 @@ export const CHARACTER_TYPE_LABELS: Readonly<Record<CharacterType, string>> = {
   knight: '騎士',
   scholar: '学者',
   politician: '政治家',
-  magician: '魔法使い',
+  magician: '魔術師',
   hunter: '狩人',
   rifleman: 'ライフル兵',
   artillery: '砲兵',
