@@ -15,6 +15,10 @@ export const SHEETS_DIR = path.join(DATA_DIR, 'characters', 'sheets')
 export const BUILDINGS_FILE = path.join(DATA_DIR, 'buildings', 'buildings.json')
 export const BUILDING_SHEETS_DIR = path.join(DATA_DIR, 'buildings', 'sources')
 
+/** 技術データの元データと元画像（施設と同じ並びとセル） */
+export const TECHS_FILE = path.join(DATA_DIR, 'techs', 'techs.json')
+export const TECH_SHEETS_DIR = path.join(DATA_DIR, 'techs', 'sources')
+
 /** ゲームが読む出力先 */
 export const OUTPUT = {
   /** 拠点データ（エディタで直接読み書きする） */
@@ -25,6 +29,10 @@ export const OUTPUT = {
   /** buildings.webp の大きさとセルの大きさ */
   buildingSprite: path.join(GAME_ROOT, 'src', 'data', 'buildingSprite.json'),
   buildingImage: path.join(GAME_ROOT, 'src', 'assets', 'buildings.webp'),
+  techData: path.join(GAME_ROOT, 'src', 'data', 'techData.json'),
+  /** techs.webp の大きさとセルの大きさ */
+  techSprite: path.join(GAME_ROOT, 'src', 'data', 'techSprite.json'),
+  techImage: path.join(GAME_ROOT, 'src', 'assets', 'techs.webp'),
   /** セリフ（エディタで直接読み書きする） */
   voiceLines: path.join(GAME_ROOT, 'src', 'data', 'voiceLines.json'),
   characterData: path.join(GAME_ROOT, 'src', 'data', 'characterData.json'),

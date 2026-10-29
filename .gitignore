@@ -8,3 +8,6 @@ characters/sheets/*
 # 施設の元画像（大きいのでコミットしない。各自で置く）
 buildings/sources/*
 !buildings/sources/.gitkeep
+# 技術の元画像（大きいのでコミットしない。各自で置く）
+techs/sources/*
+!techs/sources/.gitkeep

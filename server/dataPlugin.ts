@@ -7,6 +7,10 @@
  * - POST     /api/buildings/export   ルートの buildingData.json・buildings.webp などに書き出す
  * - GET      /api/building-sheets    buildings/sources/ の元画像とセルの並び
  * - GET      /building-sheets/<file> 施設の元画像
+ * - GET/PUT  /api/techs              techs/techs.json（技術データの元データ）
+ * - POST     /api/techs/export       ルートの techData.json・techs.webp などに書き出す
+ * - GET      /api/tech-sheets        techs/sources/ の元画像とセルの並び
+ * - GET      /tech-sheets/<file>     技術の元画像
  * - GET/PUT  /api/voice-lines        ルートの src/data/voiceLines.json
  * - GET/PUT  /api/characters         characters/characters.json（騎士データの元データ）
  * - POST     /api/characters/export  ルートの characterData.json などに書き出す
@@ -20,11 +24,13 @@ import path from 'node:path'
 import type { Plugin } from 'vite'
 import { isBuildingId, type SourceBuilding } from '../src/buildings/types.ts'
 import type { SourceCharacter } from '../src/characters/types.ts'
+import { isTechId, type SourceTech } from '../src/techs/types.ts'
 import { isFactionId } from '../src/factions/types.ts'
 import { exportBuildings } from './exportBuildings.ts'
 import { exportCharacterData, exportCharacters } from './exportCharacters.ts'
+import { exportTechs } from './exportTechs.ts'
 import { ExportError } from './files.ts'
-import { BUILDING_SHEETS_DIR, BUILDINGS_FILE, CHARACTERS_FILE, OUTPUT, SHEETS_DIR } from './paths.ts'
+import { BUILDING_SHEETS_DIR, BUILDINGS_FILE, CHARACTERS_FILE, OUTPUT, SHEETS_DIR, TECH_SHEETS_DIR, TECHS_FILE } from './paths.ts'
 import { isSheetFileName, listSheets } from './sheets.ts'
 
 class HttpError extends Error {
@@ -161,6 +167,32 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<boolea
     case 'GET /api/building-sheets':
       sendJson(res, 200, await listSheets(BUILDING_SHEETS_DIR))
       return true
+    case 'GET /api/techs':
+      sendJson(res, 200, await readJson(TECHS_FILE))
+      return true
+    case 'PUT /api/techs': {
+      const body = await readBody(req)
+      assertList(body)
+      const bad = body.find((t) => !isTechId(t.id))
+      if (bad) throw new HttpError(400, `技術の ID は英小文字・数字・_ にしてください: ${bad.id}`)
+      await writeJson(TECHS_FILE, body)
+      sendJson(res, 200, { ok: true, file: TECHS_FILE })
+      return true
+    }
+    case 'POST /api/techs/export': {
+      const techs = await readJson(TECHS_FILE)
+      assertList(techs)
+      try {
+        sendJson(res, 200, await exportTechs(techs as SourceTech[]))
+      } catch (e) {
+        if (e instanceof ExportError) throw new HttpError(400, e.message)
+        throw e
+      }
+      return true
+    }
+    case 'GET /api/tech-sheets':
+      sendJson(res, 200, await listSheets(TECH_SHEETS_DIR))
+      return true
     case 'GET /api/voice-lines':
       sendJson(res, 200, await readJson(OUTPUT.voiceLines))
       return true
@@ -209,6 +241,12 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<boolea
   if (buildingSheet) {
     if (!isSheetFileName(buildingSheet)) throw new HttpError(400, `不正なファイル名: ${buildingSheet}`)
     await sendImage(res, BUILDING_SHEETS_DIR, buildingSheet)
+    return true
+  }
+  const techSheet = /^GET \/tech-sheets\/([^/]+)$/.exec(route)?.[1]
+  if (techSheet) {
+    if (!isSheetFileName(techSheet)) throw new HttpError(400, `不正なファイル名: ${techSheet}`)
+    await sendImage(res, TECH_SHEETS_DIR, techSheet)
     return true
   }
   return false

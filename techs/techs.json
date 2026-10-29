@@ -1,0 +1,481 @@
+[
+  {
+    "id": "physical_civ",
+    "name": "物理文明",
+    "description": "旧帝国の遺した機械と書物を読み解き、理と技で世界を動かそうとする歩み。",
+    "branch": "physical",
+    "cost": 100,
+    "requires": [],
+    "effects": [
+      {
+        "kind": "productionPct",
+        "value": 5
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "tactics",
+    "name": "兵法",
+    "description": "古い軍記を写し、隊列と号令を定める。新兵は最初から多少は戦い方を知っている。",
+    "branch": "physical",
+    "cost": 200,
+    "requires": [
+      "physical_civ"
+    ],
+    "effects": [
+      {
+        "kind": "recruitMorale",
+        "value": 5
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "encirclement",
+    "name": "包囲殲滅",
+    "description": "敵を囲み、四方から同時に叩く。号令一つで部隊が動く。",
+    "branch": "physical",
+    "cost": 400,
+    "requires": [
+      "tactics"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "一斉攻撃が解禁"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "mobile_warfare",
+    "name": "機動戦術",
+    "description": "馬を替えながら駆け、敵が備える前に回り込む。",
+    "branch": "physical",
+    "cost": 400,
+    "requires": [
+      "tactics"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "騎兵の移動力 +1"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "melee",
+    "name": "白兵戦",
+    "description": "盾と短剣で懐に飛び込む。乱戦を恐れぬ歩兵を育てる。",
+    "branch": "physical",
+    "cost": 400,
+    "requires": [
+      "tactics"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "歩兵の攻撃力 +5%"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "siege_defense",
+    "name": "籠城",
+    "description": "城壁を背に、迫る敵を槍衾で迎え撃つ。",
+    "branch": "physical",
+    "cost": 700,
+    "requires": [
+      "melee"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "歩兵の迎撃効果 +5%"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "gunpowder",
+    "name": "火薬",
+    "description": "硝石と硫黄と炭。混ぜ方ひとつで、ただの粉が雷になる。",
+    "branch": "physical",
+    "cost": 200,
+    "requires": [
+      "physical_civ"
+    ],
+    "effects": [],
+    "sprite": null
+  },
+  {
+    "id": "rifle",
+    "name": "ライフル",
+    "description": "遺跡から出る鉄の筒の仕組みを解き明かす。",
+    "branch": "physical",
+    "cost": 400,
+    "requires": [
+      "gunpowder"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "壊れたライフルの修復"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "rifle_production",
+    "name": "ライフルの生産",
+    "description": "鉄の筒を自分たちの手で打ち出す。",
+    "branch": "physical",
+    "cost": 700,
+    "requires": [
+      "rifle"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "ライフルの生産が可能に"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "field_gun",
+    "name": "野戦砲",
+    "description": "車輪の付いた大筒。旧帝国の軍はこれで城壁を崩したという。",
+    "branch": "physical",
+    "cost": 400,
+    "requires": [
+      "gunpowder"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "壊れた野戦砲の修復"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "field_gun_production",
+    "name": "野戦砲の生産",
+    "description": "砲身を鋳造し、車輪に載せる。",
+    "branch": "physical",
+    "cost": 700,
+    "requires": [
+      "field_gun"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "野戦砲の生産が可能に"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "mounted_cannon",
+    "name": "据付大砲",
+    "description": "城壁に据える巨砲。遠くの敵陣まで砲弾が届く。",
+    "branch": "physical",
+    "cost": 1000,
+    "requires": [
+      "field_gun_production"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "壊れた据付大砲の修復"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "mounted_cannon_production",
+    "name": "据付大砲の生産",
+    "description": "巨砲を一から鋳造する。町じゅうの炉が要る。",
+    "branch": "physical",
+    "cost": 1500,
+    "requires": [
+      "mounted_cannon"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "据付大砲の生産が可能に"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "flight",
+    "name": "飛行",
+    "description": "風を読み、帆と翼で空に浮かぶ術を探る。",
+    "branch": "physical",
+    "cost": 200,
+    "requires": [
+      "physical_civ"
+    ],
+    "effects": [],
+    "sprite": null
+  },
+  {
+    "id": "gunship",
+    "name": "ガンシップ",
+    "description": "空を往く鉄の船。銃と砲を積んで地上を見下ろす。",
+    "branch": "physical",
+    "cost": 1000,
+    "requires": [
+      "flight",
+      "rifle_production",
+      "field_gun_production"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "壊れたガンシップの修復"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "gunship_production",
+    "name": "ガンシップの生産",
+    "description": "鉄の船を自分たちの造船所で組み上げる。",
+    "branch": "physical",
+    "cost": 1500,
+    "requires": [
+      "gunship"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "ガンシップの生産が可能に"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "arcane_civ",
+    "name": "魔法文明",
+    "description": "古の魔術書をひもとき、言葉と印で世界の理に触れようとする歩み。",
+    "branch": "arcane",
+    "cost": 100,
+    "requires": [],
+    "effects": [
+      {
+        "kind": "productionPct",
+        "value": 5
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "lightning_magic",
+    "name": "雷魔法",
+    "description": "空の怒りを呼び、敵から敵へと稲妻を走らせる。",
+    "branch": "arcane",
+    "cost": 300,
+    "requires": [
+      "arcane_civ"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "チェインライトニング"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "fire_magic",
+    "name": "火魔法",
+    "description": "掌に炎を集め、槍のように放つ。",
+    "branch": "arcane",
+    "cost": 300,
+    "requires": [
+      "arcane_civ"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "フレイムランス"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "dragon",
+    "name": "ドラゴン",
+    "description": "遺跡に眠る竜の卵を温め、孵す術。",
+    "branch": "arcane",
+    "cost": 600,
+    "requires": [
+      "fire_magic"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "ドラゴンの卵の修復"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "artificial_dragon",
+    "name": "人工ドラゴン",
+    "description": "卵を探さずとも、竜を一から生み出す。",
+    "branch": "arcane",
+    "cost": 1200,
+    "requires": [
+      "dragon"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "ドラゴンを遺物なしで生産できる"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "water_magic",
+    "name": "水魔法",
+    "description": "大気の水を凍らせ、周りの敵を氷で縛る。",
+    "branch": "arcane",
+    "cost": 300,
+    "requires": [
+      "arcane_civ"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "フロストノヴァ"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "earth_magic",
+    "name": "土魔法",
+    "description": "大地を揺らし、足元から岩の槍を突き出す。",
+    "branch": "arcane",
+    "cost": 300,
+    "requires": [
+      "arcane_civ"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "アーススパイク"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "golem",
+    "name": "ゴーレム",
+    "description": "崩れた石の巨人に、もう一度命を吹き込む。",
+    "branch": "arcane",
+    "cost": 600,
+    "requires": [
+      "earth_magic"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "ゴーレムの残骸の修復"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "artificial_golem",
+    "name": "人工ゴーレム",
+    "description": "土と石を捏ね、巨人を一から作り上げる。",
+    "branch": "arcane",
+    "cost": 1200,
+    "requires": [
+      "golem"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "ゴーレムを遺物なしで生産できる"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "archmage",
+    "name": "上級魔術師",
+    "description": "四つの元素をすべて修めた者だけが進める、魔術の奥の院。",
+    "branch": "arcane",
+    "cost": 800,
+    "requires": [
+      "lightning_magic",
+      "fire_magic",
+      "water_magic",
+      "earth_magic"
+    ],
+    "effects": [],
+    "sprite": null
+  },
+  {
+    "id": "celestial_magic",
+    "name": "天体魔法",
+    "description": "星を呼び、天から火の雨を降らせる。",
+    "branch": "arcane",
+    "cost": 1200,
+    "requires": [
+      "archmage"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "メテオフォール"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "behemoth",
+    "name": "ベヒーモス",
+    "description": "伝説の巨獣の骸を繋ぎ合わせ、再び立たせる。",
+    "branch": "arcane",
+    "cost": 1200,
+    "requires": [
+      "archmage"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "ベヒーモスの残骸の修復"
+      }
+    ],
+    "sprite": null
+  },
+  {
+    "id": "artificial_behemoth",
+    "name": "人工ベヒーモス",
+    "description": "骸を探さずとも、巨獣を一から生み出す。",
+    "branch": "arcane",
+    "cost": 2000,
+    "requires": [
+      "behemoth"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "ベヒーモスを遺物なしで生産できる"
+      }
+    ],
+    "sprite": null
+  }
+]

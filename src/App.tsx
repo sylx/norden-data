@@ -3,6 +3,7 @@ import { BuildingEditor } from './buildings/BuildingEditor'
 import { CharacterEditor } from './characters/CharacterEditor'
 import { CityEditor } from './cities/CityEditor'
 import { FactionEditor } from './factions/FactionEditor'
+import { TechEditor } from './techs/TechEditor'
 import { VoiceLineEditor } from './voiceLines/VoiceLineEditor'
 
 const TABS = [
@@ -10,13 +11,14 @@ const TABS = [
   { id: 'factions', label: '勢力データ' },
   { id: 'characters', label: '騎士データ' },
   { id: 'buildings', label: '施設データ' },
+  { id: 'techs', label: '技術データ' },
   { id: 'voiceLines', label: 'セリフ' },
 ] as const
 type TabId = (typeof TABS)[number]['id']
 
 const tabFromHash = (): TabId => TABS.find((t) => `#${t.id}` === location.hash)?.id ?? 'cities'
 
-/** 拠点データ・勢力データ・騎士データ・施設データ・セリフのエディタ。タブを切り替えても編集中の内容は残す */
+/** 拠点データ・勢力データ・騎士データ・施設データ・技術データ・セリフのエディタ。タブを切り替えても編集中の内容は残す */
 export function App() {
   const [tab, setTab] = useState<TabId>(tabFromHash)
 
@@ -41,6 +43,7 @@ export function App() {
         <div className="app__page" hidden={tab !== 'factions'}><FactionEditor active={tab === 'factions'} /></div>
         <div className="app__page" hidden={tab !== 'characters'}><CharacterEditor /></div>
         <div className="app__page" hidden={tab !== 'buildings'}><BuildingEditor /></div>
+        <div className="app__page" hidden={tab !== 'techs'}><TechEditor /></div>
         <div className="app__page" hidden={tab !== 'voiceLines'}><VoiceLineEditor active={tab === 'voiceLines'} /></div>
       </main>
     </div>

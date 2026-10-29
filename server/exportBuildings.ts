@@ -65,6 +65,7 @@ export async function exportBuildings(buildings: readonly SourceBuilding[]): Pro
     ...(b.requiredTags?.length ? { requiredTags: b.requiredTags } : {}),
     ...(b.upgradeFrom ? { upgradeFrom: b.upgradeFrom } : {}),
     ...(b.requiredRelic ? { requiredRelic: b.requiredRelic } : {}),
+    ...(b.requiredTech ? { requiredTech: b.requiredTech } : {}),
     effects: b.effects,
     ...(b.sprite ? { sprite: placed.get(cellKey(b.sprite))! } : {}),
   }))

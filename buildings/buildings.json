@@ -211,8 +211,9 @@
     "gold": 150,
     "effects": [
       {
-        "kind": "etc",
-        "value": "魔術関連研究施設"
+        "kind": "researchPoints",
+        "value": 5,
+        "branch": "arcane"
       }
     ],
     "sprite": {
@@ -227,10 +228,12 @@
     "description": "術を秘伝から学問へ。疎まれてきた者たちが、ここでは机を並べて師を持つ。",
     "supplies": 1100,
     "gold": 350,
+    "requiredTech": "arcane_civ",
     "effects": [
       {
-        "kind": "etc",
-        "value": "魔術関連研究施設"
+        "kind": "researchPoints",
+        "value": 10,
+        "branch": "arcane"
       }
     ],
     "sprite": {
@@ -248,8 +251,9 @@
     "gold": 600,
     "effects": [
       {
-        "kind": "etc",
-        "value": "魔術関連研究施設"
+        "kind": "researchPoints",
+        "value": 20,
+        "branch": "arcane"
       }
     ],
     "sprite": {
@@ -267,8 +271,9 @@
     "gold": 150,
     "effects": [
       {
-        "kind": "etc",
-        "value": "科学関係研究施設"
+        "kind": "researchPoints",
+        "value": 5,
+        "branch": "physical"
       }
     ],
     "sprite": {
@@ -283,10 +288,12 @@
     "description": "旧帝国の文書が棚の奥まで眠る。司書たちは失われた知識の地図を少しずつ描き直している。",
     "supplies": 1200,
     "gold": 350,
+    "requiredTech": "physical_civ",
     "effects": [
       {
-        "kind": "etc",
-        "value": "科学関係研究施設"
+        "kind": "researchPoints",
+        "value": 10,
+        "branch": "physical"
       }
     ],
     "sprite": {
@@ -304,8 +311,9 @@
     "gold": 600,
     "effects": [
       {
-        "kind": "etc",
-        "value": "科学関係研究施設"
+        "kind": "researchPoints",
+        "value": 20,
+        "branch": "physical"
       }
     ],
     "sprite": {

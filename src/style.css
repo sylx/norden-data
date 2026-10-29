@@ -252,3 +252,16 @@ input[type='range'] { accent-color: var(--accent); width: 100%; }
 .emblem-picker__item.is-used { opacity: 0.5; }
 .emblem-picker__item.is-selected { border-color: var(--accent); opacity: 1; }
 .emblem-picker__number { position: absolute; right: 2px; bottom: 0; font-size: 10px; color: var(--muted); }
+
+/* 技術データ: 前提の選択と、段ごとの簡単なツリー */
+.tech-requires { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+.tech-requires__item { display: inline-flex; align-items: center; gap: 4px; white-space: nowrap; }
+.tech-requires__item.is-disabled { opacity: .45; }
+.tech-tree { display: grid; gap: 12px; }
+.tech-tree__columns { display: flex; gap: 18px; overflow-x: auto; }
+.tech-tree__column { display: grid; align-content: start; gap: 4px; min-width: 9em; margin: 0; padding: 0; list-style: none; }
+.tech-tree__node { width: 100%; padding: 3px 8px; text-align: left; color: inherit; background: transparent; border: 1px solid var(--line); border-radius: 4px; cursor: pointer; font: inherit; }
+.tech-tree__node.is-selected { border-color: currentColor; font-weight: 700; }
+.tech-tree__node.is-required { background: #3d6fb833; }
+.tech-tree__node.is-child { background: #4f8a6333; }
+.tech-tree__cost { margin-left: 6px; opacity: .6; font-size: 11px; }

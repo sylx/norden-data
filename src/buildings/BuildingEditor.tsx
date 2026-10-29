@@ -2,12 +2,14 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import {
   BUILDING_EFFECT_LABELS, describeEffect, type BuildingEffect, type BuildingEffectKind,
 } from '@game/data/buildings.ts'
+import { TECH_BRANCH_LABELS, type TechBranch } from '@game/data/techs.ts'
 import { api, errorMessage } from '../api'
 import { Field, NumberField, SaveStatus, TagsField } from '../fields'
 import { useLeaveGuard } from '../useDirty'
 import { SheetCrop } from '../characters/SheetCrop'
 import { SpritePicker } from '../characters/SpritePicker'
 import { cellRect, type SheetInfo } from '../characters/types'
+import type { SourceTech } from '../techs/types'
 import { createBuilding, isBuildingId, upgradeCycle, type SourceBuilding } from './types'
 
 const EFFECT_KINDS = Object.keys(BUILDING_EFFECT_LABELS) as BuildingEffectKind[]
@@ -21,10 +23,12 @@ const clampEffect = (kind: BuildingEffectKind, value: number) => {
   return input ? Math.min(input.max, Math.max(input.min, Math.round(value))) : value
 }
 
-/** 種類を kind に変えた効果。前の値は引き継げるときだけ引き継ぐ（その他はテキスト、ほかは数） */
+/** 種類を kind に変えた効果。前の値は引き継げるときだけ引き継ぐ（その他はテキスト、ほかは数。研究は系統も持つ） */
 function withKind(effect: BuildingEffect, kind: BuildingEffectKind): BuildingEffect {
   if (kind === 'etc') return { kind, value: effect.kind === 'etc' ? effect.value : '' }
-  return { kind, value: clampEffect(kind, effect.kind === 'etc' ? 10 : effect.value) }
+  const value = clampEffect(kind, effect.kind === 'etc' ? 10 : effect.value)
+  if (kind === 'researchPoints') return { kind, value, branch: effect.kind === 'researchPoints' ? effect.branch : 'physical' }
+  return { kind, value }
 }
 
 /** server/exportBuildings.ts の ExportResult */
@@ -66,6 +70,8 @@ export function BuildingEditor() {
   const [status, setStatus] = useState<{ message?: string; error?: string }>({})
   const [exported, setExported] = useState<ExportResult | null>(null)
   const [busy, setBusy] = useState(false)
+  /** 必要な技術に選べる技術（技術データの元データ） */
+  const [techs, setTechs] = useState<SourceTech[]>([])
 
   const loadSheets = useCallback(() => api<SheetInfo[]>('/api/building-sheets').then(
     setSheets,
@@ -82,6 +88,7 @@ export function BuildingEditor() {
     (e) => setStatus({ error: errorMessage(e) }),
   ), [])
   useEffect(() => { load(); loadSheets() }, [load, loadSheets])
+  useEffect(() => { api<SourceTech[]>('/api/techs').then(setTechs, (e) => setStatus({ error: errorMessage(e) })) }, [])
 
   const dirty = buildings !== null && JSON.stringify(buildings) !== savedJson
   useLeaveGuard(dirty)
@@ -181,6 +188,7 @@ export function BuildingEditor() {
                       b.requiredTags?.length && b.requiredTags.join('・'),
                       b.upgradeFrom && `${nameOf(b.upgradeFrom)}から`,
                       b.requiredRelic && `遺物「${b.requiredRelic}」`,
+                      b.requiredTech && `技術「${techs.find((t) => t.id === b.requiredTech)?.name ?? b.requiredTech}」`,
                       b.effects.map(describeEffect).join('・') || '効果なし',
                     ].filter(Boolean).join(' / ')}
                   </span>
@@ -240,6 +248,15 @@ export function BuildingEditor() {
                   <input value={building.requiredRelic ?? ''} placeholder="なし"
                     onChange={(e) => update({ requiredRelic: e.target.value || undefined })} />
                 </Field>
+                <Field label="必要な技術">
+                  <select value={building.requiredTech ?? ''} onChange={(e) => update({ requiredTech: e.target.value || undefined })}>
+                    <option value="">なし</option>
+                    {building.requiredTech && !techs.some((t) => t.id === building.requiredTech) && (
+                      <option value={building.requiredTech}>{building.requiredTech}（見つかりません）</option>
+                    )}
+                    {techs.map((t) => <option key={t.id} value={t.id}>{t.name}（{t.id}）</option>)}
+                  </select>
+                </Field>
                 <Field label="必要なタグ（どれか）" wide>
                   <TagsField value={building.requiredTags ?? []}
                     onChange={(tags) => update({ requiredTags: tags.length ? tags : undefined })} />
@@ -253,6 +270,9 @@ export function BuildingEditor() {
               )}
               {building.requiredRelic && (
                 <p className="form__hint">遺物の所持はまだゲームに無いので、今は建てられない</p>
+              )}
+              {building.requiredTech && (
+                <p className="form__hint">勢力がこの技術を研究し終えるまで、建てられる施設に出ない</p>
               )}
               {upgradesTo.length > 0 && (
                 <p className="form__hint">アップグレード先: {upgradesTo.map((b) => b.name).join('・')}</p>
@@ -278,6 +298,12 @@ export function BuildingEditor() {
                         min={EFFECT_INPUTS[effect.kind]?.min} max={EFFECT_INPUTS[effect.kind]?.max} step={EFFECT_INPUTS[effect.kind]?.step ?? 5}
                         onChange={(e) => setEffects(building.effects.map((ef, j) => (
                           j === i ? { ...effect, value: clampEffect(effect.kind, e.target.value === '' ? 0 : Number(e.target.value)) } : ef)))} />
+                      {effect.kind === 'researchPoints' && (
+                        <select value={effect.branch} aria-label="系統"
+                          onChange={(e) => setEffects(building.effects.map((ef, j) => (j === i ? { ...effect, branch: e.target.value as TechBranch } : ef)))}>
+                          {(Object.keys(TECH_BRANCH_LABELS) as TechBranch[]).map((b) => <option key={b} value={b}>{TECH_BRANCH_LABELS[b]}</option>)}
+                        </select>
+                      )}
                       <span className="relation__target form__hint">{describeEffect(effect)}</span>
                     </>
                   )}
