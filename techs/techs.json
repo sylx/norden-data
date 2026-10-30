@@ -12,7 +12,11 @@
         "value": 5
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 0,
+      "row": 0
+    }
   },
   {
     "id": "tactics",
@@ -29,7 +33,11 @@
         "value": 5
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 1,
+      "row": 0
+    }
   },
   {
     "id": "encirclement",
@@ -46,7 +54,11 @@
         "value": "一斉攻撃が解禁"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 2,
+      "row": 0
+    }
   },
   {
     "id": "mobile_warfare",
@@ -63,7 +75,11 @@
         "value": "騎兵の移動力 +1"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 3,
+      "row": 0
+    }
   },
   {
     "id": "melee",
@@ -80,7 +96,11 @@
         "value": "歩兵の攻撃力 +5%"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 4,
+      "row": 0
+    }
   },
   {
     "id": "siege_defense",
@@ -97,7 +117,11 @@
         "value": "歩兵の迎撃効果 +5%"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 0,
+      "row": 1
+    }
   },
   {
     "id": "gunpowder",
@@ -109,7 +133,11 @@
       "physical_civ"
     ],
     "effects": [],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 1,
+      "row": 1
+    }
   },
   {
     "id": "rifle",
@@ -126,7 +154,11 @@
         "value": "壊れたライフルの修復"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 2,
+      "row": 1
+    }
   },
   {
     "id": "rifle_production",
@@ -143,7 +175,11 @@
         "value": "ライフルの生産が可能に"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 3,
+      "row": 1
+    }
   },
   {
     "id": "field_gun",
@@ -160,7 +196,11 @@
         "value": "壊れた野戦砲の修復"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 4,
+      "row": 1
+    }
   },
   {
     "id": "field_gun_production",
@@ -177,7 +217,11 @@
         "value": "野戦砲の生産が可能に"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 0,
+      "row": 2
+    }
   },
   {
     "id": "mounted_cannon",
@@ -194,7 +238,11 @@
         "value": "壊れた据付大砲の修復"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 1,
+      "row": 2
+    }
   },
   {
     "id": "mounted_cannon_production",
@@ -211,7 +259,11 @@
         "value": "据付大砲の生産が可能に"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 2,
+      "row": 2
+    }
   },
   {
     "id": "flight",
@@ -223,7 +275,11 @@
       "physical_civ"
     ],
     "effects": [],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 3,
+      "row": 2
+    }
   },
   {
     "id": "gunship",
@@ -242,7 +298,11 @@
         "value": "壊れたガンシップの修復"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 4,
+      "row": 2
+    }
   },
   {
     "id": "gunship_production",
@@ -259,7 +319,11 @@
         "value": "ガンシップの生産が可能に"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 0,
+      "row": 3
+    }
   },
   {
     "id": "arcane_civ",
