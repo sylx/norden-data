@@ -289,8 +289,7 @@
     "cost": 1000,
     "requires": [
       "flight",
-      "rifle_production",
-      "field_gun_production"
+      "rifle_production"
     ],
     "effects": [
       {
