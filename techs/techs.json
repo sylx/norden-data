@@ -22,11 +22,8 @@
     "id": "tactics",
     "name": "兵法",
     "description": "古い軍記を写し、隊列と号令を定める。新兵は最初から多少は戦い方を知っている。",
-    "branch": "physical",
-    "cost": 200,
-    "requires": [
-      "physical_civ"
-    ],
+    "cost": 100,
+    "requires": [],
     "effects": [
       {
         "kind": "recruitMorale",
@@ -43,8 +40,7 @@
     "id": "encirclement",
     "name": "包囲殲滅",
     "description": "敵を囲み、四方から同時に叩く。号令一つで部隊が動く。",
-    "branch": "physical",
-    "cost": 400,
+    "cost": 200,
     "requires": [
       "tactics"
     ],
@@ -64,8 +60,7 @@
     "id": "mobile_warfare",
     "name": "機動戦術",
     "description": "馬を替えながら駆け、敵が備える前に回り込む。",
-    "branch": "physical",
-    "cost": 400,
+    "cost": 200,
     "requires": [
       "tactics"
     ],
@@ -85,8 +80,7 @@
     "id": "melee",
     "name": "白兵戦",
     "description": "盾と短剣で懐に飛び込む。乱戦を恐れぬ歩兵を育てる。",
-    "branch": "physical",
-    "cost": 400,
+    "cost": 200,
     "requires": [
       "tactics"
     ],
@@ -106,8 +100,7 @@
     "id": "siege_defense",
     "name": "籠城",
     "description": "城壁を背に、迫る敵を槍衾で迎え撃つ。",
-    "branch": "physical",
-    "cost": 700,
+    "cost": 400,
     "requires": [
       "melee"
     ],
@@ -253,6 +246,7 @@
       "flight",
       "rifle_production"
     ],
+    "alignWith": "flight",
     "effects": [
       {
         "kind": "etc",

@@ -60,6 +60,7 @@ export async function exportTechs(techs: readonly SourceTech[]): Promise<ExportR
     branch: t.branch,
     cost: t.cost,
     requires: t.requires,
+    ...(t.alignWith ? { alignWith: t.alignWith } : {}),
     effects: t.effects,
     ...(t.sprite ? { sprite: placed.get(cellKey(t.sprite))! } : {}),
   }))

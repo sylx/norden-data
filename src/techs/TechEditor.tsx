@@ -7,7 +7,7 @@ import { useLeaveGuard } from '../useDirty'
 import { SheetCrop } from '../characters/SheetCrop'
 import { SpritePicker } from '../characters/SpritePicker'
 import { cellRect, type SheetInfo } from '../characters/types'
-import { createTech, isTechId, requiresCycle, techDepths, techProblems, type SourceTech } from './types'
+import { createTech, isAlignTarget, isTechId, requiresCycle, techDepths, techProblems, type SourceTech } from './types'
 
 type TechEffectKind = TechEffect['kind']
 
@@ -48,40 +48,35 @@ function TechThumb({ tech, sheets, width, square, className = '' }: {
   return <SheetCrop sheet={sheet} rect={rect} width={width} base="/tech-sheets" className={className} />
 }
 
-/** 系統ごとに、段（前提からの深さ）を列にした簡単なツリー。前提のつながりの確認用 */
+/** 段（前提からの深さ）を列にした簡単なツリー。前提の無い技術は左端の列に並ぶ。前提のつながりの確認用 */
 function TechTree({ techs, selectedId, onSelect }: { techs: readonly SourceTech[]; selectedId: string; onSelect: (id: string) => void }) {
   const depths = techDepths(techs)
   const nameOf = (id: string) => techs.find((t) => t.id === id)?.name ?? id
   const selected = techs.find((t) => t.id === selectedId)
+  const columns = Math.max(0, ...techs.map((t) => (depths.get(t.id) ?? 0) + 1))
   return (
     <div className="tech-tree">
-      {BRANCHES.map((branch) => {
-        const inBranch = techs.filter((t) => t.branch === branch)
-        const columns = Math.max(0, ...inBranch.map((t) => (depths.get(t.id) ?? 0) + 1))
-        return (
-          <section key={branch} className="tech-tree__branch">
-            <h3 className="form__heading">{TECH_BRANCH_LABELS[branch]}</h3>
-            <div className="tech-tree__columns">
-              {Array.from({ length: columns }, (_, depth) => (
-                <ol key={depth} className="tech-tree__column">
-                  {inBranch.filter((t) => (depths.get(t.id) ?? 0) === depth).map((t) => {
-                    const related = selected && (selected.requires.includes(t.id) ? 'is-required' : t.requires.includes(selected.id) ? 'is-child' : '')
-                    return (
-                      <li key={t.id}>
-                        <button type="button" className={`tech-tree__node ${t.id === selectedId ? 'is-selected' : ''} ${related || ''}`}
-                          title={t.requires.length > 0 ? `前提: ${t.requires.map(nameOf).join('・')}` : '根'}
-                          onClick={() => onSelect(t.id)}>
-                          {t.name}<span className="tech-tree__cost">{t.cost}</span>
-                        </button>
-                      </li>
-                    )
-                  })}
-                </ol>
-              ))}
-            </div>
-          </section>
-        )
-      })}
+      <section className="tech-tree__branch">
+        <h3 className="form__heading">ツリー</h3>
+        <div className="tech-tree__columns">
+          {Array.from({ length: columns }, (_, depth) => (
+            <ol key={depth} className="tech-tree__column">
+              {techs.filter((t) => (depths.get(t.id) ?? 0) === depth).map((t) => {
+                const related = selected && (selected.requires.includes(t.id) ? 'is-required' : t.requires.includes(selected.id) ? 'is-child' : '')
+                return (
+                  <li key={t.id}>
+                    <button type="button" className={`tech-tree__node ${t.id === selectedId ? 'is-selected' : ''} ${related || ''}`}
+                      title={t.requires.length > 0 ? `前提: ${t.requires.map(nameOf).join('・')}` : '根'}
+                      onClick={() => onSelect(t.id)}>
+                      {t.name}<span className="tech-tree__cost">{t.cost}</span>
+                    </button>
+                  </li>
+                )
+              })}
+            </ol>
+          ))}
+        </div>
+      </section>
       <p className="form__hint">選んだ技術の前提は青、それを前提にする技術は緑。前提が循環している技術は出ない</p>
     </div>
   )
@@ -166,18 +161,22 @@ export function TechEditor() {
   /** 選んでいる技術の子として足す（系統と前提を引き継ぐ） */
   const add = () => {
     if (!newId || idProblem) return
-    setTechs((list) => list && [...list, { ...createTech(newId, tech?.branch), requires: tech ? [tech.id] : [] }])
+    setTechs((list) => list && [...list, { ...createTech(newId, tech ? tech.branch : 'physical'), requires: tech ? [tech.id] : [] }])
     setSelectedId(newId)
     setNewId('')
   }
 
-  /** 削除した技術を前提にしていた技術からは、前提を外す */
+  /** 削除した技術を前提にしていた技術からは、前提を外す（行を揃える先も） */
   const remove = () => {
     if (!techs || !tech) return
     const children = techs.filter((t) => t.requires.includes(tech.id))
     const note = children.length ? `\n${children.map((t) => t.name).join('・')}の前提からも外します。` : ''
     if (!confirm(`${tech.name}（${tech.id}）を削除しますか？${note}\n施設の必要な技術に入っていれば、そこには残ります`)) return
-    const rest = techs.filter((t) => t.id !== tech.id).map((t) => ({ ...t, requires: t.requires.filter((id) => id !== tech.id) }))
+    const rest = techs.filter((t) => t.id !== tech.id).map((t) => ({
+      ...t,
+      requires: t.requires.filter((id) => id !== tech.id),
+      alignWith: t.alignWith === tech.id ? undefined : t.alignWith,
+    }))
     setTechs(rest)
     setSelectedId(rest[0]?.id ?? '')
   }
@@ -189,6 +188,9 @@ export function TechEditor() {
   const wouldCycle = (id: string) => Boolean(tech
     && requiresCycle(techs.map((t) => (t.id === tech.id ? { ...t, requires: [...t.requires, id] } : t)), tech.id))
   const children = tech ? techs.filter((t) => t.requires.includes(tech.id)) : []
+  const depths = techDepths(techs)
+  /** 行を揃える先に選べる技術（いま選んでいるものが選べなくなっていても、問題が見えるように残す） */
+  const alignTargets = tech ? techs.filter((t) => t.id === tech.alignWith || isAlignTarget(tech.id, t.id, depths)) : []
 
   return (
     <div className="character-editor">
@@ -211,7 +213,7 @@ export function TechEditor() {
                   <span className="character-list__sub">
                     {[
                       t.id,
-                      TECH_BRANCH_LABELS[t.branch],
+                      t.branch ? TECH_BRANCH_LABELS[t.branch] : '系統なし',
                       `${t.cost}pt`,
                       t.requires.length > 0 ? `前提 ${t.requires.map(nameOf).join('・')}` : '根',
                       t.effects.map(describeEffect).join('・') || '効果なし',
@@ -262,7 +264,8 @@ export function TechEditor() {
               <div className="form__grid">
                 <Field label="名前"><input value={tech.name} onChange={(e) => update({ name: e.target.value })} /></Field>
                 <Field label="系統">
-                  <select value={tech.branch} onChange={(e) => update({ branch: e.target.value as TechBranch })}>
+                  <select value={tech.branch ?? ''} onChange={(e) => update({ branch: (e.target.value || undefined) as TechBranch | undefined })}>
+                    <option value="">なし（研究施設の割増なし）</option>
                     {BRANCHES.map((b) => <option key={b} value={b}>{TECH_BRANCH_LABELS[b]}</option>)}
                   </select>
                 </Field>
@@ -290,6 +293,12 @@ export function TechEditor() {
                 {tech.requires.length === 0 ? '根（最初から研究できる）' : `前提: ${tech.requires.map(nameOf).join('・')}`}
                 {children.length > 0 && ` / この技術を前提にする: ${children.map((t) => t.name).join('・')}`}
               </p>
+              <Field label="行を揃える技術（技術画面のツリー）">
+                <select value={tech.alignWith ?? ''} onChange={(e) => update({ alignWith: e.target.value || undefined })}>
+                  <option value="">なし（一番深い前提の行）</option>
+                  {alignTargets.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
+                </select>
+              </Field>
 
               <h3 className="form__heading">効果（研究し終えた勢力の全都市）</h3>
               {tech.effects.map((effect, i) => (

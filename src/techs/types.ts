@@ -11,7 +11,7 @@ export type SourceTech = Omit<Tech, 'sprite'> & {
 
 export const isTechId = (id: string) => /^[a-z][a-z0-9_]*$/.test(id)
 
-export const createTech = (id: string, branch: Tech['branch'] = 'physical'): SourceTech => ({
+export const createTech = (id: string, branch: Tech['branch']): SourceTech => ({
   id, name: id, description: '', branch, cost: 100, requires: [], effects: [], sprite: null,
 })
 
@@ -32,16 +32,27 @@ export function requiresCycle(techs: readonly Pick<SourceTech, 'id' | 'requires'
   return walk(id, [id])
 }
 
-/** 前提の技術が無い・前提が循環している技術の問題（ゲームの techDataProblems と同じ検査） */
-export function techProblems(techs: readonly Pick<SourceTech, 'id' | 'name' | 'requires'>[]): string[] {
+/** 前提の技術が無い・前提が循環している・行を揃える先が左の列に無い技術の問題（ゲームの techDataProblems と同じ検査） */
+export function techProblems(techs: readonly Pick<SourceTech, 'id' | 'name' | 'requires' | 'alignWith'>[]): string[] {
   const ids = new Set(techs.map((t) => t.id))
+  const depths = techDepths(techs)
   const problems: string[] = []
   for (const t of techs) {
     for (const r of t.requires) if (!ids.has(r)) problems.push(`${t.id} ${t.name}: 前提 ${r} がありません`)
     const cycle = requiresCycle(techs, t.id)
     if (cycle) problems.push(`前提が循環しています: ${cycle.join(' → ')}`)
+    if (t.alignWith && !isAlignTarget(t.id, t.alignWith, depths)) {
+      problems.push(`${t.id} ${t.name}: 行を揃える先 ${t.alignWith} は左の列の技術ではありません`)
+    }
   }
   return problems
+}
+
+/** target の技術が id の技術の行を揃える先になれるか（左の列にある） */
+export function isAlignTarget(id: string, target: string, depths: ReadonlyMap<string, number>): boolean {
+  const depth = depths.get(target)
+  const own = depths.get(id)
+  return depth !== undefined && own !== undefined && depth < own
 }
 
 /** 前提からの段（根は 0、前提の一番深いものの次）。循環しているものは入らない */
