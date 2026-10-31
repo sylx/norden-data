@@ -183,7 +183,7 @@
   },
   {
     "id": "field_gun",
-    "name": "野戦砲",
+    "name": "大砲",
     "description": "車輪の付いた大筒。旧帝国の軍はこれで城壁を崩したという。",
     "branch": "physical",
     "cost": 400,
@@ -193,7 +193,7 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "壊れた野戦砲の修復"
+        "value": "壊れた大砲の修復"
       }
     ],
     "sprite": {
@@ -204,7 +204,7 @@
   },
   {
     "id": "field_gun_production",
-    "name": "野戦砲の生産",
+    "name": "大砲の生産",
     "description": "砲身を鋳造し、車輪に載せる。",
     "branch": "physical",
     "cost": 700,
@@ -214,46 +214,8 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "野戦砲の生産が可能に"
-      }
-    ],
-    "sprite": {
-      "sheet": "research01.webp",
-      "col": 0,
-      "row": 2
-    }
-  },
-  {
-    "id": "mounted_cannon",
-    "name": "据付大砲",
-    "description": "城壁に据える巨砲。遠くの敵陣まで砲弾が届く。",
-    "branch": "physical",
-    "cost": 1000,
-    "requires": [
-      "field_gun_production"
-    ],
-    "effects": [
-      {
-        "kind": "etc",
-        "value": "壊れた据付大砲の修復"
-      }
-    ],
-    "sprite": {
-      "sheet": "research01.webp",
-      "col": 1,
-      "row": 2
-    }
-  },
-  {
-    "id": "mounted_cannon_production",
-    "name": "据付大砲の生産",
-    "description": "巨砲を一から鋳造する。町じゅうの炉が要る。",
-    "branch": "physical",
-    "cost": 1500,
-    "requires": [
-      "mounted_cannon"
-    ],
-    "effects": [
+        "value": "砲兵の生産が可能に"
+      },
       {
         "kind": "etc",
         "value": "据付大砲の生産が可能に"
@@ -261,7 +223,7 @@
     ],
     "sprite": {
       "sheet": "research01.webp",
-      "col": 2,
+      "col": 0,
       "row": 2
     }
   },
@@ -337,7 +299,11 @@
         "value": 5
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research02.webp",
+      "col": 0,
+      "row": 0
+    }
   },
   {
     "id": "lightning_magic",
@@ -354,7 +320,11 @@
         "value": "チェインライトニング"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research02.webp",
+      "col": 1,
+      "row": 0
+    }
   },
   {
     "id": "fire_magic",
@@ -371,7 +341,11 @@
         "value": "フレイムランス"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research02.webp",
+      "col": 2,
+      "row": 0
+    }
   },
   {
     "id": "dragon",
@@ -388,7 +362,11 @@
         "value": "ドラゴンの卵の修復"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research02.webp",
+      "col": 3,
+      "row": 0
+    }
   },
   {
     "id": "artificial_dragon",
@@ -405,7 +383,11 @@
         "value": "ドラゴンを遺物なしで生産できる"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research02.webp",
+      "col": 4,
+      "row": 0
+    }
   },
   {
     "id": "water_magic",
@@ -422,7 +404,11 @@
         "value": "フロストノヴァ"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research02.webp",
+      "col": 0,
+      "row": 1
+    }
   },
   {
     "id": "earth_magic",
@@ -439,7 +425,11 @@
         "value": "アーススパイク"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research02.webp",
+      "col": 1,
+      "row": 1
+    }
   },
   {
     "id": "golem",
@@ -456,7 +446,11 @@
         "value": "ゴーレムの残骸の修復"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research02.webp",
+      "col": 2,
+      "row": 1
+    }
   },
   {
     "id": "artificial_golem",
@@ -473,7 +467,11 @@
         "value": "ゴーレムを遺物なしで生産できる"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research02.webp",
+      "col": 3,
+      "row": 1
+    }
   },
   {
     "id": "archmage",
@@ -488,7 +486,11 @@
       "earth_magic"
     ],
     "effects": [],
-    "sprite": null
+    "sprite": {
+      "sheet": "research02.webp",
+      "col": 4,
+      "row": 1
+    }
   },
   {
     "id": "celestial_magic",
@@ -505,7 +507,11 @@
         "value": "メテオフォール"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research02.webp",
+      "col": 0,
+      "row": 2
+    }
   },
   {
     "id": "behemoth",
@@ -522,7 +528,11 @@
         "value": "ベヒーモスの残骸の修復"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research02.webp",
+      "col": 1,
+      "row": 2
+    }
   },
   {
     "id": "artificial_behemoth",
@@ -539,6 +549,10 @@
         "value": "ベヒーモスを遺物なしで生産できる"
       }
     ],
-    "sprite": null
+    "sprite": {
+      "sheet": "research02.webp",
+      "col": 2,
+      "row": 2
+    }
   }
 ]
