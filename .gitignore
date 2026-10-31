@@ -11,3 +11,6 @@ buildings/sources/*
 # 技術の元画像（大きいのでコミットしない。各自で置く）
 techs/sources/*
 !techs/sources/.gitkeep
+# 遺物の元画像（大きいのでコミットしない。各自で置く）
+relics/sources/*
+!relics/sources/.gitkeep

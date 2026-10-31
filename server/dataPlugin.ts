@@ -11,6 +11,10 @@
  * - POST     /api/techs/export       ルートの techData.json・techs.webp などに書き出す
  * - GET      /api/tech-sheets        techs/sources/ の元画像とセルの並び
  * - GET      /tech-sheets/<file>     技術の元画像
+ * - GET/PUT  /api/relics             relics/relics.json（遺物データの元データ）
+ * - POST     /api/relics/export      ルートの relicData.json・relics.webp などに書き出す
+ * - GET      /api/relic-sheets       relics/sources/ の元画像とセルの並び
+ * - GET      /relic-sheets/<file>    遺物の元画像
  * - GET/PUT  /api/voice-lines        ルートの src/data/voiceLines.json
  * - GET/PUT  /api/characters         characters/characters.json（騎士データの元データ）
  * - POST     /api/characters/export  ルートの characterData.json などに書き出す
@@ -24,13 +28,15 @@ import path from 'node:path'
 import type { Plugin } from 'vite'
 import { isBuildingId, type SourceBuilding } from '../src/buildings/types.ts'
 import type { SourceCharacter } from '../src/characters/types.ts'
+import { isRelicId, type SourceRelic } from '../src/relics/types.ts'
 import { isTechId, type SourceTech } from '../src/techs/types.ts'
 import { isFactionId } from '../src/factions/types.ts'
 import { exportBuildings } from './exportBuildings.ts'
 import { exportCharacterData, exportCharacters } from './exportCharacters.ts'
+import { exportRelics } from './exportRelics.ts'
 import { exportTechs } from './exportTechs.ts'
 import { ExportError } from './files.ts'
-import { BUILDING_SHEETS_DIR, BUILDINGS_FILE, CHARACTERS_FILE, OUTPUT, SHEETS_DIR, TECH_SHEETS_DIR, TECHS_FILE } from './paths.ts'
+import { BUILDING_SHEETS_DIR, BUILDINGS_FILE, CHARACTERS_FILE, OUTPUT, RELIC_SHEETS_DIR, RELICS_FILE, SHEETS_DIR, TECH_SHEETS_DIR, TECHS_FILE } from './paths.ts'
 import { isSheetFileName, listSheets } from './sheets.ts'
 
 class HttpError extends Error {
@@ -193,6 +199,34 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<boolea
     case 'GET /api/tech-sheets':
       sendJson(res, 200, await listSheets(TECH_SHEETS_DIR))
       return true
+    case 'GET /api/relics':
+      sendJson(res, 200, await readJson(RELICS_FILE))
+      return true
+    case 'PUT /api/relics': {
+      const body = await readBody(req)
+      assertList(body)
+      const bad = body.find((r) => !isRelicId(r.id))
+      if (bad) throw new HttpError(400, `遺物の ID は英小文字・数字・_ にしてください: ${bad.id}`)
+      await writeJson(RELICS_FILE, body)
+      sendJson(res, 200, { ok: true, file: RELICS_FILE })
+      return true
+    }
+    case 'POST /api/relics/export': {
+      const relics = await readJson(RELICS_FILE)
+      const techs = await readJson(TECHS_FILE)
+      assertList(relics)
+      assertList(techs)
+      try {
+        sendJson(res, 200, await exportRelics(relics as unknown as SourceRelic[], techs.map((t) => t.id)))
+      } catch (e) {
+        if (e instanceof ExportError) throw new HttpError(400, e.message)
+        throw e
+      }
+      return true
+    }
+    case 'GET /api/relic-sheets':
+      sendJson(res, 200, await listSheets(RELIC_SHEETS_DIR))
+      return true
     case 'GET /api/voice-lines':
       sendJson(res, 200, await readJson(OUTPUT.voiceLines))
       return true
@@ -247,6 +281,12 @@ async function handle(req: IncomingMessage, res: ServerResponse): Promise<boolea
   if (techSheet) {
     if (!isSheetFileName(techSheet)) throw new HttpError(400, `不正なファイル名: ${techSheet}`)
     await sendImage(res, TECH_SHEETS_DIR, techSheet)
+    return true
+  }
+  const relicSheet = /^GET \/relic-sheets\/([^/]+)$/.exec(route)?.[1]
+  if (relicSheet) {
+    if (!isSheetFileName(relicSheet)) throw new HttpError(400, `不正なファイル名: ${relicSheet}`)
+    await sendImage(res, RELIC_SHEETS_DIR, relicSheet)
     return true
   }
   return false

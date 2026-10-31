@@ -1,0 +1,149 @@
+[
+  {
+    "id": "rifle",
+    "name": "ライフル",
+    "brokenName": "壊れたライフル",
+    "description": "火薬で鉛の弾を撃ち出す、旧文明の携行兵器。遠くの鎧を音より先に貫く。",
+    "rarity": "C",
+    "use": "equipment",
+    "dismantlePoints": 300,
+    "repair": { "supplies": 400, "gold": 150, "tech": "rifle" },
+    "production": { "supplies": 300, "gold": 100, "tech": "rifle_production" },
+    "sprite": { "sheet": "relics01.webp", "col": 1, "row": 0 },
+    "brokenSprite": { "sheet": "relics01.webp", "col": 0, "row": 0 }
+  },
+  {
+    "id": "field_gun",
+    "name": "大砲",
+    "brokenName": "壊れた大砲",
+    "description": "城壁ごと敵を砕く旧文明の重砲。据え付ければ都市の守りが変わる。",
+    "rarity": "B",
+    "use": "building",
+    "dismantlePoints": 300,
+    "repair": { "supplies": 600, "gold": 250, "tech": "field_gun" },
+    "production": { "supplies": 800, "gold": 300, "tech": "field_gun_production" },
+    "sprite": { "sheet": "relics01.webp", "col": 3, "row": 0 },
+    "brokenSprite": { "sheet": "relics01.webp", "col": 2, "row": 0 }
+  },
+  {
+    "id": "ballista",
+    "name": "バリスタ",
+    "brokenName": "壊れたバリスタ",
+    "description": "太い矢を弦で放つ大型の弩。仕組みは単純で、職人の手で直せる。",
+    "rarity": "C",
+    "use": "building",
+    "dismantlePoints": 200,
+    "repair": { "supplies": 500, "gold": 150 },
+    "sprite": { "sheet": "relics01.webp", "col": 0, "row": 1 },
+    "brokenSprite": { "sheet": "relics01.webp", "col": 4, "row": 0 }
+  },
+  {
+    "id": "arcane_focus",
+    "name": "魔導台",
+    "brokenName": "壊れた魔導台",
+    "description": "魔力を束ねて増幅する石の台座。継ぎ目を埋めれば、再び魔力が巡りはじめる。",
+    "rarity": "B",
+    "use": "building",
+    "dismantlePoints": 300,
+    "repair": { "supplies": 600, "gold": 250 },
+    "sprite": { "sheet": "relics01.webp", "col": 2, "row": 1 },
+    "brokenSprite": { "sheet": "relics01.webp", "col": 1, "row": 1 }
+  },
+  {
+    "id": "gunship",
+    "name": "ガンシップ",
+    "brokenName": "壊れたガンシップ",
+    "description": "空を渡り、上から砲火を浴びせる旧文明の飛行艦。その残骸だけでも国が買える。",
+    "rarity": "A",
+    "use": "building",
+    "dismantlePoints": 800,
+    "repair": { "supplies": 1500, "gold": 500, "tech": "gunship" },
+    "production": { "supplies": 2000, "gold": 700, "tech": "gunship_production" },
+    "sprite": { "sheet": "relics01.webp", "col": 4, "row": 1 },
+    "brokenSprite": { "sheet": "relics01.webp", "col": 3, "row": 1 }
+  },
+  {
+    "id": "dragon",
+    "name": "ドラゴン",
+    "brokenName": "ドラゴンの卵",
+    "description": "古代の術式で眠らされた竜。孵れば、主と認めた者のために空を焼く。",
+    "rarity": "A",
+    "use": "summon",
+    "dismantlePoints": 500,
+    "repair": { "supplies": 1000, "gold": 400, "tech": "dragon" },
+    "production": { "supplies": 1500, "gold": 600, "tech": "artificial_dragon" },
+    "sprite": { "sheet": "relics01.webp", "col": 1, "row": 2 },
+    "brokenSprite": { "sheet": "relics01.webp", "col": 0, "row": 2 }
+  },
+  {
+    "id": "golem",
+    "name": "ゴーレム",
+    "brokenName": "ゴーレムの残骸",
+    "description": "命令のままに歩く石の巨人。刻まれた術式を繋ぎ直せば、再び立ち上がる。",
+    "rarity": "A",
+    "use": "summon",
+    "dismantlePoints": 500,
+    "repair": { "supplies": 1000, "gold": 400, "tech": "golem" },
+    "production": { "supplies": 1500, "gold": 600, "tech": "artificial_golem" },
+    "sprite": { "sheet": "relics01.webp", "col": 3, "row": 2 },
+    "brokenSprite": { "sheet": "relics01.webp", "col": 2, "row": 2 }
+  },
+  {
+    "id": "behemoth",
+    "name": "ベヒーモス",
+    "brokenName": "ベヒーモスの残骸",
+    "description": "都市ひとつを踏み潰したと伝わる魔導の巨獣。朽ちてなお、その骨は熱を帯びている。",
+    "rarity": "S",
+    "use": "summon",
+    "dismantlePoints": 1000,
+    "repair": { "supplies": 2000, "gold": 800, "tech": "behemoth" },
+    "production": { "supplies": 3000, "gold": 1200, "tech": "artificial_behemoth" },
+    "sprite": { "sheet": "relics01.webp", "col": 0, "row": 3 },
+    "brokenSprite": { "sheet": "relics01.webp", "col": 4, "row": 2 }
+  },
+  {
+    "id": "grimoire_chain_lightning",
+    "name": "チェインライトニングの魔導書",
+    "description": "敵から敵へ跳ねる雷の術式を記した書。",
+    "rarity": "B",
+    "use": "equipment",
+    "production": { "supplies": 400, "gold": 200, "tech": "lightning_magic" },
+    "sprite": { "sheet": "relics01.webp", "col": 1, "row": 3 }
+  },
+  {
+    "id": "grimoire_flame_lance",
+    "name": "フレイムランスの魔導書",
+    "description": "炎を一条の槍に束ねて放つ術式を記した書。",
+    "rarity": "B",
+    "use": "equipment",
+    "production": { "supplies": 400, "gold": 200, "tech": "fire_magic" },
+    "sprite": { "sheet": "relics01.webp", "col": 2, "row": 3 }
+  },
+  {
+    "id": "grimoire_frost_nova",
+    "name": "フロストノヴァの魔導書",
+    "description": "周囲の熱を奪い、敵の足を凍らせる術式を記した書。",
+    "rarity": "B",
+    "use": "equipment",
+    "production": { "supplies": 400, "gold": 200, "tech": "water_magic" },
+    "sprite": { "sheet": "relics01.webp", "col": 3, "row": 3 }
+  },
+  {
+    "id": "grimoire_earth_spike",
+    "name": "アーススパイクの魔導書",
+    "description": "大地から岩の杭を突き上げる術式を記した書。",
+    "rarity": "B",
+    "use": "equipment",
+    "production": { "supplies": 400, "gold": 200, "tech": "earth_magic" },
+    "sprite": { "sheet": "relics01.webp", "col": 4, "row": 3 }
+  },
+  {
+    "id": "grimoire_meteor_fall",
+    "name": "メテオフォールの魔導書",
+    "description": "天の星を呼び落とす、最上位の術式を記した書。",
+    "rarity": "A",
+    "use": "equipment",
+    "production": { "supplies": 1200, "gold": 600, "tech": "celestial_magic" },
+    "sprite": { "sheet": "relics01.webp", "col": 0, "row": 4 }
+  }
+]
