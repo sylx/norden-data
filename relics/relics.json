@@ -19,12 +19,12 @@
     },
     "sprite": {
       "sheet": "relics01.webp",
-      "col": 1,
+      "col": 0,
       "row": 0
     },
     "brokenSprite": {
       "sheet": "relics01.webp",
-      "col": 0,
+      "col": 1,
       "row": 0
     }
   },
@@ -48,12 +48,12 @@
     },
     "sprite": {
       "sheet": "relics01.webp",
-      "col": 3,
+      "col": 2,
       "row": 0
     },
     "brokenSprite": {
       "sheet": "relics01.webp",
-      "col": 2,
+      "col": 3,
       "row": 0
     }
   },
@@ -76,13 +76,42 @@
     },
     "sprite": {
       "sheet": "relics01.webp",
+      "col": 4,
+      "row": 0
+    },
+    "brokenSprite": {
+      "sheet": "relics01.webp",
       "col": 0,
+      "row": 1
+    }
+  },
+  {
+    "id": "cannon",
+    "name": "要塞砲",
+    "brokenName": "壊れた要塞砲",
+    "description": "要塞に据える旧文明の巨砲。迫る敵のどこへ落ちるかは砲手にも読めないが、着弾の跡には何も残らない。",
+    "rarity": "A",
+    "use": "building",
+    "dismantlePoints": 300,
+    "repair": {
+      "supplies": 1000,
+      "gold": 500,
+      "tech": "field_gun"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 1,
       "row": 1
     },
     "brokenSprite": {
       "sheet": "relics01.webp",
-      "col": 4,
-      "row": 0
+      "col": 2,
+      "row": 1
+    },
+    "production": {
+      "supplies": 1750,
+      "gold": 700,
+      "tech": "field_gun_production"
     }
   },
   {
@@ -100,12 +129,12 @@
     },
     "sprite": {
       "sheet": "relics01.webp",
-      "col": 2,
+      "col": 3,
       "row": 1
     },
     "brokenSprite": {
       "sheet": "relics01.webp",
-      "col": 1,
+      "col": 4,
       "row": 1
     }
   },
@@ -129,13 +158,13 @@
     },
     "sprite": {
       "sheet": "relics01.webp",
-      "col": 4,
-      "row": 1
+      "col": 0,
+      "row": 2
     },
     "brokenSprite": {
       "sheet": "relics01.webp",
-      "col": 3,
-      "row": 1
+      "col": 1,
+      "row": 2
     }
   },
   {
@@ -157,14 +186,14 @@
       "tech": "artificial_dragon"
     },
     "sprite": {
-      "sheet": "relics01.webp",
-      "col": 1,
-      "row": 2
+      "sheet": "relics02.webp",
+      "col": 0,
+      "row": 0
     },
     "brokenSprite": {
-      "sheet": "relics01.webp",
-      "col": 0,
-      "row": 2
+      "sheet": "relics02.webp",
+      "col": 1,
+      "row": 0
     }
   },
   {
@@ -186,14 +215,14 @@
       "tech": "artificial_golem"
     },
     "sprite": {
-      "sheet": "relics01.webp",
-      "col": 3,
-      "row": 2
+      "sheet": "relics02.webp",
+      "col": 2,
+      "row": 0
     },
     "brokenSprite": {
-      "sheet": "relics01.webp",
-      "col": 2,
-      "row": 2
+      "sheet": "relics02.webp",
+      "col": 3,
+      "row": 0
     }
   },
   {
@@ -215,14 +244,14 @@
       "tech": "artificial_behemoth"
     },
     "sprite": {
-      "sheet": "relics01.webp",
-      "col": 0,
-      "row": 3
+      "sheet": "relics02.webp",
+      "col": 4,
+      "row": 0
     },
     "brokenSprite": {
-      "sheet": "relics01.webp",
-      "col": 4,
-      "row": 2
+      "sheet": "relics02.webp",
+      "col": 0,
+      "row": 1
     }
   },
   {
@@ -237,9 +266,9 @@
       "tech": "lightning_magic"
     },
     "sprite": {
-      "sheet": "relics01.webp",
+      "sheet": "relics02.webp",
       "col": 1,
-      "row": 3
+      "row": 1
     }
   },
   {
@@ -254,9 +283,9 @@
       "tech": "fire_magic"
     },
     "sprite": {
-      "sheet": "relics01.webp",
+      "sheet": "relics02.webp",
       "col": 2,
-      "row": 3
+      "row": 1
     }
   },
   {
@@ -271,9 +300,9 @@
       "tech": "water_magic"
     },
     "sprite": {
-      "sheet": "relics01.webp",
+      "sheet": "relics02.webp",
       "col": 3,
-      "row": 3
+      "row": 1
     }
   },
   {
@@ -288,9 +317,9 @@
       "tech": "earth_magic"
     },
     "sprite": {
-      "sheet": "relics01.webp",
+      "sheet": "relics02.webp",
       "col": 4,
-      "row": 3
+      "row": 1
     }
   },
   {
@@ -300,11 +329,15 @@
     "rarity": "S",
     "use": "equipment",
     "production": {
-      "supplies": 800,
-      "gold": 400,
+      "supplies": 2000,
+      "gold": 1000,
       "tech": "archmage"
     },
-    "sprite": null
+    "sprite": {
+      "sheet": "relics02.webp",
+      "col": 0,
+      "row": 2
+    }
   },
   {
     "id": "grimoire_meteor_fall",
@@ -313,43 +346,14 @@
     "rarity": "S",
     "use": "equipment",
     "production": {
-      "supplies": 1200,
-      "gold": 600,
+      "supplies": 2500,
+      "gold": 1500,
       "tech": "celestial_magic"
     },
     "sprite": {
-      "sheet": "relics01.webp",
-      "col": 0,
-      "row": 4
-    }
-  },
-  {
-    "id": "cannon",
-    "name": "要塞砲",
-    "brokenName": "壊れた要塞砲",
-    "description": "要塞に据える旧文明の巨砲。迫る敵のどこへ落ちるかは砲手にも読めないが、着弾の跡には何も残らない。",
-    "rarity": "A",
-    "use": "building",
-    "dismantlePoints": 300,
-    "repair": {
-      "supplies": 1000,
-      "gold": 500,
-      "tech": "field_gun"
-    },
-    "sprite": {
-      "sheet": "relics01.webp",
-      "col": 3,
-      "row": 0
-    },
-    "brokenSprite": {
-      "sheet": "relics01.webp",
-      "col": 2,
-      "row": 0
-    },
-    "production": {
-      "supplies": 1750,
-      "gold": 700,
-      "tech": "field_gun_production"
+      "sheet": "relics02.webp",
+      "col": 1,
+      "row": 2
     }
   }
 ]
