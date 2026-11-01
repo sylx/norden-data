@@ -429,14 +429,14 @@
   },
   {
     "id": "cannon",
-    "name": "据付大砲",
+    "name": "要塞砲",
     "description": "城壁に据えた鋼の筒。遺された設計図から鋳造されたそれは、雷鳴のような音で敵を迎える。",
     "supplies": 1200,
     "gold": 400,
     "effects": [
       {
         "kind": "etc",
-        "value": "設置した都市の防衛拠点から射程5の砲撃を毎ターン実行可能"
+        "value": "設置した都市の防衛拠点から射程3の砲撃をランダムに実行し、大ダメージを与える"
       }
     ],
     "sprite": {
@@ -444,7 +444,7 @@
       "col": 1,
       "row": 0
     },
-    "requiredRelic": "大砲の設計図"
+    "requiredRelic": "cannon"
   },
   {
     "id": "arcane_focus_platform",
@@ -463,7 +463,7 @@
       "col": 2,
       "row": 0
     },
-    "requiredRelic": "魔導台の設計図"
+    "requiredRelic": "arcane_focus"
   },
   {
     "id": "ballista",
@@ -482,7 +482,7 @@
       "col": 3,
       "row": 0
     },
-    "requiredRelic": "バリスタの設計図"
+    "requiredRelic": "ballista"
   },
   {
     "id": "gunship",
@@ -501,7 +501,7 @@
       "col": 4,
       "row": 0
     },
-    "requiredRelic": "ガンシップの設計図"
+    "requiredRelic": "gunship"
   },
   {
     "id": "prison",

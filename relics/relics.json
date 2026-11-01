@@ -7,23 +7,55 @@
     "rarity": "C",
     "use": "equipment",
     "dismantlePoints": 300,
-    "repair": { "supplies": 400, "gold": 150, "tech": "rifle" },
-    "production": { "supplies": 300, "gold": 100, "tech": "rifle_production" },
-    "sprite": { "sheet": "relics01.webp", "col": 1, "row": 0 },
-    "brokenSprite": { "sheet": "relics01.webp", "col": 0, "row": 0 }
+    "repair": {
+      "supplies": 400,
+      "gold": 150,
+      "tech": "rifle"
+    },
+    "production": {
+      "supplies": 300,
+      "gold": 100,
+      "tech": "rifle_production"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 1,
+      "row": 0
+    },
+    "brokenSprite": {
+      "sheet": "relics01.webp",
+      "col": 0,
+      "row": 0
+    }
   },
   {
     "id": "field_gun",
     "name": "大砲",
     "brokenName": "壊れた大砲",
-    "description": "城壁ごと敵を砕く旧文明の重砲。据え付ければ都市の守りが変わる。",
+    "description": "城壁ごと敵を砕く旧文明の重砲。車輪で戦場を渡り、狙った壁を崩す。",
     "rarity": "B",
     "use": "building",
     "dismantlePoints": 300,
-    "repair": { "supplies": 600, "gold": 250, "tech": "field_gun" },
-    "production": { "supplies": 800, "gold": 300, "tech": "field_gun_production" },
-    "sprite": { "sheet": "relics01.webp", "col": 3, "row": 0 },
-    "brokenSprite": { "sheet": "relics01.webp", "col": 2, "row": 0 }
+    "repair": {
+      "supplies": 600,
+      "gold": 250,
+      "tech": "field_gun"
+    },
+    "production": {
+      "supplies": 800,
+      "gold": 300,
+      "tech": "field_gun_production"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 3,
+      "row": 0
+    },
+    "brokenSprite": {
+      "sheet": "relics01.webp",
+      "col": 2,
+      "row": 0
+    }
   },
   {
     "id": "ballista",
@@ -33,9 +65,25 @@
     "rarity": "C",
     "use": "building",
     "dismantlePoints": 200,
-    "repair": { "supplies": 500, "gold": 150 },
-    "sprite": { "sheet": "relics01.webp", "col": 0, "row": 1 },
-    "brokenSprite": { "sheet": "relics01.webp", "col": 4, "row": 0 }
+    "repair": {
+      "supplies": 500,
+      "gold": 150
+    },
+    "production": {
+      "supplies": 600,
+      "gold": 200,
+      "tech": "volley_fire"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 0,
+      "row": 1
+    },
+    "brokenSprite": {
+      "sheet": "relics01.webp",
+      "col": 4,
+      "row": 0
+    }
   },
   {
     "id": "arcane_focus",
@@ -45,9 +93,21 @@
     "rarity": "B",
     "use": "building",
     "dismantlePoints": 300,
-    "repair": { "supplies": 600, "gold": 250 },
-    "sprite": { "sheet": "relics01.webp", "col": 2, "row": 1 },
-    "brokenSprite": { "sheet": "relics01.webp", "col": 1, "row": 1 }
+    "repair": {
+      "supplies": 600,
+      "gold": 250,
+      "tech": "arcane_civ"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 2,
+      "row": 1
+    },
+    "brokenSprite": {
+      "sheet": "relics01.webp",
+      "col": 1,
+      "row": 1
+    }
   },
   {
     "id": "gunship",
@@ -57,10 +117,26 @@
     "rarity": "A",
     "use": "building",
     "dismantlePoints": 800,
-    "repair": { "supplies": 1500, "gold": 500, "tech": "gunship" },
-    "production": { "supplies": 2000, "gold": 700, "tech": "gunship_production" },
-    "sprite": { "sheet": "relics01.webp", "col": 4, "row": 1 },
-    "brokenSprite": { "sheet": "relics01.webp", "col": 3, "row": 1 }
+    "repair": {
+      "supplies": 1500,
+      "gold": 500,
+      "tech": "gunship"
+    },
+    "production": {
+      "supplies": 2000,
+      "gold": 700,
+      "tech": "gunship_production"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 4,
+      "row": 1
+    },
+    "brokenSprite": {
+      "sheet": "relics01.webp",
+      "col": 3,
+      "row": 1
+    }
   },
   {
     "id": "dragon",
@@ -70,80 +146,210 @@
     "rarity": "A",
     "use": "summon",
     "dismantlePoints": 500,
-    "repair": { "supplies": 1000, "gold": 400, "tech": "dragon" },
-    "production": { "supplies": 1500, "gold": 600, "tech": "artificial_dragon" },
-    "sprite": { "sheet": "relics01.webp", "col": 1, "row": 2 },
-    "brokenSprite": { "sheet": "relics01.webp", "col": 0, "row": 2 }
+    "repair": {
+      "supplies": 1000,
+      "gold": 400,
+      "tech": "dragon"
+    },
+    "production": {
+      "supplies": 1500,
+      "gold": 600,
+      "tech": "artificial_dragon"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 1,
+      "row": 2
+    },
+    "brokenSprite": {
+      "sheet": "relics01.webp",
+      "col": 0,
+      "row": 2
+    }
   },
   {
     "id": "golem",
     "name": "ゴーレム",
-    "brokenName": "ゴーレムの残骸",
+    "brokenName": "停止したゴーレム",
     "description": "命令のままに歩く石の巨人。刻まれた術式を繋ぎ直せば、再び立ち上がる。",
     "rarity": "A",
     "use": "summon",
     "dismantlePoints": 500,
-    "repair": { "supplies": 1000, "gold": 400, "tech": "golem" },
-    "production": { "supplies": 1500, "gold": 600, "tech": "artificial_golem" },
-    "sprite": { "sheet": "relics01.webp", "col": 3, "row": 2 },
-    "brokenSprite": { "sheet": "relics01.webp", "col": 2, "row": 2 }
+    "repair": {
+      "supplies": 1000,
+      "gold": 400,
+      "tech": "golem"
+    },
+    "production": {
+      "supplies": 1500,
+      "gold": 600,
+      "tech": "artificial_golem"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 3,
+      "row": 2
+    },
+    "brokenSprite": {
+      "sheet": "relics01.webp",
+      "col": 2,
+      "row": 2
+    }
   },
   {
     "id": "behemoth",
     "name": "ベヒーモス",
-    "brokenName": "ベヒーモスの残骸",
-    "description": "都市ひとつを踏み潰したと伝わる魔導の巨獣。朽ちてなお、その骨は熱を帯びている。",
+    "brokenName": "ベヒーモスの化石",
+    "description": "都市ひとつを踏み潰したと伝わる魔導の巨獣。石と化してなお、その骨は熱を帯びている。",
     "rarity": "S",
     "use": "summon",
     "dismantlePoints": 1000,
-    "repair": { "supplies": 2000, "gold": 800, "tech": "behemoth" },
-    "production": { "supplies": 3000, "gold": 1200, "tech": "artificial_behemoth" },
-    "sprite": { "sheet": "relics01.webp", "col": 0, "row": 3 },
-    "brokenSprite": { "sheet": "relics01.webp", "col": 4, "row": 2 }
+    "repair": {
+      "supplies": 2000,
+      "gold": 800,
+      "tech": "behemoth"
+    },
+    "production": {
+      "supplies": 3000,
+      "gold": 1200,
+      "tech": "artificial_behemoth"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 0,
+      "row": 3
+    },
+    "brokenSprite": {
+      "sheet": "relics01.webp",
+      "col": 4,
+      "row": 2
+    }
   },
   {
     "id": "grimoire_chain_lightning",
-    "name": "チェインライトニングの魔導書",
-    "description": "敵から敵へ跳ねる雷の術式を記した書。",
+    "name": "雷の魔導書",
+    "description": "敵から敵へ跳ねる雷、チェインライトニングの術式を記した書。",
     "rarity": "B",
     "use": "equipment",
-    "production": { "supplies": 400, "gold": 200, "tech": "lightning_magic" },
-    "sprite": { "sheet": "relics01.webp", "col": 1, "row": 3 }
+    "production": {
+      "supplies": 400,
+      "gold": 200,
+      "tech": "lightning_magic"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 1,
+      "row": 3
+    }
   },
   {
     "id": "grimoire_flame_lance",
-    "name": "フレイムランスの魔導書",
-    "description": "炎を一条の槍に束ねて放つ術式を記した書。",
+    "name": "火の魔導書",
+    "description": "炎を一条の槍に束ねて放つフレイムランスの術式を記した書。",
     "rarity": "B",
     "use": "equipment",
-    "production": { "supplies": 400, "gold": 200, "tech": "fire_magic" },
-    "sprite": { "sheet": "relics01.webp", "col": 2, "row": 3 }
+    "production": {
+      "supplies": 400,
+      "gold": 200,
+      "tech": "fire_magic"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 2,
+      "row": 3
+    }
   },
   {
     "id": "grimoire_frost_nova",
-    "name": "フロストノヴァの魔導書",
-    "description": "周囲の熱を奪い、敵の足を凍らせる術式を記した書。",
+    "name": "水の魔導書",
+    "description": "周囲の熱を奪い、敵の足を凍らせるフロストノヴァの術式を記した書。",
     "rarity": "B",
     "use": "equipment",
-    "production": { "supplies": 400, "gold": 200, "tech": "water_magic" },
-    "sprite": { "sheet": "relics01.webp", "col": 3, "row": 3 }
+    "production": {
+      "supplies": 400,
+      "gold": 200,
+      "tech": "water_magic"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 3,
+      "row": 3
+    }
   },
   {
     "id": "grimoire_earth_spike",
-    "name": "アーススパイクの魔導書",
-    "description": "大地から岩の杭を突き上げる術式を記した書。",
+    "name": "土の魔導書",
+    "description": "大地から岩の杭を突き上げるアーススパイクの術式を記した書。",
     "rarity": "B",
     "use": "equipment",
-    "production": { "supplies": 400, "gold": 200, "tech": "earth_magic" },
-    "sprite": { "sheet": "relics01.webp", "col": 4, "row": 3 }
+    "production": {
+      "supplies": 400,
+      "gold": 200,
+      "tech": "earth_magic"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 4,
+      "row": 3
+    }
+  },
+  {
+    "id": "grimoire_prismatic",
+    "name": "万色の魔導書",
+    "description": "雷・火・水・土、四つの元素の術式を一冊に綴じた書。読み解けるのは上級の術者だけ。",
+    "rarity": "S",
+    "use": "equipment",
+    "production": {
+      "supplies": 800,
+      "gold": 400,
+      "tech": "archmage"
+    },
+    "sprite": null
   },
   {
     "id": "grimoire_meteor_fall",
-    "name": "メテオフォールの魔導書",
-    "description": "天の星を呼び落とす、最上位の術式を記した書。",
-    "rarity": "A",
+    "name": "星辰の魔導書",
+    "description": "天の星を呼び落とす最上位の術式、メテオフォールを記した書。",
+    "rarity": "S",
     "use": "equipment",
-    "production": { "supplies": 1200, "gold": 600, "tech": "celestial_magic" },
-    "sprite": { "sheet": "relics01.webp", "col": 0, "row": 4 }
+    "production": {
+      "supplies": 1200,
+      "gold": 600,
+      "tech": "celestial_magic"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 0,
+      "row": 4
+    }
+  },
+  {
+    "id": "cannon",
+    "name": "要塞砲",
+    "brokenName": "壊れた要塞砲",
+    "description": "要塞に据える旧文明の巨砲。迫る敵のどこへ落ちるかは砲手にも読めないが、着弾の跡には何も残らない。",
+    "rarity": "A",
+    "use": "building",
+    "dismantlePoints": 300,
+    "repair": {
+      "supplies": 1000,
+      "gold": 500,
+      "tech": "field_gun"
+    },
+    "sprite": {
+      "sheet": "relics01.webp",
+      "col": 3,
+      "row": 0
+    },
+    "brokenSprite": {
+      "sheet": "relics01.webp",
+      "col": 2,
+      "row": 0
+    },
+    "production": {
+      "supplies": 1750,
+      "gold": 700,
+      "tech": "field_gun_production"
+    }
   }
 ]

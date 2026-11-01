@@ -97,6 +97,50 @@
     }
   },
   {
+    "id": "archery",
+    "name": "強弓術",
+    "description": "強い弓を引ききる腕を鍛える。矢は敵の間合いの外から届く。",
+    "cost": 200,
+    "requires": [
+      "tactics"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "弓兵の射程 +1"
+      }
+    ],
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 1,
+      "row": 2
+    }
+  },
+  {
+    "id": "volley_fire",
+    "name": "斉射戦法",
+    "description": "隊列を揃え、矢の雨を一点に降らせる。太矢を放つ大弩も、自分たちの手で組み上げる。",
+    "cost": 400,
+    "requires": [
+      "archery"
+    ],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "弓兵の攻撃力 +10%"
+      },
+      {
+        "kind": "etc",
+        "value": "バリスタを遺物なしで生産できる"
+      }
+    ],
+    "sprite": {
+      "sheet": "research01.webp",
+      "col": 2,
+      "row": 2
+    }
+  },
+  {
     "id": "siege_defense",
     "name": "籠城",
     "description": "城壁を背に、迫る敵を槍衾で迎え撃つ。",
@@ -144,7 +188,7 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "壊れたライフルの修復"
+        "value": "壊れたライフルが修復できる"
       }
     ],
     "sprite": {
@@ -165,7 +209,7 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "ライフルの生産が可能に"
+        "value": "ライフルを遺物なしで生産できる"
       }
     ],
     "sprite": {
@@ -186,7 +230,11 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "壊れた大砲の修復"
+        "value": "壊れた大砲が修復できる"
+      },
+      {
+        "kind": "etc",
+        "value": "壊れた要塞砲が修復できる"
       }
     ],
     "sprite": {
@@ -207,11 +255,11 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "砲兵の生産が可能に"
+        "value": "大砲を遺物なしで生産できる"
       },
       {
         "kind": "etc",
-        "value": "据付大砲の生産が可能に"
+        "value": "要塞砲を遺物なしで生産できる"
       }
     ],
     "sprite": {
@@ -250,7 +298,7 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "壊れたガンシップの修復"
+        "value": "壊れたガンシップが修復できる"
       }
     ],
     "sprite": {
@@ -271,7 +319,7 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "ガンシップの生産が可能に"
+        "value": "ガンシップを遺物なしで生産できる"
       }
     ],
     "sprite": {
@@ -311,7 +359,7 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "チェインライトニング"
+        "value": "雷の魔導書（チェインライトニング）を遺物なしで生産できる"
       }
     ],
     "sprite": {
@@ -332,7 +380,7 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "フレイムランス"
+        "value": "火の魔導書（フレイムランス）を遺物なしで生産できる"
       }
     ],
     "sprite": {
@@ -353,7 +401,7 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "ドラゴンの卵の修復"
+        "value": "ドラゴンの卵が修復できる"
       }
     ],
     "sprite": {
@@ -395,7 +443,7 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "フロストノヴァ"
+        "value": "水の魔導書（フロストノヴァ）を遺物なしで生産できる"
       }
     ],
     "sprite": {
@@ -416,7 +464,7 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "アーススパイク"
+        "value": "土の魔導書（アーススパイク）を遺物なしで生産できる"
       }
     ],
     "sprite": {
@@ -428,7 +476,7 @@
   {
     "id": "golem",
     "name": "ゴーレム",
-    "description": "崩れた石の巨人に、もう一度命を吹き込む。",
+    "description": "止まったままの石の巨人に、もう一度命を吹き込む。",
     "branch": "arcane",
     "cost": 600,
     "requires": [
@@ -437,7 +485,7 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "ゴーレムの残骸の修復"
+        "value": "停止したゴーレムが修復できる"
       }
     ],
     "sprite": {
@@ -479,7 +527,12 @@
       "water_magic",
       "earth_magic"
     ],
-    "effects": [],
+    "effects": [
+      {
+        "kind": "etc",
+        "value": "万色の魔導書を遺物なしで生産できる"
+      }
+    ],
     "sprite": {
       "sheet": "research02.webp",
       "col": 4,
@@ -498,7 +551,7 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "メテオフォール"
+        "value": "星辰の魔導書（メテオフォール）を遺物なしで生産できる"
       }
     ],
     "sprite": {
@@ -510,7 +563,7 @@
   {
     "id": "behemoth",
     "name": "ベヒーモス",
-    "description": "伝説の巨獣の骸を繋ぎ合わせ、再び立たせる。",
+    "description": "石と化した伝説の巨獣の骨を繋ぎ合わせ、再び立たせる。",
     "branch": "arcane",
     "cost": 1200,
     "requires": [
@@ -519,7 +572,7 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "ベヒーモスの残骸の修復"
+        "value": "ベヒーモスの化石が修復できる"
       }
     ],
     "sprite": {
@@ -531,7 +584,7 @@
   {
     "id": "artificial_behemoth",
     "name": "人工ベヒーモス",
-    "description": "骸を探さずとも、巨獣を一から生み出す。",
+    "description": "化石を探さずとも、巨獣を一から生み出す。",
     "branch": "arcane",
     "cost": 2000,
     "requires": [
