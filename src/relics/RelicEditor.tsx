@@ -258,7 +258,7 @@ export function RelicEditor() {
                   onChange={(e) => update(e.target.checked
                     ? { brokenName: `壊れた${relic.name}`, dismantlePoints: 300, repair: { supplies: 400, gold: 150 }, brokenSprite: null }
                     : { brokenName: undefined, dismantlePoints: undefined, repair: undefined, brokenSprite: undefined })} />
-                壊れた状態がある（無い遺物は解体も修復も初期配布もできない。魔導書）
+                壊れた状態がある（無い遺物は解体も修復もできず、初期配布は修復済みだけ。魔導書）
               </label>
               {hasBroken && relic.repair && (
                 <>

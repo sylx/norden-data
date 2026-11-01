@@ -133,12 +133,29 @@ export function FactionEditor({ active }: { active: boolean }) {
   const owned = faction ? citiesOf(faction.id) : []
   const knights = faction ? knightsOf(faction.id) : []
   const sameEmblem = faction ? factions.filter((f) => f.id !== faction.id && f.emblem === faction.emblem) : []
-  const startRelics = faction?.relics ?? []
-  // 壊れた状態で配るので、壊れた状態の無い遺物（魔導書）は選べない
+  const brokenStart = faction?.relics ?? []
+  const repairedStart = faction?.repairedRelics ?? []
+  // 壊れた状態の無い遺物（魔導書）は、修復済みでだけ配れる
   const brokenRelics = relics.filter((r) => r.brokenName !== undefined)
-  const relicLabel = (id: string) => relics.find((r) => r.id === id)?.brokenName
-  /** 外すと relics を省く（空の配列を書かない） */
-  const setStartRelics = (list: readonly string[]) => update({ relics: list.length > 0 ? list : undefined })
+  /** 外すと relics・repairedRelics を省く（空の配列を書かない） */
+  const setBrokenStart = (list: readonly string[]) => update({ relics: list.length > 0 ? list : undefined })
+  const setRepairedStart = (list: readonly string[]) => update({ repairedRelics: list.length > 0 ? list : undefined })
+  /** 足す遺物の選択肢の値は「状態:ID」 */
+  const addStartRelic = () => {
+    const [state, id] = newRelic.split(':')
+    if (state === 'broken') setBrokenStart([...brokenStart, id])
+    else setRepairedStart([...repairedStart, id])
+  }
+  const relicChips = (list: readonly string[], label: (id: string) => string | undefined, missing: string, set: (list: readonly string[]) => void) =>
+    list.map((id, i) => (
+      <li key={`${missing}-${id}-${i}`}>
+        <span className={`chip chip--static ${label(id) ? '' : 'chip--missing'}`}>
+          {label(id) ?? `${id}（${missing}ではありません）`}
+          <button type="button" className="tags__remove" aria-label={`${id}を外す`}
+            onClick={() => set(list.filter((_, j) => j !== i))}>×</button>
+        </span>
+      </li>
+    ))
 
   return (
     <div className="character-editor">
@@ -235,28 +252,29 @@ export function FactionEditor({ active }: { active: boolean }) {
               fallback={INITIAL_GOLD} fallbackNote={String(INITIAL_GOLD)}
               onChange={(gold) => update({ gold })} />
 
-            <h3 className="form__heading">初期配布の遺物（{startRelics.length}）</h3>
-            {startRelics.length > 0 && (
+            <h3 className="form__heading">初期配布の遺物（{brokenStart.length + repairedStart.length}）</h3>
+            {brokenStart.length + repairedStart.length > 0 && (
               <ul className="chips">
-                {startRelics.map((id, i) => (
-                  <li key={`${id}-${i}`}>
-                    <span className={`chip chip--static ${relicLabel(id) ? '' : 'chip--missing'}`}>
-                      {relicLabel(id) ?? `${id}（壊れた遺物ではありません）`}
-                      <button type="button" className="tags__remove" aria-label={`${id}を外す`}
-                        onClick={() => setStartRelics(startRelics.filter((_, j) => j !== i))}>×</button>
-                    </span>
-                  </li>
-                ))}
+                {relicChips(brokenStart, (id) => relics.find((r) => r.id === id)?.brokenName, '壊れた遺物', setBrokenStart)}
+                {relicChips(repairedStart, (id) => {
+                  const relic = relics.find((r) => r.id === id)
+                  return relic && `${relic.name}（修復済み）`
+                }, '遺物', setRepairedStart)}
               </ul>
             )}
             <div className="relation">
               <select value={newRelic} onChange={(e) => setNewRelic(e.target.value)}>
                 <option value="">足す遺物を選ぶ</option>
-                {brokenRelics.map((r) => <option key={r.id} value={r.id}>{r.brokenName}</option>)}
+                <optgroup label="壊れた遺物">
+                  {brokenRelics.map((r) => <option key={r.id} value={`broken:${r.id}`}>{r.brokenName}</option>)}
+                </optgroup>
+                <optgroup label="修復済みの遺物">
+                  {relics.map((r) => <option key={r.id} value={`repaired:${r.id}`}>{r.name}</option>)}
+                </optgroup>
               </select>
-              <button type="button" className="button" disabled={!newRelic} onClick={() => setStartRelics([...startRelics, newRelic])}>追加</button>
+              <button type="button" className="button" disabled={!newRelic} onClick={addStartRelic}>追加</button>
             </div>
-            <p className="form__hint">壊れた状態でアイテムボックスに入る。同じ遺物を複数持てる</p>
+            <p className="form__hint">選んだ状態でアイテムボックスに入る。同じ遺物を複数持てる</p>
 
             <h3 className="form__heading">初期の拠点（{owned.length}・人口 {owned.reduce((sum, c) => sum + c.population, 0).toLocaleString()}）</h3>
             {owned.length > 0
