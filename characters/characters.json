@@ -1882,7 +1882,8 @@
     "strength": 79,
     "charm": 62,
     "start": {
-      "cityId": "P017"
+      "cityId": "P027",
+      "isLord": true
     },
     "gender": "male",
     "voiceTone": "noble_male",
