@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { EMBLEM_NUMBERS, FACTION_LIST as MAP_FACTION_LIST, emblemImage } from 'norden-strategy/data'
 import type { City } from '@game/data/city.ts'
-import type { Faction } from '@game/data/faction.ts'
+import type { Faction, FactionRelic } from '@game/data/faction.ts'
 import { INITIAL_GOLD } from '@game/game/economy/balance.ts'
 import { api, errorMessage } from '../api'
 import type { SourceCharacter } from '../characters/types'
@@ -133,29 +133,20 @@ export function FactionEditor({ active }: { active: boolean }) {
   const owned = faction ? citiesOf(faction.id) : []
   const knights = faction ? knightsOf(faction.id) : []
   const sameEmblem = faction ? factions.filter((f) => f.id !== faction.id && f.emblem === faction.emblem) : []
-  const brokenStart = faction?.relics ?? []
-  const repairedStart = faction?.repairedRelics ?? []
+  const startRelics = faction?.relics ?? []
   // 壊れた状態の無い遺物（魔導書）は、修復済みでだけ配れる
   const brokenRelics = relics.filter((r) => r.brokenName !== undefined)
-  /** 外すと relics・repairedRelics を省く（空の配列を書かない） */
-  const setBrokenStart = (list: readonly string[]) => update({ relics: list.length > 0 ? list : undefined })
-  const setRepairedStart = (list: readonly string[]) => update({ repairedRelics: list.length > 0 ? list : undefined })
+  const relicLabel = ({ relicId, repaired }: FactionRelic) => {
+    const relic = relics.find((r) => r.id === relicId)
+    return repaired ? relic && `${relic.name}（修復済み）` : relic?.brokenName
+  }
+  /** 外すと relics を省く（空の配列を書かない） */
+  const setStartRelics = (list: readonly FactionRelic[]) => update({ relics: list.length > 0 ? list : undefined })
   /** 足す遺物の選択肢の値は「状態:ID」 */
   const addStartRelic = () => {
-    const [state, id] = newRelic.split(':')
-    if (state === 'broken') setBrokenStart([...brokenStart, id])
-    else setRepairedStart([...repairedStart, id])
+    const [state, relicId] = newRelic.split(':')
+    setStartRelics([...startRelics, { relicId, repaired: state === 'repaired' }])
   }
-  const relicChips = (list: readonly string[], label: (id: string) => string | undefined, missing: string, set: (list: readonly string[]) => void) =>
-    list.map((id, i) => (
-      <li key={`${missing}-${id}-${i}`}>
-        <span className={`chip chip--static ${label(id) ? '' : 'chip--missing'}`}>
-          {label(id) ?? `${id}（${missing}ではありません）`}
-          <button type="button" className="tags__remove" aria-label={`${id}を外す`}
-            onClick={() => set(list.filter((_, j) => j !== i))}>×</button>
-        </span>
-      </li>
-    ))
 
   return (
     <div className="character-editor">
@@ -252,14 +243,18 @@ export function FactionEditor({ active }: { active: boolean }) {
               fallback={INITIAL_GOLD} fallbackNote={String(INITIAL_GOLD)}
               onChange={(gold) => update({ gold })} />
 
-            <h3 className="form__heading">初期配布の遺物（{brokenStart.length + repairedStart.length}）</h3>
-            {brokenStart.length + repairedStart.length > 0 && (
+            <h3 className="form__heading">初期配布の遺物（{startRelics.length}）</h3>
+            {startRelics.length > 0 && (
               <ul className="chips">
-                {relicChips(brokenStart, (id) => relics.find((r) => r.id === id)?.brokenName, '壊れた遺物', setBrokenStart)}
-                {relicChips(repairedStart, (id) => {
-                  const relic = relics.find((r) => r.id === id)
-                  return relic && `${relic.name}（修復済み）`
-                }, '遺物', setRepairedStart)}
+                {startRelics.map((relic, i) => (
+                  <li key={`${relic.relicId}-${i}`}>
+                    <span className={`chip chip--static ${relicLabel(relic) ? '' : 'chip--missing'}`}>
+                      {relicLabel(relic) ?? `${relic.relicId}（${relic.repaired ? '' : '壊れた'}遺物ではありません）`}
+                      <button type="button" className="tags__remove" aria-label={`${relic.relicId}を外す`}
+                        onClick={() => setStartRelics(startRelics.filter((_, j) => j !== i))}>×</button>
+                    </span>
+                  </li>
+                ))}
               </ul>
             )}
             <div className="relation">
