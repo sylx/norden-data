@@ -67,8 +67,8 @@ export function CharacterEditor() {
   const sheetMap = useMemo(() => new Map(sheets.map((s) => [s.file, s])), [sheets])
   const cityOwner = useMemo(() => new Map(cities.map((c) => [c.id, c.belongTo])), [cities])
   const cityName = (id: string) => cities.find((c) => c.id === id)?.name ?? id
-  /** 配置先の勢力（省略なら都市の勢力） */
-  const factionOf = (c: SourceCharacter) => characterFaction(c, (id) => cityOwner.get(id))
+  /** 配置先の勢力（省略なら傭兵は傭兵のまとまり、それ以外は放浪・所属なし） */
+  const factionOf = characterFaction
 
   const save = async (list = characters) => {
     if (!list) return false
@@ -276,12 +276,20 @@ export function CharacterEditor() {
                   <select value={character.start?.factionId ?? ''} disabled={!character.start}
                     onChange={(e) => character.start && update({ start: { ...character.start, factionId: e.target.value || undefined } })}>
                     <option value="">
-                      {character.start?.isPrisoner ? '所属なし'
-                        : character.mercenaryInfo ? `所属なし（${MERCENARY.name}）` : `都市の勢力（${factionName(character.start ? cityOwner.get(character.start.cityId) : undefined)}）`}
+                      {character.start?.isPrisoner ? '所属なし' : character.mercenaryInfo ? `所属なし（${MERCENARY.name}）` : 'なし（放浪）'}
                     </option>
                     {FACTIONS.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}
                   </select>
                 </Field>
+                {character.start && !character.start.factionId && !character.start.isPrisoner && !character.mercenaryInfo && (
+                  <Field label="怨恨勢力">
+                    <select value={character.start.grudge ?? ''}
+                      onChange={(e) => character.start && update({ start: { ...character.start, grudge: e.target.value || undefined } })}>
+                      <option value="">なし</option>
+                      {FACTIONS.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}
+                    </select>
+                  </Field>
+                )}
                 <label className="checkbox">
                   <input type="checkbox" checked={!!character.start?.isLord && !character.start.isPrisoner}
                     disabled={!character.start || !!character.start.isPrisoner}
@@ -300,6 +308,14 @@ export function CharacterEditor() {
                 ? <p className="form__note">中立の都市には捕虜を置けません（ゲームでは捕虜になりません）</p>
                 : factionOf(character) === cityOwner.get(character.start.cityId)
                 && <p className="form__note">都市の勢力の騎士は捕虜になりません（ゲームでは都市の騎士になります）。勢力を選んでください</p>)}
+              {character.start && !character.start.isPrisoner && !character.start.factionId && (
+                <p className="form__note">
+                  {character.mercenaryInfo ? 'この都市が最初の居所です。雇われるまで各地を移動します' : '放浪で始まります。この都市が最初の居所で、各地を移動します'}
+                </p>
+              )}
+              {character.mercenaryInfo && character.start?.factionId && (
+                <p className="form__note">傭兵の開始に勢力は書けません（ゲームのテストで落ちます）。「所属なし」にしてください</p>
+              )}
               {cityMapOpen && (
                 <div className="city-picker">
                   <MiniMap cities={cities} selectedId={character.start?.cityId ?? ''} showTotals={false}
@@ -310,7 +326,7 @@ export function CharacterEditor() {
               <h3 className="form__heading">傭兵</h3>
               <label className="checkbox">
                 <input type="checkbox" checked={!!character.mercenaryInfo}
-                  onChange={(e) => update({ mercenaryInfo: e.target.checked ? { name: '', fee: 1000 } : undefined })} />
+                  onChange={(e) => update({ mercenaryInfo: e.target.checked ? { name: '', fee: 1000, maxSoldiers: 500, pride: 2 } : undefined })} />
                 傭兵団を率いる
               </label>
               {character.mercenaryInfo && (
@@ -319,9 +335,17 @@ export function CharacterEditor() {
                     <input value={character.mercenaryInfo.name}
                       onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, name: e.target.value } })} />
                   </Field>
-                  <Field label="報酬">
+                  <Field label="契約金">
                     <input type="number" value={character.mercenaryInfo.fee}
                       onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, fee: Number(e.target.value) } })} />
+                  </Field>
+                  <Field label="最大兵力（1000 まで）">
+                    <input type="number" min={1} max={1000} step={10} value={character.mercenaryInfo.maxSoldiers}
+                      onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, maxSoldiers: Math.max(1, Math.min(1000, Number(e.target.value))) } })} />
+                  </Field>
+                  <Field label="プライド（1〜5）">
+                    <input type="number" min={1} max={5} value={character.mercenaryInfo.pride}
+                      onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, pride: Math.max(1, Math.min(5, Number(e.target.value))) } })} />
                   </Field>
                 </div>
               )}

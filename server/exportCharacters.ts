@@ -64,6 +64,7 @@ async function writeData(characters: readonly SourceCharacter[], imageInfo: (c: 
     id: c.id,
     cityId: c.start!.cityId,
     ...(c.start!.factionId ? { factionId: c.start!.factionId } : {}),
+    ...(c.start!.grudge && !c.start!.factionId && !c.mercenaryInfo && !c.start!.isPrisoner ? { grudge: c.start!.grudge } : {}),
     ...(c.start!.isLord && !c.start!.isPrisoner ? { isLord: true } : {}),
     ...(c.start!.isPrisoner ? { isPrisoner: true } : {}),
   }))

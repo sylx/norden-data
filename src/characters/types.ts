@@ -53,8 +53,10 @@ export interface Relation {
 /** ゲーム開始時の配置（ルートの characterStart.json の 1 行） */
 export interface CharacterStart {
   cityId: string
-  /** 省略: 都市の勢力 */
+  /** 省略: どの勢力にも仕えていない（傭兵は雇われていない、それ以外は放浪）。cityId が居所になる */
   factionId?: string
+  /** 怨恨勢力。放浪で始まる騎士だけ */
+  grudge?: string
   /** 都市の領主 */
   isLord?: boolean
   /** 都市に捕らえられている捕虜。factionId は捕まる前に仕えていた勢力（省略: 所属なし）。都市の勢力の騎士は捕虜にならない */
@@ -81,7 +83,8 @@ export interface SourceCharacter {
   strength: number
   charm: number
   biography?: string
-  mercenaryInfo?: { name: string; fee: number }
+  /** 傭兵。fee は契約金（月額はこの 1/6）、maxSoldiers は最大兵力（1000 まで）、pride はプライド（1〜5） */
+  mercenaryInfo?: { name: string; fee: number; maxSoldiers: number; pride: number }
   relations?: Relation[]
   /** 勢力の当主 */
   isPatriarch?: boolean

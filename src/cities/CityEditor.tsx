@@ -87,7 +87,7 @@ export function CityEditor({ active }: { active: boolean }) {
   const mercenaries = members.filter((c) => c.mercenaryInfo && !c.start?.isPrisoner)
   /** 都市の勢力と違う勢力に仕える騎士は、勢力名を添える */
   const memberChip = (c: SourceCharacter) => {
-    const factionId = characterFaction(c, () => city?.belongTo)
+    const factionId = characterFaction(c)
     return (
       <li key={c.id}>
         <span className="chip chip--static">

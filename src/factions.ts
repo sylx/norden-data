@@ -13,9 +13,8 @@ export const factionName = (id: string | null | undefined) =>
 
 export const factionColor = (id: string | null | undefined) => (id === MERCENARY.id ? MERCENARY.color : gameFactionColor(id))
 
-/** 騎士の勢力。指定がなければ、傭兵は傭兵、捕虜は所属なし（undefined）、それ以外は配置先の都市の勢力。配置しない騎士は undefined */
-export function characterFaction(c: SourceCharacter, cityOwner: (cityId: string) => string | undefined): string | undefined {
+/** 騎士の勢力。指定がなければ、傭兵は傭兵、それ以外（捕虜・放浪）は所属なし（undefined）。配置しない騎士も undefined */
+export function characterFaction(c: SourceCharacter): string | undefined {
   if (!c.start) return undefined
-  if (c.start.isPrisoner) return c.start.factionId
-  return c.start.factionId ?? (c.mercenaryInfo ? MERCENARY.id : cityOwner(c.start.cityId))
+  return c.start.factionId ?? (c.mercenaryInfo && !c.start.isPrisoner ? MERCENARY.id : undefined)
 }

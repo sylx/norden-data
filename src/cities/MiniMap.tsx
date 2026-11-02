@@ -38,7 +38,7 @@ export function MiniMap({ cities, characters = [], selectedId, onSelect, showTot
   // 勢力ごとの拠点数・人口・商業・生産・兵数・騎士数（傭兵は別に数える）・クラスごとの人数（傭兵も含む）と、その合計
   const totals = useMemo(() => {
     const placed = characters.filter((c) => c.start && byId.has(c.start.cityId))
-      .map((c) => ({ factionId: characterFaction(c, (id) => byId.get(id)?.belongTo), mercenary: !!c.mercenaryInfo, type: c.type }))
+      .map((c) => ({ factionId: characterFaction(c), mercenary: !!c.mercenaryInfo, type: c.type }))
     const rows = [
       ...FACTIONS.map((f) => ({ id: f.id as string | undefined, name: f.name })),
       { id: undefined, name: '中立' },

@@ -109,8 +109,7 @@ export function FactionEditor({ active }: { active: boolean }) {
   }
 
   const citiesOf = (id: string) => cities.filter((c) => c.belongTo === id)
-  const cityOwner = (cityId: string) => cities.find((c) => c.id === cityId)?.belongTo
-  const knightsOf = (id: string) => characters.filter((c) => characterFaction(c, cityOwner) === id)
+  const knightsOf = (id: string) => characters.filter((c) => characterFaction(c) === id)
 
   /** 拠点や騎士が所属している勢力は削除しない（先に拠点データ・騎士データで所属を変える） */
   const remove = () => {

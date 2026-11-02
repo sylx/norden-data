@@ -824,7 +824,9 @@
     "biography": "白髪に革鎧、どの勢力の旗も持たない一匹狼の狩人。ロストテクノロジーの残骸や危険な遺跡周辺に出没し、依頼があれば受け、なければ消える。年齢不詳で出自不明——本人が語らないからだ。各勢力の狩人たちとは「同業者」として顔見知りだが、仲間だと思っている者はいない。ただし、一度依頼を受けた相手は最後まで守る。それだけが知られている。",
     "mercenaryInfo": {
       "name": "鉄弦団",
-      "fee": 1000
+      "fee": 1000,
+      "maxSoldiers": 500,
+      "pride": 2
     },
     "start": {
       "cityId": "P001"
@@ -913,7 +915,8 @@
     "strength": 11,
     "charm": 79,
     "start": {
-      "cityId": "P007"
+      "cityId": "P007",
+      "factionId": "rosalia"
     },
     "gender": "female",
     "voiceTone": "cool_female",
@@ -944,7 +947,8 @@
     "strength": 38,
     "charm": 80,
     "start": {
-      "cityId": "P028"
+      "cityId": "P028",
+      "factionId": "valhardt"
     },
     "gender": "female",
     "voiceTone": "tomboy_warrior",
@@ -975,7 +979,8 @@
     "strength": 12,
     "charm": 70,
     "start": {
-      "cityId": "P008"
+      "cityId": "P008",
+      "factionId": "rosalia"
     },
     "gender": "female",
     "voiceTone": "noble_lady",
@@ -1005,7 +1010,8 @@
     "strength": 41,
     "charm": 75,
     "start": {
-      "cityId": "P002"
+      "cityId": "P002",
+      "factionId": "taurus"
     },
     "gender": "female",
     "voiceTone": "sisterly_veteran",
@@ -1041,7 +1047,8 @@
     "strength": 30,
     "charm": 52,
     "start": {
-      "cityId": "P019"
+      "cityId": "P019",
+      "factionId": "nordis"
     },
     "gender": "female",
     "voiceTone": "cool_female",
@@ -1072,7 +1079,8 @@
     "strength": 72,
     "charm": 66,
     "start": {
-      "cityId": "P003"
+      "cityId": "P003",
+      "factionId": "leonis"
     },
     "gender": "female",
     "voiceTone": "earnest_youth",
@@ -1105,6 +1113,7 @@
     "charm": 55,
     "start": {
       "cityId": "P002",
+      "factionId": "taurus",
       "isLord": true
     },
     "gender": "male",
@@ -1138,7 +1147,8 @@
     "strength": 74,
     "charm": 49,
     "start": {
-      "cityId": "P013"
+      "cityId": "P013",
+      "factionId": "leonis"
     },
     "gender": "female",
     "voiceTone": "tomboy_warrior",
@@ -1171,6 +1181,7 @@
     "charm": 58,
     "start": {
       "cityId": "P023",
+      "factionId": "leonis",
       "isLord": true
     },
     "gender": "male",
@@ -1223,7 +1234,9 @@
     ],
     "mercenaryInfo": {
       "name": "鴉羽団",
-      "fee": 1000
+      "fee": 1000,
+      "maxSoldiers": 500,
+      "pride": 2
     },
     "biography": "軍馬の産地アンバリアを根城にする傭兵団「鴉羽団」の団長。帝国の騎兵隊に馬ごと雇われることが多く、騎乗戦なら正規の騎士にも引けを取らない。食い詰めた若者や戦で行き場を失った孤児を拾っては鍛え上げ、団員の半分は彼女を「姐さん」としか呼ばない。大義も忠誠も信じない——信じるのは契約と、団員が生きて帰ることだけ。軍規には誰より厳しく、略奪をした団員は自らの手で追放する。"
   },
@@ -1248,7 +1261,8 @@
     "strength": 40,
     "charm": 72,
     "start": {
-      "cityId": "P023"
+      "cityId": "P023",
+      "factionId": "leonis"
     },
     "gender": "male",
     "voiceTone": "noble_male",
@@ -1301,7 +1315,9 @@
     ],
     "mercenaryInfo": {
       "name": "樽盾団",
-      "fee": 1000
+      "fee": 1000,
+      "maxSoldiers": 500,
+      "pride": 2
     },
     "biography": "樽のような体躯と白い髭で知られる老傭兵で、傭兵団「樽盾団」の親方。北の山の生まれを自称し、円盾を構えて一歩も退かない守りの戦いを得意とする。金に細かく字は読めないが、若い傭兵に「生き残り方」を叩き込むことにかけては右に出る者がいない。フルーエンの酒場に長逗留していて、書院の学者たちに「本より樽の方が役に立つ」と言っては呆れられている。"
   },
@@ -1327,6 +1343,7 @@
     "charm": 67,
     "start": {
       "cityId": "P024",
+      "factionId": "leonis",
       "isLord": true
     },
     "gender": "male",
@@ -1361,6 +1378,7 @@
     "charm": 78,
     "start": {
       "cityId": "P025",
+      "factionId": "leonis",
       "isLord": true
     },
     "gender": "male",
@@ -1395,6 +1413,7 @@
     "charm": 81,
     "start": {
       "cityId": "P003",
+      "factionId": "leonis",
       "isLord": true
     },
     "gender": "male",
@@ -1428,6 +1447,7 @@
     "charm": 54,
     "start": {
       "cityId": "P004",
+      "factionId": "leonis",
       "isLord": true
     },
     "gender": "male",
@@ -1459,7 +1479,8 @@
     "strength": 70,
     "charm": 64,
     "start": {
-      "cityId": "P002"
+      "cityId": "P002",
+      "factionId": "taurus"
     },
     "gender": "female",
     "voiceTone": "tomboy_warrior",
@@ -1495,7 +1516,8 @@
     "strength": 76,
     "charm": 46,
     "start": {
-      "cityId": "P029"
+      "cityId": "P029",
+      "factionId": "valhardt"
     },
     "gender": "female",
     "voiceTone": "cool_female",
@@ -1526,7 +1548,8 @@
     "strength": 78,
     "charm": 72,
     "start": {
-      "cityId": "P027"
+      "cityId": "P027",
+      "factionId": "nordis"
     },
     "gender": "male",
     "voiceTone": "wild_berserker",
@@ -1558,7 +1581,8 @@
     "strength": 80,
     "charm": 58,
     "start": {
-      "cityId": "P008"
+      "cityId": "P008",
+      "factionId": "rosalia"
     },
     "gender": "female",
     "voiceTone": "valkyrie_female",
@@ -1592,6 +1616,7 @@
     "charm": 70,
     "start": {
       "cityId": "P009",
+      "factionId": "aqua",
       "isLord": true
     },
     "voiceTone": "cool_tactician",
@@ -1635,7 +1660,8 @@
     "strength": 18,
     "charm": 60,
     "start": {
-      "cityId": "P009"
+      "cityId": "P009",
+      "factionId": "aqua"
     },
     "gender": "male",
     "voiceTone": "cool_tactician",
@@ -1672,7 +1698,8 @@
     "strength": 85,
     "charm": 84,
     "start": {
-      "cityId": "P015"
+      "cityId": "P015",
+      "factionId": "leonis"
     },
     "gender": "female",
     "voiceTone": "valkyrie_female",
@@ -1714,7 +1741,8 @@
     "strength": 83,
     "charm": 55,
     "start": {
-      "cityId": "P009"
+      "cityId": "P009",
+      "factionId": "aqua"
     },
     "gender": "female",
     "voiceTone": "valkyrie_female",
@@ -1752,7 +1780,8 @@
     "strength": 76,
     "charm": 79,
     "start": {
-      "cityId": "P017"
+      "cityId": "P017",
+      "factionId": "nordis"
     },
     "gender": "female",
     "voiceTone": "valkyrie_female",
@@ -1786,6 +1815,7 @@
     "charm": 74,
     "start": {
       "cityId": "P013",
+      "factionId": "leonis",
       "isLord": true
     },
     "gender": "male",
@@ -1818,6 +1848,7 @@
     "charm": 48,
     "start": {
       "cityId": "P014",
+      "factionId": "leonis",
       "isLord": true
     },
     "gender": "male",
@@ -1851,6 +1882,7 @@
     "charm": 52,
     "start": {
       "cityId": "P005",
+      "factionId": "leonis",
       "isLord": true
     },
     "gender": "male",
@@ -1883,6 +1915,7 @@
     "charm": 62,
     "start": {
       "cityId": "P027",
+      "factionId": "nordis",
       "isLord": true
     },
     "gender": "male",
@@ -1916,6 +1949,7 @@
     "charm": 80,
     "start": {
       "cityId": "P015",
+      "factionId": "leonis",
       "isLord": true
     },
     "gender": "male",
@@ -1947,7 +1981,8 @@
     "strength": 76,
     "charm": 70,
     "start": {
-      "cityId": "P026"
+      "cityId": "P026",
+      "factionId": "carta"
     },
     "gender": "female",
     "voiceTone": "tomboy_warrior",
@@ -1985,7 +2020,8 @@
     "strength": 74,
     "charm": 68,
     "start": {
-      "cityId": "P018"
+      "cityId": "P018",
+      "factionId": "leonis"
     },
     "gender": "female",
     "voiceTone": "sisterly_veteran",
@@ -2023,7 +2059,8 @@
     "strength": 84,
     "charm": 66,
     "start": {
-      "cityId": "P008"
+      "cityId": "P008",
+      "factionId": "rosalia"
     },
     "gender": "male",
     "voiceTone": "noble_male",
@@ -2056,6 +2093,7 @@
     "charm": 58,
     "start": {
       "cityId": "P008",
+      "factionId": "rosalia",
       "isLord": true
     },
     "gender": "male",
@@ -2089,6 +2127,7 @@
     "charm": 90,
     "start": {
       "cityId": "P017",
+      "factionId": "nordis",
       "isLord": true
     },
     "gender": "male",
@@ -2123,7 +2162,8 @@
     "strength": 82,
     "charm": 76,
     "start": {
-      "cityId": "P030"
+      "cityId": "P030",
+      "factionId": "taurus"
     },
     "gender": "male",
     "voiceTone": "noble_male",
@@ -2161,6 +2201,7 @@
     "charm": 82,
     "start": {
       "cityId": "P026",
+      "factionId": "carta",
       "isLord": true
     },
     "gender": "male",
@@ -2193,7 +2234,8 @@
     "strength": 81,
     "charm": 64,
     "start": {
-      "cityId": "P006"
+      "cityId": "P006",
+      "factionId": "rosalia"
     },
     "gender": "male",
     "voiceTone": "noble_male",
@@ -2231,7 +2273,8 @@
     "strength": 84,
     "charm": 45,
     "start": {
-      "cityId": "P015"
+      "cityId": "P015",
+      "factionId": "leonis"
     },
     "gender": "male",
     "voiceTone": "noble_male",
@@ -2264,6 +2307,7 @@
     "charm": 88,
     "start": {
       "cityId": "P007",
+      "factionId": "rosalia",
       "isLord": true
     },
     "gender": "male",
@@ -2297,6 +2341,7 @@
     "charm": 58,
     "start": {
       "cityId": "P010",
+      "factionId": "leonis",
       "isLord": true
     },
     "voiceTone": "noble_male",
@@ -2331,6 +2376,7 @@
     "charm": 66,
     "start": {
       "cityId": "P006",
+      "factionId": "rosalia",
       "isLord": true
     },
     "gender": "male",
@@ -2363,6 +2409,7 @@
     "charm": 90,
     "start": {
       "cityId": "P001",
+      "factionId": "taurus",
       "isLord": true
     },
     "gender": "male",
@@ -2397,7 +2444,8 @@
     "strength": 38,
     "charm": 60,
     "start": {
-      "cityId": "P001"
+      "cityId": "P001",
+      "factionId": "taurus"
     },
     "gender": "female",
     "voiceTone": "tomboy_warrior",
@@ -2428,7 +2476,8 @@
     "strength": 10,
     "charm": 64,
     "start": {
-      "cityId": "P011"
+      "cityId": "P011",
+      "factionId": "leonis"
     },
     "gender": "female",
     "voiceTone": "noble_lady",
@@ -2464,7 +2513,8 @@
     "strength": 18,
     "charm": 44,
     "start": {
-      "cityId": "P021"
+      "cityId": "P021",
+      "factionId": "valhardt"
     },
     "gender": "female",
     "voiceTone": "noble_lady",
@@ -2496,7 +2546,8 @@
     "strength": 26,
     "charm": 62,
     "start": {
-      "cityId": "P022"
+      "cityId": "P022",
+      "factionId": "aqua"
     },
     "gender": "male",
     "voiceTone": "noble_male",
@@ -2529,6 +2580,7 @@
     "charm": 72,
     "start": {
       "cityId": "P011",
+      "factionId": "leonis",
       "isLord": true
     },
     "gender": "female",
@@ -2568,7 +2620,8 @@
     "strength": 14,
     "charm": 80,
     "start": {
-      "cityId": "P005"
+      "cityId": "P005",
+      "factionId": "leonis"
     },
     "gender": "female",
     "voiceTone": "noble_lady",
@@ -2598,7 +2651,9 @@
     "leadership": 74,
     "strength": 28,
     "charm": 72,
-    "start": null,
+    "start": {
+      "cityId": "P006"
+    },
     "gender": "female",
     "voiceTone": "cool_female",
     "personality": [
@@ -2606,7 +2661,9 @@
     ],
     "mercenaryInfo": {
       "name": "金翼団",
-      "fee": 1000
+      "fee": 1000,
+      "maxSoldiers": 500,
+      "pride": 2
     },
     "biography": "顔の上半分を黄金の仮面で覆った魔法師で、小さな傭兵団「金翼団」の頭目。陽炎を操って一隊を大軍に見せ、あるいは大軍を砂の上の幻のように消してみせる。仮面を外したところを見た者はおらず、砂漠の向こうから来たとも、仮面の下には顔がないとも噂される。契約の場では雇い主の名を聞かず、敵の名と報酬だけを確かめる。団員は皆かつて彼女に命を拾われた者たちで、彼女のために死ぬことを当然と思っている。本人はそれを喜ばず、「死なせるために拾ったのではない」と短く言うだけだ。"
   },
@@ -2632,6 +2689,7 @@
     "charm": 46,
     "start": {
       "cityId": "P030",
+      "factionId": "taurus",
       "isLord": true
     },
     "gender": "male",
@@ -2663,7 +2721,8 @@
     "strength": 82,
     "charm": 40,
     "start": {
-      "cityId": "P011"
+      "cityId": "P011",
+      "factionId": "leonis"
     },
     "voiceTone": "noble_male",
     "gender": "male",
@@ -2695,6 +2754,7 @@
     "charm": 78,
     "start": {
       "cityId": "P028",
+      "factionId": "valhardt",
       "isLord": true
     },
     "gender": "male",
@@ -2728,7 +2788,8 @@
     "strength": 42,
     "charm": 34,
     "start": {
-      "cityId": "P018"
+      "cityId": "P018",
+      "factionId": "leonis"
     },
     "gender": "male",
     "voiceTone": "veteran_soldier",
@@ -2760,7 +2821,8 @@
     "strength": 89,
     "charm": 70,
     "start": {
-      "cityId": "P014"
+      "cityId": "P014",
+      "factionId": "leonis"
     },
     "gender": "male",
     "voiceTone": "wild_berserker",
@@ -2798,7 +2860,8 @@
     "strength": 72,
     "charm": 62,
     "start": {
-      "cityId": "P024"
+      "cityId": "P024",
+      "factionId": "leonis"
     },
     "gender": "male",
     "voiceTone": "noble_male",
@@ -2830,7 +2893,8 @@
     "strength": 84,
     "charm": 60,
     "start": {
-      "cityId": "P004"
+      "cityId": "P004",
+      "factionId": "leonis"
     },
     "gender": "female",
     "voiceTone": "noble_lady",
@@ -2863,7 +2927,8 @@
     "strength": 78,
     "charm": 80,
     "start": {
-      "cityId": "P029"
+      "cityId": "P029",
+      "factionId": "valhardt"
     },
     "gender": "female",
     "voiceTone": "sisterly_veteran",
@@ -2896,7 +2961,8 @@
     "strength": 16,
     "charm": 56,
     "start": {
-      "cityId": "P006"
+      "cityId": "P006",
+      "factionId": "rosalia"
     },
     "gender": "female",
     "voiceTone": "cool_female",
@@ -2928,6 +2994,7 @@
     "charm": 68,
     "start": {
       "cityId": "P018",
+      "factionId": "leonis",
       "isLord": true
     },
     "gender": "male",
@@ -2973,7 +3040,9 @@
     "voiceTone": "cool_female",
     "mercenaryInfo": {
       "name": "黙鈴団",
-      "fee": 1000
+      "fee": 1000,
+      "maxSoldiers": 500,
+      "pride": 2
     },
     "personality": [
       "cautious",
@@ -3003,7 +3072,8 @@
     "charm": 62,
     "biography": "本の山を抱えて歩く癖毛の若い学者。旧帝国の年代記を読み比べ、各家が誇る建国史の食い違いを片端から書き出しては、相手が誰であろうと面と向かって突きつける。レオニスの「神意による継承」にもヴァルハルトの「中断された帝国」にも同じ調子で赤線を引くので、どこの宮廷でも招かれては追い出されてきた。論争に負けると眼鏡を外して袖で拭き、翌朝には新しい反論を書き上げて戸口に立っている。灰の七日間に何が起きたのかを自分の手で書き記すのが夢で、「三百年分の嘘を剥がせば、どこかに本当の一行がある」と信じている。",
     "start": {
-      "cityId": "P021"
+      "cityId": "P021",
+      "factionId": "valhardt"
     },
     "gender": "female",
     "voiceTone": "tomboy_warrior",
@@ -3035,7 +3105,8 @@
     "charm": 41,
     "biography": "測量用の縄と巻いた地図を背負い、大陸の街道を自分の足で測って歩く学者。旧帝国の街道図が書き写されるたびに狂い、川筋も橋の数も実際と合わなくなっていると知ってから、机の上の地図を一枚も信じなくなった。「道を誤った軍は、戦う前に兵を失う」と言い、頼まれれば相手を選ばず正確な道を教えるため、どこの将からも重宝され、同じくらい警戒されている。野営にも慣れ、短剣と火打ち石があれば一人で峠を越える。描き上げた地図の端には、必ず歩いた日付と自分の名を小さく書き入れる。",
     "start": {
-      "cityId": "P013"
+      "cityId": "P013",
+      "factionId": "leonis"
     },
     "gender": "female",
     "voiceTone": "tomboy_warrior",
@@ -3067,7 +3138,8 @@
     "charm": 69,
     "biography": "名家の令嬢として育ち、毒と解毒の研究に生涯を捧げる学者。幼い頃、晩餐の席で父が倒れるのを目の前で見て以来、同じ死に方を誰にもさせないと決めた。旧帝国の薬草書と宮廷の古い記録を読み解き、香水や封蝋、指輪の細工に仕込まれた毒まで見分ける。人前で黒い手袋を外さないのは、試した毒が指先の感覚を少しずつ奪っているからだと噂される。諸侯の宮廷に招かれては食卓を検め、その見返りに、宴の席で交わされる噂をすべて耳に収めている。胸の首飾りにはどんな毒にも効く薬を入れていると言うが、中身を確かめた者はいない。毒を盛る側の手口を誰より知っているのが自分だということを、彼女自身が一番よく分かっている。",
     "start": {
-      "cityId": "P010"
+      "cityId": "P010",
+      "factionId": "leonis"
     },
     "gender": "female",
     "voiceTone": "noble_lady",
@@ -3110,7 +3182,9 @@
     ],
     "mercenaryInfo": {
       "name": "緋帯団",
-      "fee": 1000
+      "fee": 1000,
+      "maxSoldiers": 500,
+      "pride": 2
     }
   },
   {
@@ -3135,7 +3209,8 @@
     "charm": 68,
     "biography": "穀物問屋の娘から身を起こし、軍の兵站を一手に取り仕切るまでになった政務官。胸の勲章はどれも戦場での手柄ではなく、遠征軍を一人も飢えさせなかった褒賞として与えられたもの。倉の麦を袋の単位まで数え、街道の雪解けの時期や橋の傷み具合まで帳簿に書き込み、常に最悪の冬を想定した備えを崩さない。騎士たちからは「麦の番人」と陰口を叩かれるが、彼女の陣中で腹を空かせた者が出たことはない。主君の命には忠実に従うものの、無理な遠征の計画が届いたときだけは、帳簿を抱えて自ら説きに出向く。",
     "start": {
-      "cityId": "P015"
+      "cityId": "P015",
+      "factionId": "leonis"
     },
     "gender": "female",
     "voiceTone": "noble_lady",
@@ -3168,7 +3243,8 @@
     "charm": 57,
     "biography": "峠守りの家の末娘で、兄たちを差し置いて家の槍を継いだ若い女騎士。雪の中でこそ本領を発揮し、吹雪の夜に峠を越えて敵陣の背後を突いた初陣は、今も兵たちの語り草になっている。言葉少なで、命令を受けても頷くだけだが、その目はいつも次の戦場を探している。毛皮の外套は自分で仕留めた雪狼のもので、髪に編み込んだ珠は勝ち戦の数だけ増えていく。いつか自分の名で一軍を率い、兄たちに頭を下げさせるのが望み。功を急ぐあまり退き際を誤ることがあり、古参の騎士たちは彼女の背中から目を離さない。",
     "start": {
-      "cityId": "P025"
+      "cityId": "P025",
+      "factionId": "leonis"
     },
     "gender": "female",
     "voiceTone": "cool_female",
@@ -3200,7 +3276,8 @@
     "charm": 71,
     "biography": "旧帝国の医学書を読み解き、傷を縫い、折れた骨を継ぐ術を身につけた老医師。拡大鏡を重ねた眼鏡で傷口をのぞき込み、矢じりを抜く手は今も若い助手より速い。貴族の令嬢として育ちながら家を出て、戦場の天幕で四十年近く治療を続けてきた。運び込まれた者は敵味方の区別なく診て、「この天幕の中では、皆ただの怪我人ですわ」と将の口出しを退ける。弟子には厳しく、手を洗わずに傷に触れた者は天幕から叩き出す。魔法による治療を否定はしないが、「術者のいない村でも人は怪我をしますのよ」と、誰にでもできる手当てを書き残すことに晩年を捧げている。",
     "start": {
-      "cityId": "P022"
+      "cityId": "P022",
+      "factionId": "aqua"
     },
     "gender": "female",
     "voiceTone": "noble_lady",
@@ -3238,7 +3315,9 @@
     "voiceTone": "tomboy_warrior",
     "mercenaryInfo": {
       "name": "朱線団",
-      "fee": 1000
+      "fee": 1000,
+      "maxSoldiers": 500,
+      "pride": 2
     },
     "personality": [
       "valiant",
@@ -3268,7 +3347,8 @@
     "charm": 52,
     "biography": "少年と見間違えられることの多い小柄な女騎士。兵舎の下働きをしていた頃、酔って暴れた騎士三人を木の棒一本で打ち倒し、その場で剣を与えられた。小柄な体からは信じられない膂力の持ち主で、大の男が両手で扱う剣を片手で振るう。口数は少なく、命じられれば先頭に立って真っ先に敵陣へ斬り込む。剣を与えてくれた主に恩を返すことしか考えておらず、それ以外の大義には興味を示さない。勝っても喜ぶ顔を見せないが、鎧の留め金だけは毎晩欠かさず磨いている。",
     "start": {
-      "cityId": "P025"
+      "cityId": "P025",
+      "factionId": "leonis"
     },
     "voiceTone": "cool_female",
     "gender": "female",
@@ -3304,7 +3384,9 @@
     },
     "mercenaryInfo": {
       "name": "遠雷団",
-      "fee": 1000
+      "fee": 1000,
+      "maxSoldiers": 500,
+      "pride": 2
     },
     "gender": "male",
     "voiceTone": "wild_berserker",
@@ -3336,7 +3418,8 @@
     "charm": 86,
     "biography": "色とりどりに染めた髪と派手な紅の上着で、戦場でもひと目でそれとわかる騎士。染料商の家の放蕩息子で、家業の顔料を髪に塗っては「敵が俺を狙えば、そのぶん仲間が狙われねぇ」と笑う。剣を抜けば誰より先に飛び込み、弱い者が踏みにじられているのを見れば、相手が誰でも割って入る。そのくせ大義や信仰の話になると肩をすくめ、「旗の色なんざ、洗えば落ちる」と言ってのける。酒場では誰とでもすぐに肩を組むが、本心を明かした相手は一人もいないとも言われる。胸の飾りはどれも、助けた相手から押しつけられたものだという。",
     "start": {
-      "cityId": "P001"
+      "cityId": "P001",
+      "factionId": "taurus"
     },
     "gender": "male",
     "voiceTone": "wild_berserker",
@@ -3369,7 +3452,8 @@
     "charm": 73,
     "biography": "叙任されたばかりの若い騎士。胸の赤い星の刺繍は叙任の日に母が縫いつけたもので、騎士団の紋章より大事にしている。騎士物語を読んで育ち、弱きを守り主君に尽くす騎士の姿を一点の曇りもなく信じている。誰より早く起きて剣を振り、誰より遅くまで馬の世話をするが、手柄を立てたい気持ちが先走り、斥候に出れば命令より一歩先まで進んでしまう。先輩騎士に叱られても「次は必ず、もっと上手くやります」と言って譲らない。主君を疑うような噂を聞けば顔を真っ赤にして怒る——その頑なさが揺らぐ日が来るのを、周りの古参たちは少し心配している。",
     "start": {
-      "cityId": "P024"
+      "cityId": "P024",
+      "factionId": "leonis"
     },
     "gender": "male",
     "voiceTone": "earnest_youth",
@@ -3413,7 +3497,9 @@
     ],
     "mercenaryInfo": {
       "name": "青墨団",
-      "fee": 1000
+      "fee": 1000,
+      "maxSoldiers": 500,
+      "pride": 2
     }
   },
   {
@@ -3438,7 +3524,8 @@
     "charm": 58,
     "biography": "幼い頃、崩れた遺跡の奥に一人きりでいるところを騎士の一隊に見つけられ、その隊長の家で育てられた女騎士。それ以前のことは何も覚えておらず、そのとき手に握っていた金色の円盤だけを、今も肩当てに留めている。刻まれた文字は学者にも読めない。華奢な体つきに似合わぬ怪力の持ち主で、倒れた軍馬を一人で起こしたことがある。口数は少なく、空を見上げては方角や時刻を言い当てるが、なぜわかるのかと聞かれても首を傾げるばかり。自分が何者かを探すより、拾ってくれた家の名に恥じない騎士であろうとしている。",
     "start": {
-      "cityId": "P010"
+      "cityId": "P010",
+      "factionId": "leonis"
     },
     "gender": "female",
     "voiceTone": "cool_female",
@@ -3476,7 +3563,9 @@
     "voiceTone": "sisterly_veteran",
     "mercenaryInfo": {
       "name": "星砂団",
-      "fee": 1000
+      "fee": 1000,
+      "maxSoldiers": 500,
+      "pride": 2
     },
     "personality": [
       "cautious",
@@ -3512,7 +3601,9 @@
     "voiceTone": "veteran_soldier",
     "mercenaryInfo": {
       "name": "黒煙団",
-      "fee": 1000
+      "fee": 1000,
+      "maxSoldiers": 500,
+      "pride": 2
     },
     "personality": [
       "cautious",
@@ -3565,7 +3656,9 @@
     ],
     "mercenaryInfo": {
       "name": "列火団",
-      "fee": 1000
+      "fee": 1000,
+      "maxSoldiers": 500,
+      "pride": 2
     }
   },
   {
@@ -3601,7 +3694,9 @@
     ],
     "mercenaryInfo": {
       "name": "轟砲団",
-      "fee": 5000
+      "fee": 5000,
+      "maxSoldiers": 800,
+      "pride": 4
     }
   },
   {
@@ -3637,7 +3732,9 @@
     ],
     "mercenaryInfo": {
       "name": "ランツクネヒト",
-      "fee": 10000
+      "fee": 10000,
+      "maxSoldiers": 1000,
+      "pride": 5
     }
   }
 ]
