@@ -1317,7 +1317,8 @@
       "name": "樽盾団",
       "fee": 1000,
       "maxSoldiers": 500,
-      "pride": 2
+      "pride": 2,
+      "unitType": "infantry"
     },
     "biography": "樽のような体躯と白い髭で知られる老傭兵で、傭兵団「樽盾団」の親方。北の山の生まれを自称し、円盾を構えて一歩も退かない守りの戦いを得意とする。金に細かく字は読めないが、若い傭兵に「生き残り方」を叩き込むことにかけては右に出る者がいない。フルーエンの酒場に長逗留していて、書院の学者たちに「本より樽の方が役に立つ」と言っては呆れられている。"
   },
@@ -1780,8 +1781,7 @@
     "strength": 76,
     "charm": 79,
     "start": {
-      "cityId": "P017",
-      "factionId": "nordis"
+      "cityId": "P017"
     },
     "gender": "female",
     "voiceTone": "valkyrie_female",
@@ -3565,7 +3565,8 @@
       "name": "星砂団",
       "fee": 1000,
       "maxSoldiers": 500,
-      "pride": 2
+      "pride": 2,
+      "unitType": "infantry"
     },
     "personality": [
       "cautious",

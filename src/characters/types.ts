@@ -1,6 +1,7 @@
 /** 騎士データの元データ（characters/characters.json）。サーバー（書き出し）とエディタの両方で使う */
 
 import type { PersonalityTag, VoiceToneId } from '@game/data/characterVoice.ts'
+import type { UnitTypeId } from '@game/data/unitTypes.ts'
 
 export const CHARACTER_TYPES = ['knight', 'scholar', 'politician', 'magician', 'hunter', 'rifleman', 'artillery', 'landsknecht'] as const
 export type CharacterType = (typeof CHARACTER_TYPES)[number]
@@ -83,8 +84,11 @@ export interface SourceCharacter {
   strength: number
   charm: number
   biography?: string
-  /** 傭兵。fee は契約金（月額はこの 1/6）、maxSoldiers は最大兵力（1000 まで）、pride はプライド（1〜5） */
-  mercenaryInfo?: { name: string; fee: number; maxSoldiers: number; pride: number }
+  /**
+   * 傭兵。fee は契約金（月額はこの 1/6）、maxSoldiers は最大兵力（1000 まで）、pride はプライド（1〜5）、
+   * unitType は傭兵団の兵科（種別が率いられるもの。省略: 種別の既定の兵科）
+   */
+  mercenaryInfo?: { name: string; fee: number; maxSoldiers: number; pride: number; unitType?: UnitTypeId }
   relations?: Relation[]
   /** 勢力の当主 */
   isPatriarch?: boolean

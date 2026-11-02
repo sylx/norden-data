@@ -3,6 +3,7 @@ import type { City } from '@game/data/city.ts'
 import {
   PERSONALITY_AXES, PERSONALITY_LABELS, VOICE_TONE_GROUPS, VOICE_TONE_LABELS, type PersonalityTag,
 } from '@game/data/characterVoice.ts'
+import { DEFAULT_UNIT_TYPES, UNIT_TYPE_MAP, UNIT_TYPES_BY_CHARACTER_TYPE, type UnitTypeId } from '@game/data/unitTypes.ts'
 import { api, errorMessage } from '../api'
 import { FACTIONS, MERCENARY, characterFaction, factionColor, factionName } from '../factions'
 import { Field, NumberField, SaveStatus } from '../fields'
@@ -347,7 +348,20 @@ export function CharacterEditor() {
                     <input type="number" min={1} max={5} value={character.mercenaryInfo.pride}
                       onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, pride: Math.max(1, Math.min(5, Number(e.target.value))) } })} />
                   </Field>
+                  <Field label="傭兵団の兵科">
+                    <select value={character.mercenaryInfo.unitType ?? ''}
+                      onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, unitType: (e.target.value || undefined) as UnitTypeId | undefined } })}>
+                      <option value="">種別の既定（{UNIT_TYPE_MAP[DEFAULT_UNIT_TYPES[character.type]].name}）</option>
+                      {UNIT_TYPES_BY_CHARACTER_TYPE[character.type].map((id) => <option key={id} value={id}>{UNIT_TYPE_MAP[id].name}</option>)}
+                      {character.mercenaryInfo.unitType && !UNIT_TYPES_BY_CHARACTER_TYPE[character.type].includes(character.mercenaryInfo.unitType) && (
+                        <option value={character.mercenaryInfo.unitType}>{UNIT_TYPE_MAP[character.mercenaryInfo.unitType]?.name ?? character.mercenaryInfo.unitType}（率いられない）</option>
+                      )}
+                    </select>
+                  </Field>
                 </div>
+              )}
+              {character.mercenaryInfo?.unitType && !UNIT_TYPES_BY_CHARACTER_TYPE[character.type].includes(character.mercenaryInfo.unitType) && (
+                <p className="form__note">この種別では率いられない兵科です（ゲームのテストで落ちます）。選び直してください</p>
               )}
 
               <h3 className="form__heading">関係</h3>
