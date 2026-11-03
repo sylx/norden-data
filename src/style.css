@@ -130,8 +130,9 @@ input[type='range'] { accent-color: var(--accent); width: 100%; }
 .minimap__totals .minimap__total td { border-top: 1px solid var(--line); }
 
 /* 騎士データ */
-.character-editor { display: grid; grid-template-columns: 280px 1fr; gap: 12px; height: 100%; padding: 12px; }
+.character-editor { display: grid; grid-template-columns: 380px 1fr; gap: 12px; height: 100%; padding: 12px; }
 .character-list { display: flex; flex-direction: column; gap: 8px; min-height: 0; }
+.character-list__search { flex-basis: 100%; }
 .character-list__items { list-style: none; margin: 0; padding: 0; overflow-y: auto; flex: 1; }
 .character-list__item { display: flex; align-items: center; gap: 8px; width: 100%; padding: 4px 6px; background: none; border: 1px solid transparent; border-radius: 4px; cursor: pointer; text-align: left; }
 .character-list__item:hover { background: var(--panel-2); }

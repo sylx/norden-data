@@ -19,6 +19,21 @@ import {
 
 const axisIndex = (tag: PersonalityTag) => PERSONALITY_AXES.findIndex((axis) => axis.tags.includes(tag))
 
+/** 配置するが勢力も傭兵契約もない騎士（捕虜は除く） */
+const isWandering = (c: SourceCharacter) => !!c.start && !c.start.factionId && !c.start.isPrisoner && !c.mercenaryInfo
+
+interface ListFilter { id: string; label: string; match: (c: SourceCharacter) => boolean }
+
+/** 一覧の絞り込み。傭兵は mercenaryInfo のある騎士。勢力は勢力を指定した騎士だけ（傭兵でも勢力を指定していればその勢力） */
+const KIND_FILTERS: ListFilter[] = [
+  { id: 'all', label: 'すべて', match: () => true },
+  { id: 'mercenary', label: '傭兵', match: (c) => !!c.mercenaryInfo },
+  { id: 'other', label: '傭兵以外', match: (c) => !c.mercenaryInfo },
+  { id: 'wandering', label: '放浪', match: isWandering },
+]
+const FACTION_FILTERS: ListFilter[] = FACTIONS.map((f) => ({ id: f.id, label: f.name, match: (c) => c.start?.factionId === f.id }))
+const LIST_FILTERS = new Map([...KIND_FILTERS, ...FACTION_FILTERS].map((f) => [f.id, f]))
+
 /** server/exportCharacters.ts の ExportResult */
 interface ExportResult {
   characterCount: number
@@ -40,6 +55,7 @@ export function CharacterEditor() {
   const [cities, setCities] = useState<City[]>([])
   const [selectedId, setSelectedId] = useState('')
   const [search, setSearch] = useState('')
+  const [filterId, setFilterId] = useState('all')
   const [status, setStatus] = useState<{ message?: string; error?: string }>({})
   const [exported, setExported] = useState<ExportResult | null>(null)
   const [busy, setBusy] = useState(false)
@@ -124,8 +140,11 @@ export function CharacterEditor() {
   if (!characters) return <div className="loading">{status.error ?? '読み込み中…'}</div>
 
   const q = search.trim().toLowerCase()
-  const filtered = characters.filter((c) => !q || [c.id, c.name, factionName(factionOf(c)), c.start ? cityName(c.start.cityId) : '']
-    .some((text) => text.toLowerCase().includes(q)))
+  const listFilter = LIST_FILTERS.get(filterId) ?? KIND_FILTERS[0]
+  const filtered = characters.filter((c) => listFilter.match(c) && (!q || [
+    c.id, c.name, factionName(factionOf(c)), c.start ? cityName(c.start.cityId) : '',
+    isWandering(c) ? '放浪' : '', c.mercenaryInfo ? `傭兵 ${c.mercenaryInfo.name}` : '',
+  ].some((text) => text.toLowerCase().includes(q))))
   const sheet = character?.sprite ? sheetMap.get(character.sprite.sheet) : undefined
   const relations = character?.relations ?? []
   const personality = character?.personality ?? []
@@ -134,8 +153,14 @@ export function CharacterEditor() {
     <div className="character-editor">
       <aside className="character-list panel">
         <div className="toolbar">
-          <input className="toolbar__search" type="search" placeholder="名前・勢力・都市で検索" value={search}
+          <input className="toolbar__search character-list__search" type="search" placeholder="名前・勢力・都市で検索" value={search}
             onChange={(e) => setSearch(e.target.value)} />
+          <select className="toolbar__select" value={filterId} onChange={(e) => setFilterId(e.target.value)}>
+            {KIND_FILTERS.map((f) => <option key={f.id} value={f.id}>{f.label}（{characters.filter(f.match).length}）</option>)}
+            <optgroup label="勢力">
+              {FACTION_FILTERS.map((f) => <option key={f.id} value={f.id}>{f.label}（{characters.filter(f.match).length}）</option>)}
+            </optgroup>
+          </select>
           <button type="button" className="button" onClick={add}>＋ 新規</button>
         </div>
         <ul className="character-list__items">
@@ -148,6 +173,7 @@ export function CharacterEditor() {
                   <span className="character-list__name">{c.name}</span>
                   <span className="character-list__sub">
                     {c.id}・{CHARACTER_TYPE_LABELS[c.type]}
+                    {c.mercenaryInfo && `・傭兵（${c.mercenaryInfo.name}）`}
                     {c.start && <> ・<span className="swatch" style={{ background: factionColor(factionOf(c)) }} />{cityName(c.start.cityId)}</>}
                     {c.start?.isPrisoner && '（捕虜）'}
                   </span>
