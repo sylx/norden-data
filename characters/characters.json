@@ -38,7 +38,7 @@
       "devout",
       "generous"
     ],
-    "voiceTone": "cool_female"
+    "voiceTone": "polite_female"
   },
   {
     "id": "002",
@@ -115,7 +115,8 @@
       "pragmatic",
       "sociable",
       "enigmatic"
-    ]
+    ],
+    "voiceTone": "tomboy_warrior"
   },
   {
     "id": "004",
@@ -142,7 +143,8 @@
     "start": {
       "cityId": "P022",
       "factionId": "aqua"
-    }
+    },
+    "voiceTone": "polite_female"
   },
   {
     "id": "005",
@@ -169,7 +171,8 @@
     "start": {
       "cityId": "P001",
       "factionId": "taurus"
-    }
+    },
+    "voiceTone": "tomboy_warrior"
   },
   {
     "id": "006",
@@ -196,7 +199,8 @@
     "start": {
       "cityId": "P030",
       "factionId": "taurus"
-    }
+    },
+    "voiceTone": "sisterly_veteran"
   },
   {
     "id": "007",
@@ -223,7 +227,8 @@
     "start": {
       "cityId": "P000",
       "factionId": "sede"
-    }
+    },
+    "voiceTone": "polite_female"
   },
   {
     "id": "008",
@@ -250,7 +255,8 @@
     "start": {
       "cityId": "P021",
       "factionId": "valhardt"
-    }
+    },
+    "voiceTone": "noble_lady"
   },
   {
     "id": "009",
@@ -277,7 +283,8 @@
     "start": {
       "cityId": "P023",
       "factionId": "leonis"
-    }
+    },
+    "voiceTone": "tomboy_warrior"
   },
   {
     "id": "010",
@@ -290,10 +297,10 @@
       "row": 1
     },
     "faceRect": {
-      "x": 244.62666666666667,
-      "y": 0,
-      "width": 574,
-      "height": 574
+      "x": 252.62666666666667,
+      "y": 8,
+      "width": 558,
+      "height": 558
     },
     "politics": 31,
     "intelligence": 41,
@@ -304,7 +311,8 @@
     "start": {
       "cityId": "P007",
       "factionId": "rosalia"
-    }
+    },
+    "voiceTone": "valkyrie_female"
   },
   {
     "id": "011",
@@ -331,7 +339,8 @@
     "start": {
       "cityId": "P019",
       "factionId": "nordis"
-    }
+    },
+    "voiceTone": "polite_female"
   },
   {
     "id": "012",
@@ -358,7 +367,8 @@
     "start": {
       "cityId": "P001",
       "factionId": "taurus"
-    }
+    },
+    "voiceTone": "cool_female"
   },
   {
     "id": "013",
@@ -385,7 +395,8 @@
     "start": {
       "cityId": "P004",
       "factionId": "leonis"
-    }
+    },
+    "voiceTone": "cool_female"
   },
   {
     "id": "014",
@@ -414,7 +425,8 @@
       "cityId": "P022",
       "factionId": "aqua",
       "isLord": true
-    }
+    },
+    "voiceTone": "polite_female"
   },
   {
     "id": "015",
@@ -447,7 +459,8 @@
     "start": {
       "cityId": "P012",
       "factionId": "carta"
-    }
+    },
+    "voiceTone": "polite_female"
   },
   {
     "id": "016",
@@ -474,7 +487,8 @@
     "start": {
       "cityId": "P012",
       "factionId": "carta"
-    }
+    },
+    "voiceTone": "noble_male"
   },
   {
     "id": "017",
@@ -507,7 +521,8 @@
     "start": {
       "cityId": "P023",
       "factionId": "leonis"
-    }
+    },
+    "voiceTone": "veteran_soldier"
   },
   {
     "id": "018",
@@ -536,7 +551,8 @@
       "cityId": "P021",
       "factionId": "valhardt",
       "isLord": true
-    }
+    },
+    "voiceTone": "noble_male"
   },
   {
     "id": "019",
@@ -563,7 +579,8 @@
     "start": {
       "cityId": "P017",
       "factionId": "nordis"
-    }
+    },
+    "voiceTone": "noble_male"
   },
   {
     "id": "020",
@@ -590,7 +607,8 @@
     "start": {
       "cityId": "P007",
       "factionId": "rosalia"
-    }
+    },
+    "voiceTone": "wild_berserker"
   },
   {
     "id": "021",
@@ -618,7 +636,8 @@
       "cityId": "P029",
       "factionId": "valhardt",
       "isLord": true
-    }
+    },
+    "voiceTone": "veteran_soldier"
   },
   {
     "id": "022",
@@ -645,7 +664,8 @@
     "start": {
       "cityId": "P022",
       "factionId": "aqua"
-    }
+    },
+    "voiceTone": "cool_tactician"
   },
   {
     "id": "023",
@@ -678,7 +698,8 @@
     "start": {
       "cityId": "P000",
       "factionId": "sede"
-    }
+    },
+    "voiceTone": "earnest_youth"
   },
   {
     "id": "024",
@@ -711,7 +732,8 @@
     "start": {
       "cityId": "P023",
       "factionId": "leonis"
-    }
+    },
+    "voiceTone": "veteran_soldier"
   },
   {
     "id": "025",
@@ -738,7 +760,8 @@
     "start": {
       "cityId": "P007",
       "factionId": "rosalia"
-    }
+    },
+    "voiceTone": "fanatic_zealot"
   },
   {
     "id": "026",
@@ -771,7 +794,8 @@
     "start": {
       "cityId": "P027",
       "factionId": "nordis"
-    }
+    },
+    "voiceTone": "earnest_youth"
   },
   {
     "id": "027",
@@ -798,7 +822,8 @@
     "start": {
       "cityId": "P012",
       "factionId": "carta"
-    }
+    },
+    "voiceTone": "wild_berserker"
   },
   {
     "id": "028",
@@ -830,7 +855,8 @@
     },
     "start": {
       "cityId": "P001"
-    }
+    },
+    "voiceTone": "veteran_soldier"
   },
   {
     "id": "029",
@@ -865,7 +891,8 @@
       "cityId": "P012",
       "factionId": "carta",
       "isLord": true
-    }
+    },
+    "voiceTone": "cool_tactician"
   },
   {
     "id": "030",
@@ -892,7 +919,8 @@
     "start": {
       "cityId": "P017",
       "factionId": "nordis"
-    }
+    },
+    "voiceTone": "earnest_youth"
   },
   {
     "id": "031",
@@ -2480,7 +2508,7 @@
       "factionId": "leonis"
     },
     "gender": "female",
-    "voiceTone": "noble_lady",
+    "voiceTone": "polite_female",
     "personality": [
       "arrogant"
     ],
@@ -2517,7 +2545,7 @@
       "factionId": "valhardt"
     },
     "gender": "female",
-    "voiceTone": "noble_lady",
+    "voiceTone": "polite_female",
     "personality": [
       "cautious",
       "nihilist",
@@ -2624,7 +2652,7 @@
       "factionId": "leonis"
     },
     "gender": "female",
-    "voiceTone": "noble_lady",
+    "voiceTone": "polite_female",
     "personality": [
       "devout",
       "enigmatic"
@@ -2965,7 +2993,7 @@
       "factionId": "rosalia"
     },
     "gender": "female",
-    "voiceTone": "cool_female",
+    "voiceTone": "polite_female",
     "biography": "海の水を真水と塩に分ける術を持つ魔法師。砂漠を渡る隊商に雇われては水を作り、船に雇われては塩を作り、どこにも長く留まらずに暮らしてきた。宝飾を身につけているのは、報酬をそのまま身に着けて運ぶ隊商の慣わしに従っているだけで、本人に飾る趣味はない。必要なことしか話さず、術の仕組みを尋ねられても答えない。書物にまとめさせてほしいと日参する学者ジュリオ（072）を一言も返さずに追い返し続けているが、彼が持ってくる茶菓子だけは受け取っている。",
     "personality": [
       "pragmatic",
@@ -3280,7 +3308,7 @@
       "factionId": "aqua"
     },
     "gender": "female",
-    "voiceTone": "noble_lady",
+    "voiceTone": "polite_female",
     "personality": [
       "cautious",
       "strict",
