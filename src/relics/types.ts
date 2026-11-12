@@ -21,6 +21,7 @@ export const createRelic = (id: string): SourceRelic => ({
   description: '',
   rarity: 'C',
   use: 'equipment',
+  equipment: { wearer: 'nonMagician' },
   dismantlePoints: 300,
   repair: { supplies: 400, gold: 150 },
   sprite: null,
@@ -28,8 +29,8 @@ export const createRelic = (id: string): SourceRelic => ({
 })
 
 /**
- * 技術の参照切れと、壊れた状態のそろっていない遺物の問題（ゲームの relicDataProblems と同じ検査）。
- * 壊れた状態が無い遺物には生産が要る
+ * 技術の参照切れと、壊れた状態のそろっていない遺物の問題（ゲームの relicDataProblems のうち、書き出しのサーバーでもする検査）。
+ * 壊れた状態が無い遺物には生産が要る。効果（装備・召喚・施設）の検査（ゲームの relicEffectProblems）はエディタだけでする
  */
 export function relicProblems(relics: readonly SourceRelic[], techIds: readonly string[]): string[] {
   const ids = new Set(techIds)

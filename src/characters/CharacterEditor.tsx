@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { isSpecialCharacterId, nextCharacterId, SPECIAL_CHARACTER_IDS } from '@game/data/character.ts'
 import type { City } from '@game/data/city.ts'
 import {
   PERSONALITY_AXES, PERSONALITY_LABELS, VOICE_TONE_GROUPS, VOICE_TONE_LABELS, type PersonalityTag,
@@ -14,7 +15,7 @@ import { CharacterThumb } from './SheetCrop'
 import { SpritePicker } from './SpritePicker'
 import {
   CHARACTER_TYPES, CHARACTER_TYPE_LABELS, RELATION_LABELS, RELATION_TYPES, STAT_KEYS,
-  createCharacter, nextCharacterId, setGender, setRelations, type Relation, type SheetInfo, type SourceCharacter,
+  createCharacter, setGender, setRelations, type Relation, type SheetInfo, type SourceCharacter,
 } from './types'
 
 const axisIndex = (tag: PersonalityTag) => PERSONALITY_AXES.findIndex((axis) => axis.tags.includes(tag))
@@ -30,6 +31,7 @@ const KIND_FILTERS: ListFilter[] = [
   { id: 'mercenary', label: '傭兵', match: (c) => !!c.mercenaryInfo },
   { id: 'other', label: '傭兵以外', match: (c) => !c.mercenaryInfo },
   { id: 'wandering', label: '放浪', match: isWandering },
+  { id: 'special', label: `特殊（${SPECIAL_CHARACTER_IDS.min}〜${SPECIAL_CHARACTER_IDS.max}）`, match: (c) => isSpecialCharacterId(c.id) },
 ]
 const FACTION_FILTERS: ListFilter[] = FACTIONS.map((f) => ({ id: f.id, label: f.name, match: (c) => c.start?.factionId === f.id }))
 const LIST_FILTERS = new Map([...KIND_FILTERS, ...FACTION_FILTERS].map((f) => [f.id, f]))
@@ -123,9 +125,12 @@ export function CharacterEditor() {
   /** 関係を変える。相手の側の関係も自動でそろえる */
   const updateRelations = (next: Relation[]) => setCharacters((list) => list && setRelations(list, selectedId, next))
 
+  /** 新規の ID。特殊キャラクター（991〜）の手前まで。null: 空きが無い */
+  const newId = characters && nextCharacterId(characters.map((c) => c.id))
+
   const add = () => {
-    if (!characters) return
-    const created = createCharacter(nextCharacterId(characters))
+    if (!characters || !newId) return
+    const created = createCharacter(newId)
     setCharacters([...characters, created])
     setSelectedId(created.id)
   }
@@ -161,7 +166,8 @@ export function CharacterEditor() {
               {FACTION_FILTERS.map((f) => <option key={f.id} value={f.id}>{f.label}（{characters.filter(f.match).length}）</option>)}
             </optgroup>
           </select>
-          <button type="button" className="button" onClick={add}>＋ 新規</button>
+          <button type="button" className="button" disabled={!newId} onClick={add}
+            title={newId ? `ID ${newId} で作る` : `新規の ID が残っていません（${SPECIAL_CHARACTER_IDS.min}〜${SPECIAL_CHARACTER_IDS.max} は特殊キャラクター用）`}>＋ 新規</button>
         </div>
         <ul className="character-list__items">
           {filtered.map((c) => (
@@ -285,109 +291,123 @@ export function CharacterEditor() {
                 <NumberField key={key} label={label} value={character[key]} max={100} onChange={(v) => update({ [key]: v })} />
               ))}
 
-              <h3 className="form__heading">初期配置</h3>
-              <div className="form__grid">
-                <Field label="都市">
-                  <div className="city-select">
-                    <select value={character.start?.cityId ?? ''}
-                      onChange={(e) => update({ start: e.target.value ? { ...character.start, cityId: e.target.value } : null })}>
-                      <option value="">配置しない</option>
-                      {cities.map((c) => <option key={c.id} value={c.id}>{c.id} {c.name}</option>)}
-                    </select>
-                    <button type="button" className="button" onClick={() => setCityMapOpen((open) => !open)}>
-                      {cityMapOpen ? '地図を閉じる' : '地図から選ぶ'}
-                    </button>
-                  </div>
-                </Field>
-                <Field label="勢力">
-                  <select value={character.start?.factionId ?? ''} disabled={!character.start}
-                    onChange={(e) => character.start && update({ start: { ...character.start, factionId: e.target.value || undefined } })}>
-                    <option value="">
-                      {character.start?.isPrisoner ? '所属なし' : character.mercenaryInfo ? `所属なし（${MERCENARY.name}）` : 'なし（放浪）'}
-                    </option>
-                    {FACTIONS.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}
-                  </select>
-                </Field>
-                {character.start && !character.start.factionId && !character.start.isPrisoner && !character.mercenaryInfo && (
-                  <Field label="怨恨勢力">
-                    <select value={character.start.grudge ?? ''}
-                      onChange={(e) => character.start && update({ start: { ...character.start, grudge: e.target.value || undefined } })}>
-                      <option value="">なし</option>
+              {isSpecialCharacterId(character.id) && (
+                <>
+                  <h3 className="form__heading">特殊キャラクター</h3>
+                  <p className="form__note">
+                    {SPECIAL_CHARACTER_IDS.min}〜{SPECIAL_CHARACTER_IDS.max} は特殊キャラクター（991 ドラゴン・992 ゴーレム・993 ベヒーモスは召喚ユニットの型紙）。
+                    画像と既定の値だけを持ち、ゲームには配置しない。傭兵にもしない
+                  </p>
+                </>
+              )}
+              {!isSpecialCharacterId(character.id) && (
+                <>
+                <h3 className="form__heading">初期配置</h3>
+                <div className="form__grid">
+                  <Field label="都市">
+                    <div className="city-select">
+                      <select value={character.start?.cityId ?? ''}
+                        onChange={(e) => update({ start: e.target.value ? { ...character.start, cityId: e.target.value } : null })}>
+                        <option value="">配置しない</option>
+                        {cities.map((c) => <option key={c.id} value={c.id}>{c.id} {c.name}</option>)}
+                      </select>
+                      <button type="button" className="button" onClick={() => setCityMapOpen((open) => !open)}>
+                        {cityMapOpen ? '地図を閉じる' : '地図から選ぶ'}
+                      </button>
+                    </div>
+                  </Field>
+                  <Field label="勢力">
+                    <select value={character.start?.factionId ?? ''} disabled={!character.start}
+                      onChange={(e) => character.start && update({ start: { ...character.start, factionId: e.target.value || undefined } })}>
+                      <option value="">
+                        {character.start?.isPrisoner ? '所属なし' : character.mercenaryInfo ? `所属なし（${MERCENARY.name}）` : 'なし（放浪）'}
+                      </option>
                       {FACTIONS.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}
                     </select>
                   </Field>
+                  {character.start && !character.start.factionId && !character.start.isPrisoner && !character.mercenaryInfo && (
+                    <Field label="怨恨勢力">
+                      <select value={character.start.grudge ?? ''}
+                        onChange={(e) => character.start && update({ start: { ...character.start, grudge: e.target.value || undefined } })}>
+                        <option value="">なし</option>
+                        {FACTIONS.map((f) => <option key={f.id} value={f.id}>{f.name}</option>)}
+                      </select>
+                    </Field>
+                  )}
+                  <label className="checkbox">
+                    <input type="checkbox" checked={!!character.start?.isLord && !character.start.isPrisoner}
+                      disabled={!character.start || !!character.start.isPrisoner}
+                      onChange={(e) => character.start && update({ start: { ...character.start, isLord: e.target.checked || undefined } })} />
+                    都市の領主
+                  </label>
+                  <label className="checkbox">
+                    <input type="checkbox" checked={!!character.start?.isPrisoner} disabled={!character.start}
+                      onChange={(e) => character.start && update({
+                        start: { ...character.start, isPrisoner: e.target.checked || undefined, ...(e.target.checked && { isLord: undefined }) },
+                      })} />
+                    都市の捕虜（勢力は捕まる前に仕えていた勢力）
+                  </label>
+                </div>
+                {character.start?.isPrisoner && (!cityOwner.get(character.start.cityId)
+                  ? <p className="form__note">中立の都市には捕虜を置けません（ゲームでは捕虜になりません）</p>
+                  : factionOf(character) === cityOwner.get(character.start.cityId)
+                  && <p className="form__note">都市の勢力の騎士は捕虜になりません（ゲームでは都市の騎士になります）。勢力を選んでください</p>)}
+                {character.start && !character.start.isPrisoner && !character.start.factionId && (
+                  <p className="form__note">
+                    {character.mercenaryInfo ? 'この都市が最初の居所です。雇われるまで各地を移動します' : '放浪で始まります。この都市が最初の居所で、各地を移動します'}
+                  </p>
                 )}
-                <label className="checkbox">
-                  <input type="checkbox" checked={!!character.start?.isLord && !character.start.isPrisoner}
-                    disabled={!character.start || !!character.start.isPrisoner}
-                    onChange={(e) => character.start && update({ start: { ...character.start, isLord: e.target.checked || undefined } })} />
-                  都市の領主
-                </label>
-                <label className="checkbox">
-                  <input type="checkbox" checked={!!character.start?.isPrisoner} disabled={!character.start}
-                    onChange={(e) => character.start && update({
-                      start: { ...character.start, isPrisoner: e.target.checked || undefined, ...(e.target.checked && { isLord: undefined }) },
-                    })} />
-                  都市の捕虜（勢力は捕まる前に仕えていた勢力）
-                </label>
-              </div>
-              {character.start?.isPrisoner && (!cityOwner.get(character.start.cityId)
-                ? <p className="form__note">中立の都市には捕虜を置けません（ゲームでは捕虜になりません）</p>
-                : factionOf(character) === cityOwner.get(character.start.cityId)
-                && <p className="form__note">都市の勢力の騎士は捕虜になりません（ゲームでは都市の騎士になります）。勢力を選んでください</p>)}
-              {character.start && !character.start.isPrisoner && !character.start.factionId && (
-                <p className="form__note">
-                  {character.mercenaryInfo ? 'この都市が最初の居所です。雇われるまで各地を移動します' : '放浪で始まります。この都市が最初の居所で、各地を移動します'}
-                </p>
-              )}
-              {character.mercenaryInfo && character.start?.factionId && (
-                <p className="form__note">傭兵の開始に勢力は書けません（ゲームのテストで落ちます）。「所属なし」にしてください</p>
-              )}
-              {cityMapOpen && (
-                <div className="city-picker">
-                  <MiniMap cities={cities} selectedId={character.start?.cityId ?? ''} showTotals={false}
-                    onSelect={(cityId) => update({ start: { ...character.start, cityId } })} />
-                </div>
-              )}
+                {character.mercenaryInfo && character.start?.factionId && (
+                  <p className="form__note">傭兵の開始に勢力は書けません（ゲームのテストで落ちます）。「所属なし」にしてください</p>
+                )}
+                {cityMapOpen && (
+                  <div className="city-picker">
+                    <MiniMap cities={cities} selectedId={character.start?.cityId ?? ''} showTotals={false}
+                      onSelect={(cityId) => update({ start: { ...character.start, cityId } })} />
+                  </div>
+                )}
 
-              <h3 className="form__heading">傭兵</h3>
-              <label className="checkbox">
-                <input type="checkbox" checked={!!character.mercenaryInfo}
-                  onChange={(e) => update({ mercenaryInfo: e.target.checked ? { name: '', fee: 1000, maxSoldiers: 500, pride: 2 } : undefined })} />
-                傭兵団を率いる
-              </label>
-              {character.mercenaryInfo && (
-                <div className="form__grid">
-                  <Field label="傭兵団の名前">
-                    <input value={character.mercenaryInfo.name}
-                      onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, name: e.target.value } })} />
-                  </Field>
-                  <Field label="契約金">
-                    <input type="number" value={character.mercenaryInfo.fee}
-                      onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, fee: Number(e.target.value) } })} />
-                  </Field>
-                  <Field label="最大兵力（1000 まで）">
-                    <input type="number" min={1} max={1000} step={10} value={character.mercenaryInfo.maxSoldiers}
-                      onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, maxSoldiers: Math.max(1, Math.min(1000, Number(e.target.value))) } })} />
-                  </Field>
-                  <Field label="プライド（1〜5）">
-                    <input type="number" min={1} max={5} value={character.mercenaryInfo.pride}
-                      onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, pride: Math.max(1, Math.min(5, Number(e.target.value))) } })} />
-                  </Field>
-                  <Field label="傭兵団の兵科">
-                    <select value={character.mercenaryInfo.unitType ?? ''}
-                      onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, unitType: (e.target.value || undefined) as UnitTypeId | undefined } })}>
-                      <option value="">種別の既定（{UNIT_TYPE_MAP[DEFAULT_UNIT_TYPES[character.type]].name}）</option>
-                      {UNIT_TYPES_BY_CHARACTER_TYPE[character.type].map((id) => <option key={id} value={id}>{UNIT_TYPE_MAP[id].name}</option>)}
-                      {character.mercenaryInfo.unitType && !UNIT_TYPES_BY_CHARACTER_TYPE[character.type].includes(character.mercenaryInfo.unitType) && (
-                        <option value={character.mercenaryInfo.unitType}>{UNIT_TYPE_MAP[character.mercenaryInfo.unitType]?.name ?? character.mercenaryInfo.unitType}（率いられない）</option>
-                      )}
-                    </select>
-                  </Field>
-                </div>
-              )}
-              {character.mercenaryInfo?.unitType && !UNIT_TYPES_BY_CHARACTER_TYPE[character.type].includes(character.mercenaryInfo.unitType) && (
-                <p className="form__note">この種別では率いられない兵科です（ゲームのテストで落ちます）。選び直してください</p>
+                <h3 className="form__heading">傭兵</h3>
+                <label className="checkbox">
+                  <input type="checkbox" checked={!!character.mercenaryInfo}
+                    onChange={(e) => update({ mercenaryInfo: e.target.checked ? { name: '', fee: 1000, maxSoldiers: 500, pride: 2 } : undefined })} />
+                  傭兵団を率いる
+                </label>
+                {character.mercenaryInfo && (
+                  <div className="form__grid">
+                    <Field label="傭兵団の名前">
+                      <input value={character.mercenaryInfo.name}
+                        onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, name: e.target.value } })} />
+                    </Field>
+                    <Field label="契約金">
+                      <input type="number" value={character.mercenaryInfo.fee}
+                        onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, fee: Number(e.target.value) } })} />
+                    </Field>
+                    <Field label="最大兵力（1000 まで）">
+                      <input type="number" min={1} max={1000} step={10} value={character.mercenaryInfo.maxSoldiers}
+                        onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, maxSoldiers: Math.max(1, Math.min(1000, Number(e.target.value))) } })} />
+                    </Field>
+                    <Field label="プライド（1〜5）">
+                      <input type="number" min={1} max={5} value={character.mercenaryInfo.pride}
+                        onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, pride: Math.max(1, Math.min(5, Number(e.target.value))) } })} />
+                    </Field>
+                    <Field label="傭兵団の兵科">
+                      <select value={character.mercenaryInfo.unitType ?? ''}
+                        onChange={(e) => update({ mercenaryInfo: { ...character.mercenaryInfo!, unitType: (e.target.value || undefined) as UnitTypeId | undefined } })}>
+                        <option value="">種別の既定（{UNIT_TYPE_MAP[DEFAULT_UNIT_TYPES[character.type]].name}）</option>
+                        {UNIT_TYPES_BY_CHARACTER_TYPE[character.type].map((id) => <option key={id} value={id}>{UNIT_TYPE_MAP[id].name}</option>)}
+                        {character.mercenaryInfo.unitType && !UNIT_TYPES_BY_CHARACTER_TYPE[character.type].includes(character.mercenaryInfo.unitType) && (
+                          <option value={character.mercenaryInfo.unitType}>{UNIT_TYPE_MAP[character.mercenaryInfo.unitType]?.name ?? character.mercenaryInfo.unitType}（率いられない）</option>
+                        )}
+                      </select>
+                    </Field>
+                  </div>
+                )}
+                {character.mercenaryInfo?.unitType && !UNIT_TYPES_BY_CHARACTER_TYPE[character.type].includes(character.mercenaryInfo.unitType) && (
+                  <p className="form__note">この種別では率いられない兵科です（ゲームのテストで落ちます）。選び直してください</p>
+                )}
+
+                </>
               )}
 
               <h3 className="form__heading">関係</h3>

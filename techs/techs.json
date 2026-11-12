@@ -350,7 +350,7 @@
   {
     "id": "lightning_magic",
     "name": "雷魔法",
-    "description": "空の怒りを呼び、敵から敵へと稲妻を走らせる。",
+    "description": "空の怒りを呼び、雷の槌で敵を打ち砕く。",
     "branch": "arcane",
     "cost": 300,
     "requires": [
@@ -359,7 +359,7 @@
     "effects": [
       {
         "kind": "etc",
-        "value": "雷の魔導書（チェインライトニング）を遺物なしで生産できる"
+        "value": "雷の魔導書（トールハンマー）を遺物なしで生産できる"
       }
     ],
     "sprite": {

@@ -6,6 +6,12 @@
     "description": "火薬で鉛の弾を撃ち出す、旧文明の携行兵器。遠くの鎧を音より先に貫く。",
     "rarity": "C",
     "use": "equipment",
+    "equipment": {
+      "wearer": "nonMagician",
+      "unitTypes": [
+        "rifleman"
+      ]
+    },
     "dismantlePoints": 300,
     "repair": {
       "supplies": 400,
@@ -34,7 +40,13 @@
     "brokenName": "壊れた大砲",
     "description": "城壁ごと敵を砕く旧文明の重砲。車輪で戦場を渡り、狙った壁を崩す。",
     "rarity": "B",
-    "use": "building",
+    "use": "equipment",
+    "equipment": {
+      "wearer": "nonMagician",
+      "unitTypes": [
+        "artillery"
+      ]
+    },
     "dismantlePoints": 300,
     "repair": {
       "supplies": 600,
@@ -174,6 +186,11 @@
     "description": "古代の術式で眠らされた竜。孵れば、主と認めた者のために空を焼く。",
     "rarity": "A",
     "use": "summon",
+    "summon": {
+      "characterId": "991",
+      "unitType": "dragon",
+      "hp": 600
+    },
     "dismantlePoints": 500,
     "repair": {
       "supplies": 1000,
@@ -203,6 +220,11 @@
     "description": "命令のままに歩く石の巨人。刻まれた術式を繋ぎ直せば、再び立ち上がる。",
     "rarity": "A",
     "use": "summon",
+    "summon": {
+      "characterId": "992",
+      "unitType": "golem",
+      "hp": 800
+    },
     "dismantlePoints": 500,
     "repair": {
       "supplies": 1000,
@@ -232,6 +254,11 @@
     "description": "都市ひとつを踏み潰したと伝わる魔導の巨獣。石と化してなお、その骨は熱を帯びている。",
     "rarity": "S",
     "use": "summon",
+    "summon": {
+      "characterId": "993",
+      "unitType": "behemoth",
+      "hp": 1000
+    },
     "dismantlePoints": 1000,
     "repair": {
       "supplies": 2000,
@@ -257,9 +284,16 @@
   {
     "id": "grimoire_chain_lightning",
     "name": "雷の魔導書",
-    "description": "敵から敵へ跳ねる雷、チェインライトニングの術式を記した書。",
+    "description": "天から雷の槌を振り下ろす、トールハンマーの術式を記した書。",
     "rarity": "B",
     "use": "equipment",
+    "equipment": {
+      "wearer": "magician",
+      "minIntelligence": 80,
+      "spells": [
+        "thorHammer"
+      ]
+    },
     "production": {
       "supplies": 400,
       "gold": 200,
@@ -277,6 +311,13 @@
     "description": "炎を一条の槍に束ねて放つフレイムランスの術式を記した書。",
     "rarity": "B",
     "use": "equipment",
+    "equipment": {
+      "wearer": "magician",
+      "minIntelligence": 70,
+      "spells": [
+        "flameLance"
+      ]
+    },
     "production": {
       "supplies": 400,
       "gold": 200,
@@ -294,6 +335,13 @@
     "description": "周囲の熱を奪い、敵の足を凍らせるフロストノヴァの術式を記した書。",
     "rarity": "B",
     "use": "equipment",
+    "equipment": {
+      "wearer": "magician",
+      "minIntelligence": 70,
+      "spells": [
+        "frostNova"
+      ]
+    },
     "production": {
       "supplies": 400,
       "gold": 200,
@@ -311,6 +359,13 @@
     "description": "大地から岩の杭を突き上げるアーススパイクの術式を記した書。",
     "rarity": "B",
     "use": "equipment",
+    "equipment": {
+      "wearer": "magician",
+      "minIntelligence": 70,
+      "spells": [
+        "earthSpike"
+      ]
+    },
     "production": {
       "supplies": 400,
       "gold": 200,
@@ -328,6 +383,16 @@
     "description": "雷・火・水・土、四つの元素の術式を一冊に綴じた書。読み解けるのは上級の術者だけ。",
     "rarity": "S",
     "use": "equipment",
+    "equipment": {
+      "wearer": "magician",
+      "minIntelligence": 90,
+      "spells": [
+        "thorHammer",
+        "flameLance",
+        "frostNova",
+        "earthSpike"
+      ]
+    },
     "production": {
       "supplies": 2000,
       "gold": 1000,
@@ -345,6 +410,13 @@
     "description": "天の星を呼び落とす最上位の術式、メテオフォールを記した書。",
     "rarity": "S",
     "use": "equipment",
+    "equipment": {
+      "wearer": "magician",
+      "minIntelligence": 95,
+      "spells": [
+        "meteorFall"
+      ]
+    },
     "production": {
       "supplies": 2500,
       "gold": 1500,

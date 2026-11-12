@@ -3,7 +3,7 @@
 import type { PersonalityTag, VoiceToneId } from '@game/data/characterVoice.ts'
 import type { UnitTypeId } from '@game/data/unitTypes.ts'
 
-export const CHARACTER_TYPES = ['knight', 'scholar', 'politician', 'magician', 'hunter', 'rifleman', 'artillery', 'landsknecht'] as const
+export const CHARACTER_TYPES = ['knight', 'scholar', 'politician', 'magician', 'hunter', 'rifleman', 'artillery', 'landsknecht', 'summon'] as const
 export type CharacterType = (typeof CHARACTER_TYPES)[number]
 
 export const CHARACTER_TYPE_LABELS: Readonly<Record<CharacterType, string>> = {
@@ -15,6 +15,7 @@ export const CHARACTER_TYPE_LABELS: Readonly<Record<CharacterType, string>> = {
   rifleman: 'ライフル兵',
   artillery: '砲兵',
   landsknecht: 'ランツクネヒト',
+  summon: '召喚',
 }
 
 export const RELATION_TYPES = ['father', 'mother', 'son', 'daughter', 'brother', 'sister', 'married', 'best_friend'] as const
@@ -177,9 +178,4 @@ export function setGender(list: SourceCharacter[], id: string, gender: SourceCha
   const next = list.map((c) => (c.id === id ? { ...c, gender } : c))
   const self = next.find((c) => c.id === id)
   return syncReverse(next, id, new Set(self?.relations?.map((r) => r.characterId)))
-}
-
-export function nextCharacterId(characters: readonly SourceCharacter[]): string {
-  const max = Math.max(0, ...characters.map((c) => parseInt(c.id, 10) || 0))
-  return String(max + 1).padStart(3, '0')
 }

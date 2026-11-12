@@ -1,6 +1,14 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { RELIC_RARITIES, RELIC_USE_LABELS, type RelicRarity, type RelicUse, type RelicWorkCost } from '@game/data/relics.ts'
+import { ATTACK_DEFS } from '@norden/battle-runtime/rules'
+import { isSpecialCharacterId } from '@game/data/character.ts'
+import {
+  RELIC_RARITIES, RELIC_USE_LABELS, RELIC_WEARER_LABELS, relicEffectProblems, SPELL_IDS,
+  type RelicEquipment, type RelicRarity, type RelicSummon, type RelicUse, type RelicWearer, type RelicWorkCost,
+} from '@game/data/relics.ts'
+import { MONSTER_UNIT_TYPES, UNIT_TYPE_MAP, UNIT_TYPES, type UnitTypeId } from '@game/data/unitTypes.ts'
 import { api, errorMessage } from '../api'
+import type { SourceBuilding } from '../buildings/types'
+import type { SourceCharacter } from '../characters/types'
 import { Field, NumberField, SaveStatus } from '../fields'
 import { useLeaveGuard } from '../useDirty'
 import { SheetCrop } from '../characters/SheetCrop'
@@ -11,6 +19,101 @@ import type { SourceTech } from '../techs/types'
 import { createRelic, isRelicId, relicProblems, type SourceRelic } from './types'
 
 const USES = Object.keys(RELIC_USE_LABELS) as RelicUse[]
+const WEARERS = Object.keys(RELIC_WEARER_LABELS) as RelicWearer[]
+/** 装備で増やせる兵種（騎士の率いる兵種。歩兵は誰でも率いるので除く） */
+const EQUIPMENT_UNIT_TYPES = UNIT_TYPES.filter((t) => t.id !== 'infantry' && !MONSTER_UNIT_TYPES.includes(t.id))
+
+/** 使い道を変えたときの効果: 装備・召喚の効果は使い道に合うものだけを残し、無ければ既定を入れる */
+const effectsFor = (use: RelicUse, relic: SourceRelic): Pick<SourceRelic, 'use' | 'equipment' | 'summon'> => ({
+  use,
+  equipment: use === 'equipment' ? relic.equipment ?? { wearer: 'nonMagician', unitTypes: [] } : undefined,
+  summon: use === 'summon' ? relic.summon ?? { characterId: '991', unitType: 'dragon', hp: 600 } : undefined,
+})
+
+/** 一覧の切り替え: 入っていれば外し、無ければ足す（順は元の一覧の順） */
+const toggled = <T,>(list: readonly T[] | undefined, item: T, all: readonly T[]): T[] | undefined => {
+  const next = list?.includes(item) ? list.filter((x) => x !== item) : [...(list ?? []), item]
+  return next.length ? all.filter((x) => next.includes(x)) : undefined
+}
+
+/** 装備の効果: 付けられる騎士・知力の制限・増える兵種・使える魔法 */
+function EquipmentFields({ equipment, onChange }: { equipment: RelicEquipment; onChange: (equipment: RelicEquipment) => void }) {
+  const set = (patch: Partial<RelicEquipment>) => onChange({ ...equipment, ...patch })
+  return (
+    <>
+      <div className="form__grid">
+        <Field label="付けられる騎士">
+          <select value={equipment.wearer} onChange={(e) => set({ wearer: e.target.value as RelicWearer })}>
+            {WEARERS.map((w) => <option key={w} value={w}>{RELIC_WEARER_LABELS[w]}</option>)}
+          </select>
+        </Field>
+      </div>
+      <p className="form__note">傭兵・召喚ユニットはどちらでも付けられない</p>
+      <label className="checkbox">
+        <input type="checkbox" checked={equipment.minIntelligence !== undefined}
+          onChange={(e) => set({ minIntelligence: e.target.checked ? 70 : undefined })} />
+        知力の制限がある
+      </label>
+      {equipment.minIntelligence !== undefined && (
+        <NumberField label="付けるのに要る知力" value={equipment.minIntelligence} min={1} max={100} onChange={(minIntelligence) => set({ minIntelligence })} />
+      )}
+      <div className="field field--wide">
+        <span className="field__label">率いられるようになる兵種</span>
+        <div className="checkbox-row">
+          {EQUIPMENT_UNIT_TYPES.map((t) => (
+            <label key={t.id} className="checkbox">
+              <input type="checkbox" checked={equipment.unitTypes?.includes(t.id) ?? false}
+                onChange={() => set({ unitTypes: toggled(equipment.unitTypes, t.id, EQUIPMENT_UNIT_TYPES.map((u) => u.id)) })} />
+              {t.name}
+            </label>
+          ))}
+        </div>
+      </div>
+      <div className="field field--wide">
+        <span className="field__label">戦闘で使えるようになる魔法（魔術師の兵種を率いるときだけ。サンダーフォールは魔導書なしで使える）</span>
+        <div className="checkbox-row">
+          {SPELL_IDS.map((id) => (
+            <label key={id} className="checkbox">
+              <input type="checkbox" checked={equipment.spells?.includes(id) ?? false}
+                onChange={() => set({ spells: toggled(equipment.spells, id, SPELL_IDS) })} />
+              {ATTACK_DEFS[id].name}
+            </label>
+          ))}
+        </div>
+      </div>
+    </>
+  )
+}
+
+/** 召喚の型紙: 画像と既定の値を持つ特殊キャラクター・魔物の兵種・HP */
+function SummonFields({ summon, characters, onChange }: {
+  summon: RelicSummon
+  characters: readonly SourceCharacter[]
+  onChange: (summon: RelicSummon) => void
+}) {
+  const set = (patch: Partial<RelicSummon>) => onChange({ ...summon, ...patch })
+  const specials = characters.filter((c) => isSpecialCharacterId(c.id))
+  return (
+    <>
+      <div className="form__grid">
+        <Field label="型紙のキャラクター（画像）">
+          <select value={summon.characterId} onChange={(e) => set({ characterId: e.target.value })}>
+            {!specials.some((c) => c.id === summon.characterId) && <option value={summon.characterId}>{summon.characterId}（いません）</option>}
+            {specials.map((c) => <option key={c.id} value={c.id}>{c.id} {c.name}</option>)}
+          </select>
+        </Field>
+        <Field label="兵種">
+          <select value={summon.unitType} onChange={(e) => set({ unitType: e.target.value as UnitTypeId })}>
+            {!MONSTER_UNIT_TYPES.includes(summon.unitType) && <option value={summon.unitType}>{UNIT_TYPE_MAP[summon.unitType]?.name ?? summon.unitType}（魔物でない）</option>}
+            {MONSTER_UNIT_TYPES.map((id) => <option key={id} value={id}>{UNIT_TYPE_MAP[id].name}</option>)}
+          </select>
+        </Field>
+      </div>
+      <NumberField label="HP（召喚ユニットの最大兵力）" value={summon.hp} min={1} max={2000} step={50} onChange={(hp) => set({ hp })} />
+      <p className="form__note">統率・武力・知力は召喚したときに乱数で決まる（政治・魅力は 10）。型紙の能力は使わない</p>
+    </>
+  )
+}
 
 /** server/exportRelics.ts の ExportResult */
 interface ExportResult {
@@ -62,6 +165,8 @@ function CostFields({ cost, techs, onChange }: { cost: RelicWorkCost; techs: rea
 export function RelicEditor() {
   const [relics, setRelics] = useState<SourceRelic[] | null>(null)
   const [techs, setTechs] = useState<SourceTech[]>([])
+  const [characters, setCharacters] = useState<SourceCharacter[]>([])
+  const [buildings, setBuildings] = useState<SourceBuilding[]>([])
   const [sheets, setSheets] = useState<SheetInfo[]>([])
   const [savedJson, setSavedJson] = useState('')
   const [selectedId, setSelectedId] = useState('')
@@ -77,6 +182,8 @@ export function RelicEditor() {
 
   const load = useCallback(() => {
     api<SourceTech[]>('/api/techs').then(setTechs, (e) => setStatus({ error: errorMessage(e) }))
+    api<SourceCharacter[]>('/api/characters').then(setCharacters, (e) => setStatus({ error: errorMessage(e) }))
+    api<SourceBuilding[]>('/api/buildings').then(setBuildings, (e) => setStatus({ error: errorMessage(e) }))
     return api<SourceRelic[]>('/api/relics').then(
       (list) => {
         setRelics(list)
@@ -151,7 +258,15 @@ export function RelicEditor() {
 
   if (!relics) return <div className="loading">{status.error ?? '読み込み中…'}</div>
 
-  const problems = relicProblems(relics, techs.map((t) => t.id))
+  // 効果の検査は騎士データ・施設データの元データと比べる（書き出しのサーバーはゲームのコードを読めないので、ここだけで検査する）
+  const effectRefs = {
+    characterIds: characters.map((c) => c.id),
+    buildingRelics: buildings.flatMap((b) => (b.requiredRelic ? [b.requiredRelic] : [])),
+  }
+  const problems = [
+    ...relicProblems(relics, techs.map((t) => t.id)),
+    ...relics.flatMap((r) => relicEffectProblems(r, effectRefs).map((p) => `${r.id} ${r.name}: ${p}`)),
+  ]
   const hasBroken = relic?.brokenName !== undefined
   // 2 つのピッカーで同じ一覧を見せる（ほかの遺物が使っているセルが分かるように）。壊れた状態は ID に「（壊）」を付ける
   const owners = relics.flatMap((r) => [
@@ -243,7 +358,7 @@ export function RelicEditor() {
                   </select>
                 </Field>
                 <Field label="使い道（修復済み）">
-                  <select value={relic.use} onChange={(e) => update({ use: e.target.value as RelicUse })}>
+                  <select value={relic.use} onChange={(e) => update(effectsFor(e.target.value as RelicUse, relic))}>
                     {USES.map((u) => <option key={u} value={u}>{RELIC_USE_LABELS[u]}</option>)}
                   </select>
                 </Field>
@@ -251,6 +366,24 @@ export function RelicEditor() {
                   <textarea rows={3} value={relic.description} onChange={(e) => update({ description: e.target.value })} />
                 </Field>
               </div>
+
+              <h3 className="form__heading">効果（{RELIC_USE_LABELS[relic.use]}）</h3>
+              {relic.use === 'equipment' && relic.equipment && (
+                <EquipmentFields equipment={relic.equipment} onChange={(equipment) => update({ equipment })} />
+              )}
+              {relic.use === 'summon' && relic.summon && (
+                <SummonFields summon={relic.summon} characters={characters} onChange={(summon) => update({ summon })} />
+              )}
+              {relic.use === 'building' && (
+                <p className="form__note">
+                  {(() => {
+                    const users = buildings.filter((b) => b.requiredRelic === relic.id)
+                    return users.length
+                      ? `持っていれば ${users.map((b) => b.name).join('・')} を建てられる（建て終わると遺物は無くなる）。施設データの「必要な遺物」で決める`
+                      : 'この遺物を「必要な遺物」にした施設がありません（施設データで指定する）'
+                  })()}
+                </p>
+              )}
 
               <h3 className="form__heading">壊れた状態</h3>
               <label className="checkbox">

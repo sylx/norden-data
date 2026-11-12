@@ -19,7 +19,9 @@
     /* ゲーム本体（親ディレクトリ）のソース。vite.config.ts のエイリアスと同じ */
     "paths": {
       "norden-strategy/data": ["../norden-strategy/src/data.ts"],
-      "@game/*": ["../src/*"]
+      "@game/*": ["../src/*"],
+      "@norden/battle-runtime/rules": ["../norden-battle/battle-runtime/src/rules.ts"],
+      "@norden/map-runtime/*": ["../norden-battle/map-runtime/src/*.ts"]
     }
   },
   "include": ["src", "server", "vite.config.ts"]

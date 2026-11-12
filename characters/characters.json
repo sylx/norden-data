@@ -4607,5 +4607,71 @@
       "unitType": "infantry"
     },
     "biography": "燃えるような赤毛を太い三つ編みにした大柄な女傭兵で、歩兵の傭兵団「赤熊団」の団長。北の雪原で熊を素手で組み伏せたという逸話は本人が言いふらしているだけだが、盾を並べて押し出す彼女の隊列を、騎兵の突撃が破ったことはない。戦の前夜には団員全員と杯を交わし、翌朝には誰より先に敵陣へ突っ込む。報酬は負傷した者から先に分け、戦えなくなった団員には宿屋を一軒持たせてやるのが団の決まりで、北の街道沿いには赤熊団あがりの宿が点々とある。酒の飲み比べで負けたことはないと豪語し、杯を手放すのは剣を握るときだけ。契約金は安くないが、「アタシの団は値段の倍は働く」と言って一銭もまけない。"
+  },
+  {
+    "id": "991",
+    "name": "ドラゴン",
+    "type": "summon",
+    "sprite": {
+      "sheet": "120.webp",
+      "col": 4,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 264.5333333333333,
+      "y": 55.46666666666664,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 10,
+    "intelligence": 75,
+    "leadership": 75,
+    "strength": 75,
+    "charm": 10,
+    "start": null
+  },
+  {
+    "id": "992",
+    "name": "ゴーレム",
+    "type": "summon",
+    "sprite": {
+      "sheet": "120.webp",
+      "col": 4,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 264.5333333333333,
+      "y": 55.46666666666664,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 10,
+    "intelligence": 75,
+    "leadership": 75,
+    "strength": 75,
+    "charm": 10,
+    "start": null
+  },
+  {
+    "id": "993",
+    "name": "ベヒーモス",
+    "type": "summon",
+    "sprite": {
+      "sheet": "120.webp",
+      "col": 4,
+      "row": 1
+    },
+    "faceRect": {
+      "x": 264.5333333333333,
+      "y": 55.46666666666664,
+      "width": 512,
+      "height": 512
+    },
+    "politics": 10,
+    "intelligence": 75,
+    "leadership": 75,
+    "strength": 75,
+    "charm": 10,
+    "start": null
   }
 ]

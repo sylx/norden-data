@@ -89,6 +89,7 @@ input[type='range'] { accent-color: var(--accent); width: 100%; }
 
 .checkbox { display: flex; align-items: center; gap: 6px; cursor: pointer; padding: 4px 0; }
 .checkbox input { accent-color: var(--accent); }
+.checkbox-row { display: flex; flex-wrap: wrap; gap: 0 16px; }
 
 .tags { display: flex; flex-wrap: wrap; gap: 4px; padding: 4px; border: 1px solid var(--line); border-radius: 4px; background: var(--bg); }
 .tags__item { display: inline-flex; align-items: center; gap: 2px; background: var(--panel-2); border-radius: 3px; padding: 1px 2px 1px 8px; }
