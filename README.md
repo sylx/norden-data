@@ -1,3 +1,6 @@
+> [!NOTE]
+> このリポジトリは 2026-11-14 に [nordencult](https://github.com/sylx/nordencult) の [`norden-data/`](https://github.com/sylx/nordencult/tree/main/norden-data) に移りました（履歴もそのまま取り込んであります）。ここは更新しません。
+
 # norden-data
 
 nordencult のゲームデータのエディタ。拠点データ・勢力データ・騎士データ・施設データ・技術データ・遺物データ・セリフを編集し、ゲーム本体（nordencult）の `src/` に書き出す。React + TypeScript + Vite。
